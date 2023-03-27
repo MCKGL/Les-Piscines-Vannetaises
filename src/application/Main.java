@@ -45,8 +45,8 @@ public class Main extends Application {
 //		String rue = "pouetpouet";
 //		int numero = 68;
 //		
-		Adresse adresse = new Adresse(ville, codePostal, rue, numero);
-		System.out.println(adresse);
+//		Adresse adresse = new Adresse(ville, codePostal, rue, numero);
+//		System.out.println(adresse);
 		
 //		 Employee employee = EmployeeDAO.getInstanceEmployeeDAO().read(1);
 //		 System.out.println(employee);
