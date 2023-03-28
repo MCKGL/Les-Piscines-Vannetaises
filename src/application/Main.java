@@ -23,10 +23,10 @@ public class Main extends Application {
 //			e.printStackTrace();
 //		}
 //	}
-	
+//-----------------------------------------------test git-----------------------------	
 	//test passage page à l'autre
 	@Override
-	public void start(Stage stage) {
+public void start(Stage stage) {
 		try {
 			Parent root = FXMLLoader.load(getClass().getResource("/vue/Home.fxml"));
 			Scene scene = new Scene(root);
