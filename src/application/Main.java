@@ -1,5 +1,6 @@
 package application;
 	
+import controller.Adresse;
 import controller.Employee;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -40,15 +41,15 @@ public class Main extends Application {
 	public static void main(String[] args) {
 
 		launch(args);
-//		String ville = "Vannes";
-//		int codePostal = 56100;
-//		String rue = "pouetpouet";
-//		int numero = 68;
-//		
-//		Adresse adresse = new Adresse(ville, codePostal, rue, numero);
-//		System.out.println(adresse);
+		String ville = "Vannes";
+		int codePostal = 56100;
+		String rue = "pouetpouet";
+		int numero = 68;
 		
-//		 Employee employee = EmployeeDAO.getInstanceEmployeeDAO().read(1);
+		Adresse adresse = new Adresse(ville, codePostal, rue, numero);
+		System.out.println(adresse);
+		
+//		 Employee employee = EmployeeDAO.getInstance().read(1);
 //		 System.out.println(employee);
 //		 Connexion.fermer();
 //		 Adresse adresse = AdresseDAO.getInstanceAdresseDAO().read(1);
