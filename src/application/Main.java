@@ -40,7 +40,7 @@ public class Main extends Application {
 	public static void main(String[] args) {
 
 		launch(args);
-//		String ville = "Vannes";
+		String ville = "Vannes";
 //		int codePostal = 56100;
 //		String rue = "pouetpouet";
 //		int numero = 68;
