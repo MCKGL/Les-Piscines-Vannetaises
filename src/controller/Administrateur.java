@@ -24,6 +24,7 @@ public class Administrateur {
 		this.mdp = mdp;
 		this.hashage = hashage;
 	}
+	//Salut 
 
 	public Administrateur(String mdp, String hashage) {
 		super();
