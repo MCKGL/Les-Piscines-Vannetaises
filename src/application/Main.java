@@ -1,16 +1,12 @@
 package application;
 	
-import controller.Employee;
+import controller.Formule;
 import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.stage.Stage;
-import model.EmployeeDAO;
+import model.FormuleDAO;
 
 
 public class Main extends Application {
-	//Premier test de fenêtre
 //	@Override
 //	public void start(Stage primaryStage) {
 //		try {
@@ -24,23 +20,23 @@ public class Main extends Application {
 //		}
 //	}
 	
-	//test passage page à l'autre
-	@Override
-	public void start(Stage stage) {
-		try {
-			Parent root = FXMLLoader.load(getClass().getResource("/vue/Home.fxml"));
-			Scene scene = new Scene(root);
-			stage.setScene(scene);
-			stage.show();
-		} catch(Exception e) {
-			e.printStackTrace();
-		}
-	}
+//	//test passage page à l'autre
+//	@Override
+//	public void start(Stage stage) {
+//		try {
+//			Parent root = FXMLLoader.load(getClass().getResource("/vue/Home.fxml"));
+//			Scene scene = new Scene(root);
+//			stage.setScene(scene);
+//			stage.show();
+//		} catch(Exception e) {
+//			e.printStackTrace();
+//		}
+//	}
 	
 	public static void main(String[] args) {
 
-		launch(args);
-		String ville = "Vannes";
+//		launch(args);
+//		String ville = "Vannes";
 //		int codePostal = 56100;
 //		String rue = "pouetpouet";
 //		int numero = 68;
@@ -55,8 +51,106 @@ public class Main extends Application {
 //		 System.out.println(adresse);
 //		 Connexion.fermer();
 		
+// ----------------------------------------------------------------------------------------------------------------------
+//Test cours DAO
+//-----------------------------------------------------------------------------------------------------------------------
+//		String nom = "AquaGym";
+//		String description = "Venez profitez de notre nouveau cours d'aquagym ";
+//		int nbreSeance = 4;
+//		String trancheAge = "16 - 70";
+//		String type = "Remise en forme";
+//		int nbrePersonne = 12;
+//		Cours cours = new Cours(nom, description, nbreSeance, trancheAge, type, nbrePersonne);
+//		
+//		System.out.println(CoursDAO.getInstance().create(cours));
+//		
+//		nom = "AquaBike";
+//		cours.setNom(nom);
+//		description = "j'ai été modifiée";
+//		cours.setDescription(description);
+//		nbreSeance = 5;
+//		cours.setNbreSeance(nbreSeance);
+//		trancheAge = "40-50";
+//		cours.setTrancheAge(trancheAge);
+//		type = "Musculation";
+//		cours.setType(type);
+//		nbrePersonne = 10;
+//		cours.setNbrePersonne(nbrePersonne);
 		
+//		System.out.println(CoursDAO.getInstance().update(cours));
+//		System.out.println(CoursDAO.getInstance().read(cours.getIdCours()));
+		
+//		
+//		Cours cours1 = CoursDAO.getInstance().read(20);
+//		System.out.println(cours1);
+//		System.out.println(CoursDAO.getInstance().delete(cours1));
+		
+// ----------------------------------------------------------------------------------------------------------------------
+//Test table d'association cous prof
+//-----------------------------------------------------------------------------------------------------------------------
+//		CoursDAO coursDAO = CoursDAO.getInstance();
+//		System.out.println(coursDAO.createAssoCoursProf(19, 46));
+//		System.out.println(coursDAO.deleteAssoCoursProf(19, 46));
+//		System.out.println(coursDAO.readAllByIdCours(19));
+//		System.out.println("---");
+//		System.out.println(coursDAO.readAllByIdProf(46));
+// ----------------------------------------------------------------------------------------------------------------------
+//Test table seance
+//-----------------------------------------------------------------------------------------------------------------------
+//		SeanceDAO seanceDAO = SeanceDAO.getInstance();
+		/**
+		 * Create
+		 */
+//		LocalDate date = LocalDate.of(2023, 3, 12);
+//		LocalTime heureDebut = LocalTime.of(9, 00);
+//		LocalTime heureFin = LocalTime.of(11, 00);
+//		int prix = 15;
+//		int nbrePlace = 6;
+//		int idCours = 19;
+//		Seance seance = new Seance(date, heureDebut, heureFin, prix, nbrePlace, idCours);
+//		System.out.println(seanceDAO.create(seance));
+		
+		/**
+		 * Delete
+		 */
+//		Seance seance = seanceDAO.read(1);
+//		System.out.println(seanceDAO.delete(seance));
+		
+		/**
+		 * Update
+		 */
+//		Seance seance = seanceDAO.read(2);
+//		System.out.println(seance);
+//		seance.setDate(LocalDate.now());
+//		seance.setPrix(999);
+//		System.out.println(seanceDAO.update(seance));
+		
+// ----------------------------------------------------------------------------------------------------------------------
+//Test table Formule
+//-----------------------------------------------------------------------------------------------------------------------
+		FormuleDAO formuleDAO = FormuleDAO.getInstance();
+		/**
+		 * Create
+		 */
+		float prix = 11.99f;
+		int duree = 500;
+		int nbreEntree = 10;
+		String label = "test label";
+		String type = "test type";
+		
+		Formule formuleDO = new Formule(prix, duree, nbreEntree, label, type);
+		
+		System.out.println(FormuleDAO.getInstance().create(formuleDO));
+		
+//		UUID test = UUID.randomUUID();
+//		System.out.println(test);
 	}
+
+@Override
+public void start(Stage arg0) throws Exception {
+	// TODO Auto-generated method stub
+	
+}
 }
 
 

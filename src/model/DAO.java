@@ -5,6 +5,10 @@ import java.util.HashMap;
 public abstract class DAO<T> {
 	protected final HashMap<Integer, T> donnees = new HashMap<Integer, T>();
 	
+	public HashMap<Integer, T> getDonnees() {
+		return donnees;
+	}
+	
 	/**
 	 * M�thode de cr�ation d'un objet de type "T",
 	 * peut �tre amen� � injecter l'id cr�� dans le programme
@@ -33,4 +37,6 @@ public abstract class DAO<T> {
 	 * @return T
 	 */
 	public abstract T read(int id);
+	
+//	public abstract T readAll();
 }

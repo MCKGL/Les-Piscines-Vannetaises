@@ -4,9 +4,14 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-
+import java.util.ArrayList;
+import java.util.List;
 
 import controller.Cours;
+import controller.Employee;
+import controller.Formule;
+import controller.InfoProfesseur;
+import controller.Seance;
 
 
 
@@ -18,15 +23,14 @@ public class CoursDAO extends DAO<Cours> {
 	 */
 	private final String CLE_PRIMAIRE = "id_cours";
 	private final String TABLE = "cours";
-
+	private final String TABLE_COURS_PROF = "asso_prof_cours";
+	
 	private final String NOM = "nom";
 	private final String DESCRIPTION = "description";
-	private final String NBRE_SEANCE = "nombre_seance";
-	private final String TRANCHE_AGE = "tranche_age";
-	private final String TYPE = "type";
-	private final String NBRE_PERSONNE = "nombre_personne";
+	private final String FORMULE = "id_formule";
+	
 	private final String ACTIF = "actif";
-
+ 
 	private static CoursDAO instance = null;
 
 	// -----------------------------------------------------------------------------------------------------------------------
@@ -61,18 +65,13 @@ public class CoursDAO extends DAO<Cours> {
 			/**
 			 * Création d'un tuple dans la base de donnée cours
 			 */
-			String requete = "INSERT INTO " + TABLE + " (" + NOM + ", " + DESCRIPTION + ", " + NBRE_SEANCE + ", "
-					+ TRANCHE_AGE + ", " + TYPE + ", " + NBRE_PERSONNE +", "+ACTIF+ ") VALUES (?,?,?,?,?,?,?)";
+			String requete = "INSERT INTO " + TABLE + " (" + NOM + ", " + DESCRIPTION + ","+FORMULE+") VALUES (?,?,?)";
 			PreparedStatement pst = Connexion.getInstance().prepareStatement(requete, Statement.RETURN_GENERATED_KEYS);
 
 			// On associe les ? avec une valeur
 			pst.setString(1, cours.getNom());
 			pst.setString(2, cours.getDescription());
-			pst.setInt(3, cours.getNbreSeance());
-			pst.setString(4, cours.getTrancheAge());
-			pst.setString(5, cours.getType());
-			pst.setInt(6, cours.getNbrePersonne());
-			pst.setInt(7, cours.getActif());			
+			pst.setInt(3, cours.getFormule().getIdFormule());			
 
 			// On exécute la requete
 			pst.executeUpdate();
@@ -124,18 +123,14 @@ public class CoursDAO extends DAO<Cours> {
 	public boolean update(Cours cours) {
 		boolean succes = true;
 		try {
-			String requete = "UPDATE " + TABLE + " SET  " + NOM + " = ?, " + DESCRIPTION + " = ?, " + NBRE_SEANCE
-					+ " = ?, " + TRANCHE_AGE + " = ?, " + TYPE + " = ?, " + NBRE_PERSONNE + " = ?, "+ACTIF+" = ? WHERE " + CLE_PRIMAIRE
+			String requete = "UPDATE " + TABLE + " SET  " + NOM + " = ?, " + DESCRIPTION + " = ?, " + FORMULE
+					+ " = ? WHERE " + CLE_PRIMAIRE
 					+ " = ?";
 			PreparedStatement pst = Connexion.getInstance().prepareStatement(requete);
 			pst.setString(1, cours.getNom());
 			pst.setString(2, cours.getDescription());
-			pst.setInt(3, cours.getNbreSeance());
-			pst.setString(4, cours.getTrancheAge());
-			pst.setString(5, cours.getType());
-			pst.setInt(6, cours.getNbrePersonne());
-			pst.setInt(7, cours.getActif());
-			pst.setInt(8, cours.getIdCours());
+			pst.setInt(3, cours.getFormule().getIdFormule());
+			pst.setInt(4, cours.getIdCours());
 
 			pst.executeUpdate();
 
@@ -173,15 +168,13 @@ public class CoursDAO extends DAO<Cours> {
 			// On associe les valeurs des champs à des variables
 			String nom = rsCours.getString(NOM);
 			String description = rsCours.getString(DESCRIPTION);
-			int nbreSeance = rsCours.getInt(NBRE_SEANCE);
-			String trancheAge = rsCours.getString(TRANCHE_AGE);
-			String type = rsCours.getString(TYPE);
-			int nbrePersonne = rsCours.getInt(NBRE_PERSONNE);
+			int idFormule = rsCours.getInt(FORMULE);
+			Formule formule = FormuleDAO.getInstance().read(idFormule);
 			
 			// Création d'un objet à partir des valeurs récupérées de la base de donnée
-			cours = new Cours(id, nom, description, nbreSeance, trancheAge, type, nbrePersonne);
+			cours = new Cours(id, nom, description, formule);
 			
-			cours.setListeSeances(SeanceDAO.getInstance().readTable(cours));		
+			cours.setListeSeances(SeanceDAO.getInstance().readByCours(cours));		
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -215,14 +208,12 @@ public class CoursDAO extends DAO<Cours> {
 	public boolean existe(Cours cours) {
 		boolean result = false;
 		try {
-			String requete = "SELECT * FROM " + TABLE + " WHERE " + NOM + " = ? AND " + TYPE + " = ? AND " + NBRE_SEANCE
+			String requete = "SELECT * FROM " + TABLE + " WHERE " + NOM + " = ? AND "
 					+ " = ?";
 
 			// Préparation de la requête
 			PreparedStatement pst = Connexion.getInstance().prepareStatement(requete);
 			pst.setString(1, cours.getNom());
-			pst.setString(2, cours.getType());
-			pst.setInt(3, cours.getNbreSeance());
 
 			// On execute la requête préparé
 			pst.execute();
@@ -251,14 +242,12 @@ public class CoursDAO extends DAO<Cours> {
 		try {
 
 			// Requête pour chercher une adresse correspondante
-			String requete = "SELECT * FROM " + TABLE + " WHERE " + NOM + " = ? AND " + TYPE + " = ? AND " + NBRE_SEANCE
+			String requete = "SELECT * FROM " + TABLE + " WHERE " + NOM + " = ? AND "+ " = ? AND "
 					+ " = ?";
 
 			// Préparation de la requête
 			PreparedStatement pst = Connexion.getInstance().prepareStatement(requete);
 			pst.setString(1, cours.getNom());
-			pst.setString(2, cours.getType());
-			pst.setInt(3, cours.getNbreSeance());
 
 			// On execute la requête préparé
 			pst.execute();
@@ -306,5 +295,123 @@ public class CoursDAO extends DAO<Cours> {
 		return result;
 	}
 	
+// ---------- Lire toutes les entrées de la table cours	
+	public List<Cours> readAll() {
+	    List<Cours> coursList = new ArrayList<>();
+	    try {
+	        String requete = "SELECT * FROM " + TABLE;
+	        PreparedStatement pst = Connexion.getInstance().prepareStatement(requete);
+	        ResultSet rs = pst.executeQuery();
 
+	        while (rs.next()) {
+	            int id = rs.getInt(CLE_PRIMAIRE);
+	            String nom = rs.getString(NOM);
+	            String description = rs.getString(DESCRIPTION);
+				int idFormule = rs.getInt(FORMULE);
+				Formule formule = FormuleDAO.getInstance().read(idFormule);
+	            
+	            Cours cours = new Cours(id, nom, description, formule);
+	            cours.setListeSeances(SeanceDAO.getInstance().readByCours(cours));
+	            
+	            coursList.add(cours);
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+	    return coursList;
+	}
+	
+	
+	// Table d'association Cours professeur
+	
+	/**
+	 * Trouver les professeurs associés à un cours
+	 * @param id
+	 * @return array liste de professeur
+	 */
+	public List<Employee> readAllByIdCours(int id) {
+		List<Employee> listeProf = new ArrayList<Employee>();
+		try {
+			String requete = "SELECT * FROM " + TABLE_COURS_PROF + " WHERE id_cours = " + id;
+			PreparedStatement pst = Connexion.getInstance().prepareStatement(requete);
+			ResultSet rs = pst.executeQuery();
+			
+			while (rs.next()) {
+				int id_prof = rs.getInt("id_professeur");
+				listeProf.add(EmployeeDAO.getInstance().read(id_prof));
+			}
+			
+		} catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+		return listeProf;
+	}
+	
+	/**
+	 * Trouver les cours associés à un professeur
+	 * @param id
+	 * @return array liste de cours
+	 */
+	public List<Cours> readAllByIdProf(int id) {
+		List<Cours> listeCours = new ArrayList<Cours>();
+		try {
+			String requete = "SELECT * FROM " + TABLE_COURS_PROF + " WHERE id_professeur = " + id;
+			PreparedStatement pst = Connexion.getInstance().prepareStatement(requete);
+			ResultSet rs = pst.executeQuery();
+			
+			while (rs.next()) {
+				int id_cours = rs.getInt("id_cours");
+				listeCours.add(CoursDAO.getInstance().read(id_cours));
+			}
+		} catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+		return listeCours;
+	}
+	
+	/**
+	 * Creer une ligne dans la table d'association cours professeur
+	 * @param idProf
+	 * @param idCours
+	 * @return boolean
+	 */
+	public boolean createAssoCoursProf(int idCours, int idProf) {
+		boolean success = false;
+		try {
+			Cours cours = CoursDAO.getInstance().read(idCours);
+			Employee employee = EmployeeDAO.getInstance().read(idProf);
+			if (cours != null && employee != null) {
+				String requete = "INSERT INTO " + TABLE_COURS_PROF + " (id_professeur, id_cours) VALUES (?,?)";
+				PreparedStatement pst = Connexion.getInstance().prepareStatement(requete);
+				pst.setInt(1, idProf);
+				pst.setInt(2, idCours);
+				pst.execute();
+				success = true;
+			}
+		} catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+		return success;
+	}
+	
+	/**
+	 * Supprimer une ligne dans la table d'ssociation cours professeur
+	 * @param idProf
+	 * @param idCours
+	 * @return boolean
+	 */
+	public boolean deleteAssoCoursProf(int idCours, int idProf) {
+		boolean success = false;
+		try {
+			String requete = "DELETE FROM " + TABLE_COURS_PROF + " WHERE id_professeur = ? AND id_cours = ?";
+			PreparedStatement pst = Connexion.getInstance().prepareStatement(requete);
+			pst.setInt(1, idProf);
+			pst.setInt(2, idCours);
+			pst.execute();
+			success = true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return success;
+	}
 }

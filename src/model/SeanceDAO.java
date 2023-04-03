@@ -55,16 +55,6 @@ public class SeanceDAO extends DAO<Seance> {
 			 * mettre à jour la table d'association
 			 */
 
-			if (CoursDAO.getInstance().existe(seance.getCours())) {
-				int id = CoursDAO.getInstance().readIdCours(seance.getCours());
-				seance.getCours().setIdCours(id);
-				
-			} else {
-				CoursDAO.getInstance().create(seance.getCours());
-				int id = CoursDAO.getInstance().readIdCours(seance.getCours());
-				seance.getCours().setIdCours(id);
-			}
-
 			String requete = "INSERT INTO " + TABLE + " (" + DATE + ", " + HEURE_DEBUT + ", " + HEURE_FIN + ", " + PRIX
 					+ ", " + NBRE_PLACE + ", " + ID_COURS + ") VALUES (?,?,?,?,?,?)";
 			PreparedStatement pst = Connexion.getInstance().prepareStatement(requete, Statement.RETURN_GENERATED_KEYS);
@@ -75,7 +65,7 @@ public class SeanceDAO extends DAO<Seance> {
 			pst.setObject(3, seance.getHeureFin());
 			pst.setInt(4, seance.getPrix());
 			pst.setInt(5, seance.getNbrePlace());
-			pst.setInt(6, seance.getCours().getIdCours());
+			pst.setInt(6, seance.getIdCours());
 
 			// On exécute la requete
 			pst.executeUpdate();
@@ -121,7 +111,7 @@ public class SeanceDAO extends DAO<Seance> {
 		boolean succes = true;
 		try {
 			String requete = "UPDATE " + TABLE + " SET  " + DATE + " = ?, " + HEURE_DEBUT + " = ?, " + HEURE_FIN
-					+ " = ?, " + PRIX + " = ?, " + NBRE_PLACE + " = ?, " + ID_COURS + " = ? WHERE " + CLE_PRIMAIRE
+					+ " = ?, " + PRIX + " = ?, " + NBRE_PLACE + " = ?, " + ID_COURS +" = ? WHERE " + CLE_PRIMAIRE
 					+ " = ?";
 			PreparedStatement pst = Connexion.getInstance().prepareStatement(requete);
 			pst.setObject(1, seance.getDate());
@@ -129,8 +119,9 @@ public class SeanceDAO extends DAO<Seance> {
 			pst.setObject(3, seance.getHeureFin());
 			pst.setInt(4, seance.getPrix());
 			pst.setInt(5, seance.getNbrePlace());
-			pst.setInt(6, seance.getCours().getIdCours());
+			pst.setInt(6, seance.getIdCours());
 			pst.setInt(7, seance.getIdSeance());
+			
 
 			pst.executeUpdate();
 
@@ -168,13 +159,10 @@ public class SeanceDAO extends DAO<Seance> {
 			LocalTime timeF = rs.getTime(HEURE_FIN).toLocalTime();
 			int prix = rs.getInt(PRIX);
 			int nbrePlace = rs.getInt(NBRE_PLACE);
-//			int idCours = rs.getInt(ID_COURS);
-
-			// On ne récupère pas le cours correspondant à la séance pour éviter une boucle infini
-			//Cours cours = CoursDAO.getInstance().read(idCours);
+			int idCours = rs.getInt(ID_COURS);
 
 			// Création d'un objet à partir des valeurs récupérées de la base de donnée
-			seance = new Seance(id, date, timeD, timeF, prix, nbrePlace, null);
+			seance = new Seance(id, date, timeD, timeF, prix, nbrePlace, idCours);
 
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -188,7 +176,7 @@ public class SeanceDAO extends DAO<Seance> {
 	 * @param Cours cours
 	 * @return liste<Seance>
 	 */
-	public List<Seance> readTable(Cours cours) {
+	public List<Seance> readByCours(Cours cours) {
 		List<Seance> liste = new ArrayList<Seance>();
 		int idCours = cours.getIdCours();
 		Seance seance = null;
@@ -205,7 +193,6 @@ public class SeanceDAO extends DAO<Seance> {
 				int id = rs.getInt(ID_SEANCE);
 				System.err.println("while :"+id);
 				seance = SeanceDAO.getInstance().read(id);
-				seance.setCours(cours);
 				liste.add(seance);
 			}
 		} catch (SQLException e) {

@@ -1,8 +1,5 @@
 package controller;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class Formule {
 	/**
 	 * Attributs
@@ -14,45 +11,49 @@ public class Formule {
 	 * nombre d'entrée de la formule
 	 */
 	private int idFormule;
+	private float prix;
+	private int duree; // stock 1-12 
+	private int nbreEntree;
+	private String label;
 	private String type;
-	private long dureeEnSeconde;
-	private int prixFormule;
-	private int nbreEntreeFormule;
-	private List<Seance> listeSeance = new ArrayList<Seance>();
 	
-	/**
-	 * Constructeur global
-	 * 
-	 * @param idFormule
-	 * @param type
-	 * @param dureeEnSeconde
-	 * @param prixFormule
-	 * @param nbreEntreeFormule
-	 */
-	public Formule(int idFormule, String type, long dureeEnSeconde, int prixFormule, int nbreEntreeFormule) {
-		super();
-		this.idFormule = idFormule;
-		this.type = type;
-		this.dureeEnSeconde = dureeEnSeconde;
-		this.prixFormule = prixFormule;
-		this.nbreEntreeFormule = nbreEntreeFormule;
-	}
 
 	/**
-	 * Constructeur sans l'ID
 	 * 
-	 * @param type
-	 * @param dureeEnSeconde
+	 * @param idFormule
 	 * @param prixFormule
-	 * @param nbreEntreeFormule
+	 * @param dureeEnSeconde
+	 * @param nbreEntree
+	 * @param label
+	 * @param type
 	 */
-	public Formule(String type, long dureeEnSeconde, int prixFormule, int nbreEntreeFormule) {
+	public Formule(int idFormule, float prixFormule, int dureeEnMois, int nbreEntree, String label, String type) {
 		super();
+		this.idFormule = idFormule;
+		this.prix = prixFormule;
+		this.duree = dureeEnMois;
+		this.nbreEntree = nbreEntree;
+		this.label = label;
 		this.type = type;
-		this.dureeEnSeconde = dureeEnSeconde;
-		this.prixFormule = prixFormule;
-		this.nbreEntreeFormule = nbreEntreeFormule;
 	}
+	
+	/**
+	 * 
+	 * @param prixFormule
+	 * @param dureeEnSeconde
+	 * @param nbreEntree
+	 * @param label
+	 * @param type
+	 */
+	public Formule(float prixFormule, int dureeEnMois, int nbreEntree, String label, String type) {
+		super();
+		this.prix = prixFormule;
+		this.duree = dureeEnMois;
+		this.nbreEntree = nbreEntree;
+		this.label = label;
+		this.type = type;
+	}
+	
 	/**
 	 * Getter 
 	 * Setter
@@ -65,6 +66,38 @@ public class Formule {
 		this.idFormule = idFormule;
 	}
 
+	public float getPrix() {
+		return prix;
+	}
+
+	public void setPrix(float prix) {
+		this.prix = prix;
+	}
+
+	public int getDuree() {
+		return duree;
+	}
+
+	public void setDuree(int duree) {
+		this.duree = duree;
+	}
+
+	public int getNbreEntree() {
+		return nbreEntree;
+	}
+
+	public void setNbreEntree(int nbreEntree) {
+		this.nbreEntree = nbreEntree;
+	}
+
+	public String getLabel() {
+		return label;
+	}
+
+	public void setLabel(String label) {
+		this.label = label;
+	}
+
 	public String getType() {
 		return type;
 	}
@@ -72,31 +105,6 @@ public class Formule {
 	public void setType(String type) {
 		this.type = type;
 	}
-
-	public long getDureeEnSeconde() {
-		return dureeEnSeconde;
-	}
-
-	public void setDureeEnSeconde(long dureeEnSeconde) {
-		this.dureeEnSeconde = dureeEnSeconde;
-	}
-
-	public int getPrixFormule() {
-		return prixFormule;
-	}
-
-	public void setPrixFormule(int prixFormule) {
-		this.prixFormule = prixFormule;
-	}
-
-	public int getNbreEntreeFormule() {
-		return nbreEntreeFormule;
-	}
-
-	public void setNbreEntreeFormule(int nbreEntreeFormule) {
-		this.nbreEntreeFormule = nbreEntreeFormule;
-	}
-	
 	/**
 	 * METHODES
 	 */

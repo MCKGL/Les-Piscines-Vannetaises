@@ -16,7 +16,7 @@ public class Seance {
 	private LocalTime heureFin;
 	private int prix;
 	private int nbrePlace;
-	private Cours cours;
+	private int idCours;
 	// -----------------------------------------------------------------------------------------------------------------------
 	/**
 	 * Constructeur global
@@ -28,7 +28,7 @@ public class Seance {
 	 * @param nbrePlace
 	 * @param cours
 	 */
-	public Seance(int idSeance, LocalDate date, LocalTime heureDebut, LocalTime heureFin, int prix, int nbrePlace, Cours cours) {
+	public Seance(int idSeance, LocalDate date, LocalTime heureDebut, LocalTime heureFin, int prix, int nbrePlace, int idCours) {
 		super();
 		this.idSeance = idSeance;
 		this.date = date;
@@ -36,7 +36,7 @@ public class Seance {
 		this.heureFin = heureFin;
 		this.prix = prix;
 		this.nbrePlace = nbrePlace;
-		this.cours = cours;
+		this.idCours = idCours;
 	}
 	/**
 	 * Controleur sans ID
@@ -47,14 +47,14 @@ public class Seance {
 	 * @param nbrePlace
 	 * @param cours
 	 */
-	public Seance(LocalDate date, LocalTime heureDebut, LocalTime heureFin, int prix, int nbrePlace, Cours cours) {
+	public Seance(LocalDate date, LocalTime heureDebut, LocalTime heureFin, int prix, int nbrePlace, int idCours) {
 		super();
 		this.date = date;
 		this.heureDebut = heureDebut;
 		this.heureFin = heureFin;
 		this.prix = prix;
 		this.nbrePlace = nbrePlace;
-		this.cours = cours;
+		this.idCours = idCours;
 	}
 
 	// -----------------------------------------------------------------------------------------------------------------------
@@ -98,13 +98,12 @@ public class Seance {
 	public void setNbrePlace(int nbrePlace) {
 		this.nbrePlace = nbrePlace;
 	}
-	public Cours getCours() {
-		return cours;
+	public int getIdCours() {
+		return idCours;
 	}
-	public void setCours(Cours cours) {
-		this.cours = cours;
+	public void setIdCours(int idCours) {
+		this.idCours = idCours;
 	}
-	
 	@Override
 	public String toString() {
 		return "Seance [idSeance=" + idSeance + ", date=" + date + ", heureDebut=" + heureDebut + ", heureFin="+ heureFin + ", prix=" + prix + ", nbrePlace=" + nbrePlace + "]\n";

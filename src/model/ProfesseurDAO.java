@@ -111,12 +111,12 @@ public class ProfesseurDAO extends DAO<Employee> {
 	public InfoProfesseur readInfoProfesseur(int idProfesseur) {
 		InfoProfesseur professeur = null;
 		try {
-		String requete = "SELECT * FROM "+TABLE+" WHERE "+CLE_PRIMAIRE+"="+idProfesseur+";";
-		ResultSet rs = Connexion.executeQuery(requete);
-		rs.next();
-		String specialites = rs.getString("specialites");
-		professeur = new InfoProfesseur(specialites);
-		
+			String requete = "SELECT * FROM "+TABLE+" WHERE "+CLE_PRIMAIRE+"="+idProfesseur+";";
+			ResultSet rs = Connexion.executeQuery(requete);
+			if (rs.next()) {
+				String specialites = rs.getString("specialites");
+				professeur = new InfoProfesseur(specialites);			
+			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

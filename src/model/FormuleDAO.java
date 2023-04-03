@@ -16,14 +16,16 @@ public class FormuleDAO extends DAO<Formule> {
 	 * 
 	 * Instance existante si oui sauvegardée
 	 */
-	private String CLE_PRIMAIRE = "id_formule";
-	private String TABLE = "formule";
+	private final String CLE_PRIMAIRE = "id_formule";
+	private final String TABLE = "formule";
 
-	private String ID_FORMULE = "id_formule";
-	private String TYPE = "type";
-	private String VALIDITEE = "duree_validitee";
-	private String PRIX = "prix_final";
-	private String NBRE_ENTREE = "nombre_entree";
+	private final String ID_FORMULE = "id_formule";
+	private final String PRIX = "prix";
+	private final String VALIDITEE = "duree_validite";
+	private final String NB_ENTREE = "nb_entree";
+	private final String LABEL = "label";
+	private final String TYPE = "type";
+
 
 	private static FormuleDAO instance = null;
 
@@ -44,13 +46,14 @@ public class FormuleDAO extends DAO<Formule> {
 	public boolean create(Formule formule) {
 		boolean succes = false;
 		try {
-			String requete = "INSERT INTO " + TABLE + " ( " + TYPE + ", " + VALIDITEE + ", " + PRIX + ", " + NBRE_ENTREE
-					+ ") VALUES (?, ?, ?, ?)";
+			String requete = "INSERT INTO " + TABLE + " ( " + PRIX + ", " + VALIDITEE + ", " + NB_ENTREE + ", " + LABEL
+					+", "+TYPE+") VALUES (?, ?, ?, ?, ?)";
 			PreparedStatement pst = Connexion.getInstance().prepareStatement(requete, Statement.RETURN_GENERATED_KEYS);
-			pst.setString(1, formule.getType());
-			pst.setLong(2, formule.getDureeEnSeconde());
-			pst.setInt(3, formule.getPrixFormule());
-			pst.setInt(4, formule.getNbreEntreeFormule());
+			pst.setFloat(1, formule.getPrix());
+			pst.setInt(2, formule.getDuree());
+			pst.setInt(3, formule.getNbreEntree());
+			pst.setString(4, formule.getLabel());
+			pst.setString(5, formule.getType());
 
 			// Mise à jour de la base de donnée
 			pst.executeUpdate();
@@ -61,6 +64,7 @@ public class FormuleDAO extends DAO<Formule> {
 			}
 			donnees.put(formule.getIdFormule(), formule);
 			succes = true;
+			
 		} catch (SQLException e) {
 			succes = false;
 			e.printStackTrace();
@@ -89,14 +93,15 @@ public class FormuleDAO extends DAO<Formule> {
 	public boolean update(Formule formule) {
 		boolean succes = false;
 		try {
-			String requete = "UPDATE " + TABLE + " SET  " + TYPE + " = ?, " + VALIDITEE + " = ?, " + PRIX + " = ?, "
-					+ NBRE_ENTREE + " = ? WHERE " + ID_FORMULE + " = ?";
+			String requete = "UPDATE " + TABLE + " SET  " + PRIX + " = ?, " + VALIDITEE + " = ?, " + NB_ENTREE + " = ?, "
+					+ LABEL +" = ?, "+TYPE+" = ? WHERE " + ID_FORMULE + " = ?";
 			PreparedStatement pst = Connexion.getInstance().prepareStatement(requete);
-			pst.setString(1, formule.getType());
-			pst.setLong(2, formule.getDureeEnSeconde());
-			pst.setInt(3, formule.getPrixFormule());
-			pst.setInt(4, formule.getNbreEntreeFormule());
-			pst.setInt(5, formule.getIdFormule());
+			pst.setFloat(1, formule.getPrix());
+			pst.setInt(2, formule.getDuree());
+			pst.setInt(3, formule.getNbreEntree());
+			pst.setString(4, formule.getLabel());
+			pst.setString(5, formule.getType());
+			pst.setInt(6, formule.getIdFormule());
 
 			pst.executeUpdate();
 			succes = true;
@@ -113,15 +118,16 @@ public class FormuleDAO extends DAO<Formule> {
 		try {
 			String requete = "SELECT * FROM " + TABLE + " WHERE " + CLE_PRIMAIRE + " = " + idFormule + ";";
 			ResultSet rs = Connexion.executeQuery(requete);
-			rs.next();
-			int id = rs.getInt(ID_FORMULE);
-			String type = rs.getString(TYPE);
-			long validitee = rs.getLong(VALIDITEE);
-			int prix = rs.getInt(PRIX);
-			int nbre_entree = rs.getInt(NBRE_ENTREE);
-
-			formule = new Formule(id, type, validitee, prix, nbre_entree);
-
+			if (rs.next()) {
+				int id = rs.getInt(ID_FORMULE);
+				float prix = rs.getFloat(PRIX);
+				int validitee = rs.getInt(VALIDITEE);
+				int nbEntree = rs.getInt(NB_ENTREE);
+				String label = rs.getString(LABEL);
+				String type = rs.getString(TYPE);
+				
+				formule = new Formule(id, prix, validitee, nbEntree, label, type);
+			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

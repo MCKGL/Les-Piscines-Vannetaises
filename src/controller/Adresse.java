@@ -23,11 +23,11 @@ public class Adresse {
 		
 		/**
 		 * Constructeur avec ID
-		 * @param idAdresse
-		 * @param ville
-		 * @param codePostal2
-		 * @param rue
-		 * @param numero2
+		 * @param int idAdresse
+		 * @param string ville
+		 * @param int codePostal2
+		 * @param string rue
+		 * @param int numero2
 		 */
 		public Adresse(int idAdresse, String ville, int codePostal2, String rue, int numero2) {
 			super();
@@ -39,10 +39,10 @@ public class Adresse {
 		}
 		/**
 		 * Constructeur sans ID
-		 * @param ville
-		 * @param codePostal
-		 * @param rue
-		 * @param numero
+		 * @param string ville
+		 * @param int codePostal
+		 * @param string rue
+		 * @param int numero
 		 */
 		public Adresse(String ville, int codePostal, String rue, int numero) {
 			super();
