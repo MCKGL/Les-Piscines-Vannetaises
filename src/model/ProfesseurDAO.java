@@ -8,17 +8,17 @@ import controller.Employee;
 import controller .InfoProfesseur;
 
 public class ProfesseurDAO extends DAO<Employee> {
-// -----------------------------------------------------------------------------------------------------------------------
+	// -----------------------------------------------------------------------------------------------------------------------
 	/**
 	 * Attributs
 	 */
 	private static final String CLE_PRIMAIRE = "id_employee";
 	private static final String TABLE = "professeur";
-	
+
 	private static final String SPECIALITES = "specialites";
 
 	private static ProfesseurDAO instance=null;
-// -----------------------------------------------------------------------------------------------------------------------
+	// -----------------------------------------------------------------------------------------------------------------------
 	/**
 	 * Instance unique pour se connecter
 	 * @return instance;
@@ -29,14 +29,14 @@ public class ProfesseurDAO extends DAO<Employee> {
 		}
 		return instance;
 	}
-// -----------------------------------------------------------------------------------------------------------------------
+	// -----------------------------------------------------------------------------------------------------------------------
 	/**
 	 * Constructeur privé
 	 */
 	private ProfesseurDAO() {
 		super();
 	}
-// -----------------------------------------------------------------------------------------------------------------------
+	// -----------------------------------------------------------------------------------------------------------------------
 	/**
 	 * Création d'une ligne professeur dans la base de donnée
 	 */
@@ -49,8 +49,8 @@ public class ProfesseurDAO extends DAO<Employee> {
 			pst.setInt(1, prof.getIdEmployee());
 			pst.setString(2, prof.getInfoProfesseur().getSpecialites());
 			pst.executeUpdate();
-			
-			
+
+
 			donnees.put(prof.getIdEmployee(), prof);
 		} catch (SQLException e) {
 			succes=false;
@@ -58,7 +58,7 @@ public class ProfesseurDAO extends DAO<Employee> {
 		}
 		return succes;
 	}
-// -----------------------------------------------------------------------------------------------------------------------
+	// -----------------------------------------------------------------------------------------------------------------------
 	/**
 	 * Suppression d'une ligne professeur dans la base de donnée
 	 */
@@ -78,7 +78,7 @@ public class ProfesseurDAO extends DAO<Employee> {
 		} 
 		return succes;		
 	}
-// -----------------------------------------------------------------------------------------------------------------------
+	// -----------------------------------------------------------------------------------------------------------------------
 	/**
 	 * Mise à jour d'une ligne professeur dans la base de donnee
 	 */
@@ -91,41 +91,41 @@ public class ProfesseurDAO extends DAO<Employee> {
 			pst.setString(1, prof.getInfoProfesseur().getSpecialites());
 			pst.setInt(2, prof.getIdEmployee());
 			pst.executeUpdate() ;
-			
+
 		} catch (SQLException e) {
 			succes = false;
 			e.printStackTrace();
 		} 
 		return succes;	
 	}
-	
-// -----------------------------------------------------------------------------------------------------------------------
+
+	// -----------------------------------------------------------------------------------------------------------------------
 	@Override
 	public Employee read(int id) {
 		throw new IllegalArgumentException();
 	}
-// -----------------------------------------------------------------------------------------------------------------------
+	// -----------------------------------------------------------------------------------------------------------------------
 	/**
 	 * Lecture d'un professeur de la base de donnée dans la table professeur
 	 */
 	public InfoProfesseur readInfoProfesseur(int idProfesseur) {
 		InfoProfesseur professeur = null;
 		try {
-		String requete = "SELECT * FROM "+TABLE+" WHERE "+CLE_PRIMAIRE+"="+idProfesseur+";";
-		ResultSet rs = Connexion.executeQuery(requete);
-		rs.next();
-		String specialites = rs.getString("specialites");
-		professeur = new InfoProfesseur(specialites);
-		
+			String requete = "SELECT * FROM "+TABLE+" WHERE "+CLE_PRIMAIRE+"="+idProfesseur+";";
+			ResultSet rs = Connexion.executeQuery(requete);
+			if(rs.next()) {
+				String specialites = rs.getString("specialites");
+				professeur = new InfoProfesseur(specialites);
+			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		return professeur;
 	}
-// -----------------------------------------------------------------------------------------------------------------------
+	// -----------------------------------------------------------------------------------------------------------------------
 	/**
-	* Savoir si un tuple existe
-	*/
+	 * Savoir si un tuple existe
+	 */
 	public boolean existe(int id) {
 		boolean result = false;
 		try {
@@ -138,5 +138,5 @@ public class ProfesseurDAO extends DAO<Employee> {
 			e.printStackTrace();
 		}
 		return result;
-		}
+	}
 }

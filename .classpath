@@ -6,47 +6,12 @@
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="C:/Users/Moi/Documents/Ressources Java/JDBC/Microsoft JDBC Driver 4.2 for SQL Server/sqljdbc_4.2/fra/sqljdbc42.jar">
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/JavaFXPerso">
 		<attributes>
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="C:/Users/Moi/Documents/Ressources Java/JavaFX/javafx-sdk-11.0.2/lib/javafx.base.jar">
-		<attributes>
-			<attribute name="module" value="true"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry kind="lib" path="C:/Users/Moi/Documents/Ressources Java/JavaFX/javafx-sdk-11.0.2/lib/javafx.controls.jar">
-		<attributes>
-			<attribute name="module" value="true"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry kind="lib" path="C:/Users/Moi/Documents/Ressources Java/JavaFX/javafx-sdk-11.0.2/lib/javafx.fxml.jar">
-		<attributes>
-			<attribute name="module" value="true"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry kind="lib" path="C:/Users/Moi/Documents/Ressources Java/JavaFX/javafx-sdk-11.0.2/lib/javafx.graphics.jar">
-		<attributes>
-			<attribute name="module" value="true"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry kind="lib" path="C:/Users/Moi/Documents/Ressources Java/JavaFX/javafx-sdk-11.0.2/lib/javafx.media.jar">
-		<attributes>
-			<attribute name="module" value="true"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry kind="lib" path="C:/Users/Moi/Documents/Ressources Java/JavaFX/javafx-sdk-11.0.2/lib/javafx.swing.jar">
-		<attributes>
-			<attribute name="module" value="true"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry kind="lib" path="C:/Users/Moi/Documents/Ressources Java/JavaFX/javafx-sdk-11.0.2/lib/javafx.web.jar">
-		<attributes>
-			<attribute name="module" value="true"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry kind="lib" path="C:/Users/Moi/Documents/Ressources Java/JavaFX/javafx-sdk-11.0.2/lib/javafx-swt.jar">
+	<classpathentry kind="lib" path="C:/Program Files/Java/jdk-13.0.2/sqljdbc_4.2/fra/sqljdbc42.jar">
 		<attributes>
 			<attribute name="module" value="true"/>
 		</attributes>

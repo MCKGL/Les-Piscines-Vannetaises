@@ -188,10 +188,10 @@ public class EmployeeDAO extends DAO<Employee> {
 			// Mettre à jour la table professeur associé à un employé
 			if (employee.isProf()) {
 				if (ProfesseurDAO.getInstance().readInfoProfesseur(id) != null) {
-					System.err.println("Professeur existant !");
+					System.out.println("Professeur existant !");
 					ProfesseurDAO.getInstance().update(employee);					
 				}else {
-					System.err.println("Professeur doit être créé !");
+					System.out.println("Professeur doit être créé !");
 					ProfesseurDAO.getInstance().create(employee);
 				}
 			}
