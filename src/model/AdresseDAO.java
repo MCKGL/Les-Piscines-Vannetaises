@@ -19,8 +19,8 @@ public class AdresseDAO extends DAO<Adresse> {
 
 	private static final String VILLE = "ville";
 	private static final String CODE_POSTAL = "code_postal";
-	private static final String RUE = "rue";
-	private static final String NUMERO = "numero";
+	private static final String NOM_RUE = "nom_rue";
+	private static final String NUMERO = "num_rue";
 	
 
 	private static AdresseDAO instance=null;
@@ -50,7 +50,7 @@ public class AdresseDAO extends DAO<Adresse> {
 	public boolean create(Adresse adr) {
 		boolean succes=true;
 		try {
-			String requete = "INSERT INTO "+TABLE+" ("+VILLE+", "+CODE_POSTAL+", "+RUE+", "+NUMERO+") VALUES (?,?,?,?)";
+			String requete = "INSERT INTO "+TABLE+" ("+VILLE+", "+CODE_POSTAL+", "+NOM_RUE+", "+NUMERO+") VALUES (?,?,?,?)";
 			PreparedStatement pst = Connexion.getInstance().prepareStatement(requete, Statement.RETURN_GENERATED_KEYS);
 			pst.setString(1, adr.getVille());
 			pst.setInt(2, adr.getCodePostal());
@@ -102,7 +102,7 @@ public class AdresseDAO extends DAO<Adresse> {
 	public boolean update(Adresse adr) {
 		boolean succes=true;
 		try {
-			String requete = "UPDATE "+TABLE+" SET  "+VILLE+" = ?, "+CODE_POSTAL+" = ?, "+RUE+" = ?, "+NUMERO+" = ? WHERE "+CLE_PRIMAIRE+" = ?";
+			String requete = "UPDATE "+TABLE+" SET  "+VILLE+" = ?, "+CODE_POSTAL+" = ?, "+NOM_RUE+" = ?, "+NUMERO+" = ? WHERE "+CLE_PRIMAIRE+" = ?";
 			PreparedStatement pst = Connexion.getInstance().prepareStatement(requete) ;
 			pst.setString(1, adr.getVille());
 			pst.setInt(2, adr.getCodePostal());
@@ -133,7 +133,7 @@ public class AdresseDAO extends DAO<Adresse> {
 		rs.next();
 		String ville =rs.getString(VILLE);
 		int codePostal =rs.getInt(CODE_POSTAL);
-		String rue =rs.getString(RUE);
+		String rue =rs.getString(NOM_RUE);
 		int numero =rs.getInt(NUMERO);
 		
 		adresse=new Adresse(id, ville, codePostal ,rue , numero);
@@ -176,7 +176,7 @@ public class AdresseDAO extends DAO<Adresse> {
 		Boolean result = false;
 		try {
 			// Requête pour chercher une adresse correspondante
-			String requete = "SELECT * FROM "+TABLE+" WHERE "+VILLE+" = ? AND "+CODE_POSTAL+" = ? AND "+RUE+" = ? AND "+NUMERO+" = ?;";
+			String requete = "SELECT * FROM "+TABLE+" WHERE "+VILLE+" = ? AND "+CODE_POSTAL+" = ? AND "+NOM_RUE+" = ? AND "+NUMERO+" = ?;";
 			
 			// Préparation de la requête
 			PreparedStatement pst = Connexion.getInstance().prepareStatement(requete);
@@ -211,7 +211,7 @@ public class AdresseDAO extends DAO<Adresse> {
 		try {
 			
 			// Requête pour chercher une adresse correspondante
-			String requete = "SELECT * FROM "+TABLE+" WHERE "+VILLE+" = ? AND "+CODE_POSTAL+" = ? AND "+RUE+" = ? AND "+NUMERO+" = ?;";
+			String requete = "SELECT * FROM "+TABLE+" WHERE "+VILLE+" = ? AND "+CODE_POSTAL+" = ? AND "+NOM_RUE+" = ? AND "+NUMERO+" = ?;";
 			
 			// Préparation de la requête
 			PreparedStatement pst = Connexion.getInstance().prepareStatement(requete);

@@ -13,7 +13,7 @@ public class Connexion {
 	private static Connection connect = null;
 
 	private static final String SQL_SERVER = "localhost\\SQLEXPRESS";
-	private static final String BASE_DE_DONNEES = "borne_piscine";
+	private static final String BASE_DE_DONNEES = "bdd_piscine";
 	private static final String ID = "erwan";
 	private static final String MDP = "toto";
 

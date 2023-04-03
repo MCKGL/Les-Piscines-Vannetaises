@@ -15,7 +15,7 @@ public class Adresse {
 		private int idAdresse;
 		private String ville;
 		private int codePostal;
-		private String rue;
+		private String nom_rue;
 		private int numero;
 		//private String autre;
 		
@@ -26,7 +26,7 @@ public class Adresse {
 		 * @param idAdresse
 		 * @param ville
 		 * @param codePostal2
-		 * @param rue
+		 * @param nom_rue
 		 * @param numero2
 		 */
 		public Adresse(int idAdresse, String ville, int codePostal2, String rue, int numero2) {
@@ -34,7 +34,7 @@ public class Adresse {
 			this.idAdresse = idAdresse;
 			this.ville = ville;
 			this.codePostal = codePostal2;
-			this.rue = rue;
+			this.nom_rue = rue;
 			this.numero = numero2;
 		}
 		/**
@@ -48,7 +48,7 @@ public class Adresse {
 			super();
 			this.ville = ville;
 			this.codePostal = codePostal;
-			this.rue = rue;
+			this.nom_rue = rue;
 			this.numero = numero;
 		}
 
@@ -85,12 +85,12 @@ public class Adresse {
 
 
 		public String getRue() {
-			return rue;
+			return nom_rue;
 		}
 
 
 		public void setRue(String rue) {
-			this.rue = rue;
+			this.nom_rue = rue;
 		}
 
 
@@ -111,7 +111,7 @@ public class Adresse {
 	// -----------------------------------------------------------------------------------------------------------------------	
 		@Override
 		public String toString() {
-			return "Adresse [idAdresse=" + idAdresse + ", ville=" + ville + ", codePostal=" + codePostal + ", rue=" + rue
+			return "Adresse [idAdresse=" + idAdresse + ", ville=" + ville + ", codePostal=" + codePostal + ", rue=" + nom_rue
 					+ ", numero=" + numero + "]";
 		}
 

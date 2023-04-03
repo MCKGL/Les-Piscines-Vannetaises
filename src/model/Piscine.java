@@ -7,17 +7,25 @@ public class Piscine {
 	private int idPiscine;
 	private String nom;
 	private int idAdresse;
-	private Adresse adresse;
 	
 	
 	
+	// Attribut Adresse
+		private Adresse adresse = null;
 	
 
-	public Piscine(int idPiscine, String nom, int idAdresse){
+	public Piscine( String nom, Adresse adresse){
 		super();
-		this.idPiscine = idPiscine;
+		//this.idPiscine = idPiscine;
 		this.nom = nom;
-		this.idAdresse = idAdresse;
+		this.adresse = adresse;
+	}
+	
+	public Piscine( int id_piscine, String nom, int idAdresse) {
+	super();
+	this.idPiscine = id_piscine;
+	this.nom = nom;
+	this.idAdresse = idAdresse;
 	
 	}
 	
@@ -40,14 +48,7 @@ public class Piscine {
 		this.nom = nom;
 	}
 	
-	public int getIdAdresse() {
-		return idAdresse;
-	}
 
-	public void setIdAdresse(int idAdresse) {
-		this.idAdresse = idAdresse;
-	}
-	
 	public Adresse getAdresse() {
 		return adresse;
 	}
@@ -57,7 +58,7 @@ public class Piscine {
 	}
 	@Override
 	public String toString() {
-		return "Piscine [idPiscine=" + idPiscine + ", nom=" + nom + ", idAdresse=" + idAdresse + "]";
+		return "Piscine [idPiscine=" + idPiscine + ", nom=" + nom + "]";
 	}
 		
 		

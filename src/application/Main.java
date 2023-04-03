@@ -1,8 +1,14 @@
 package application;
 
+import java.time.LocalDate;
+
 import controller.Adresse;
 import controller.Employee;
+import controller.InfoAdministrateur;
+import controller.InfoProfesseur;
 import model.EmployeeDAO;
+import model.Piscine;
+import model.PiscineDAO;
 
 public class Main {
 
@@ -78,9 +84,18 @@ public class Main {
 //		 System.out.println(billet);
 //		 Connexion.fermer();
 
-
+//--------------------------------------------creation d'une piscine---------------------------------------
 	
-
+		 
+		 String ville = "surzur300";
+		 int codePostal = 56300; 
+		 String rue = "surzur300";
+		 int numero = 300;
+		 String nom = "piscine300";
+		 Adresse adresse = new Adresse(ville, codePostal, rue, numero);
+		 Piscine piscine = new Piscine( nom, adresse);
+		 PiscineDAO.getInstance().create(piscine);
+		 System.out.println(piscine);
 		
 		
 	}

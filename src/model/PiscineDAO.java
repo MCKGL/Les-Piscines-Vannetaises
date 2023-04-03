@@ -5,8 +5,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-import controller.Adresse;
-
 public class PiscineDAO extends DAO<Piscine> { 
 	
 // -----------------------------------------------------------------------------------------------------------------------
@@ -60,21 +58,20 @@ public class PiscineDAO extends DAO<Piscine> {
 				piscine.getAdresse().setIdAdresse(id);
 			}
 			
-			String requete = "INSERT INTO "+TABLE+" ("+NOM+", "+ID_ADRESSE+") VALUES (?,?)";
+			String requete = "INSERT INTO "+TABLE+" ("+NOM+" , "+ID_ADRESSE+") VALUES (?,?)";
 			PreparedStatement pst = Connexion.getInstance().prepareStatement(requete, Statement.RETURN_GENERATED_KEYS);
 			pst.setString(1, piscine.getNom());
 			pst.setInt(2, piscine.getAdresse().getIdAdresse());
-			
 			pst.executeUpdate();
 			
 			//Récupérer la clef générée et la pousser dans l'objet initial
 			ResultSet rs = pst.getGeneratedKeys();
 			if (rs.next()) {
-				piscine.setIdAdresse(rs.getInt(1));
+				piscine.setIdPiscine(rs.getInt(1));
 			}
 			
 			// On stock l'objet adresse dans le tableau donnees
-			donnees.put(piscine.getAdresse(), piscine);
+			donnees.put(piscine.getIdPiscine(), piscine);
 
 		} catch (SQLException e) {
 			succes=false;
@@ -88,7 +85,7 @@ public class PiscineDAO extends DAO<Piscine> {
 	 */
 	public boolean delete(Piscine piscine) {
 		boolean succes=true;
-		int id = piscine.getIdAdresse();
+		int id = piscine.getIdPiscine();
 		try {
 			String requete = "DELETE FROM "+TABLE+" WHERE "+CLE_PRIMAIRE+" = ?";
 			PreparedStatement pst = Connexion.getInstance().prepareStatement(requete) ;
@@ -114,11 +111,11 @@ public class PiscineDAO extends DAO<Piscine> {
 			String requete = "UPDATE "+TABLE+" SET  "+NOM+" = ?, "+ID_ADRESSE+" = ? WHERE "+CLE_PRIMAIRE+" = ?";
 			PreparedStatement pst = Connexion.getInstance().prepareStatement(requete) ;
 			pst.setString(1, piscine.getNom());
-			pst.setInt(2, piscine.getIdAdresse());
+			pst.setInt(2, piscine.getIdPiscine());
 			pst.executeUpdate();
 			
 			// Mise à jour de l'objet adresse dans le tableau "donnees"
-			donnees.put(piscine.getIdAdresse(), piscine);
+			donnees.put(piscine.getIdPiscine(), piscine);
 			
 		} catch (SQLException e) {
 			succes = false;
@@ -137,10 +134,11 @@ public class PiscineDAO extends DAO<Piscine> {
 		String requete = "SELECT * FROM "+TABLE+" WHERE "+CLE_PRIMAIRE+"="+id+";";
 		ResultSet rs = Connexion.executeQuery(requete);
 		rs.next();
+		int id_piscine = rs.getInt(CLE_PRIMAIRE);
 		String nom =rs.getString(NOM);
 		int idAdresse = rs.getInt(ID_ADRESSE);
 		
-		piscine=new Piscine(id, nom, idAdresse);
+		piscine=new Piscine(id_piscine, nom, idAdresse);
 		
 		} catch (SQLException e) {
 			e.printStackTrace();
