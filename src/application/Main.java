@@ -41,13 +41,13 @@ public class Main extends Application {
 	public static void main(String[] args) {
 
 		launch(args);
-		String ville = "Vannes";
+		/*String ville = "Vannes";
 		int codePostal = 56100;
 		String rue = "pouetpouet";
 		int numero = 68;
 		
 		Adresse adresse = new Adresse(ville, codePostal, rue, numero);
-		System.out.println(adresse);
+		System.out.println(adresse);*/
 		
 //		 Employee employee = EmployeeDAO.getInstance().read(1);
 //		 System.out.println(employee);

@@ -1,6 +1,7 @@
 package controller;
 
 import java.io.IOException;
+import java.util.List;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -9,16 +10,19 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+import model.CoursDAO;
 
 public class SceneControllerReservation extends SceneController  {
 	
 	private Stage stage;
 	private Scene scene;
 	private Parent root;
+	private CoursDAO coursDAO;
 	
 	@FXML
 	Pane PentreeSimple, Pcours, Pabonnement, Pdetail;
@@ -28,7 +32,8 @@ public class SceneControllerReservation extends SceneController  {
 	TextArea Tdetail, TaboSolo, TaboDuo;
 	@FXML
 	Label LabelTest, Lsomme, Lprix, LaboDuo, LaboSolo;
-	
+	@FXML
+	ChoiceBox ChoiceBoxCours;
 	
 	//retourne le prix de la sélection
 	public void recupererPrixBd() {
@@ -49,6 +54,12 @@ public class SceneControllerReservation extends SceneController  {
 		PentreeSimple.setVisible(false);
 		Pcours.setVisible(true);
 		Pabonnement.setVisible(false);
+		
+	    coursDAO = new CoursDAO();
+	    List<Cours> listeCours = CoursDAO.getInstance().readAll();
+	    for (Cours cours : listeCours) {
+	        ChoiceBoxCours.getItems().add(cours.getNom());
+	    }
 	}
 	
 	//afficher description db et prix bd
