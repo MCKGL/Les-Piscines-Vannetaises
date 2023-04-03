@@ -22,7 +22,7 @@ public class FormuleDAO extends DAO<Formule> {
 	private String ID_FORMULE = "id_formule";
 	private String TYPE = "type";
 	private String LABEL = "label";
-	private String VALIDITEE = "duree_validitee";
+	private String VALIDITEE = "duree_validite";
 	private String PRIX = "prix_final";
 	private String NBRE_ENTREE = "nombre_entree";
 

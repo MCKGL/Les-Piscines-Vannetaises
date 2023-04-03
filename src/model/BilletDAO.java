@@ -8,6 +8,7 @@ import java.time.LocalDateTime;
 
 import controller.Billet;
 import controller.Formule;
+import controller.Piscine;
 
 public class BilletDAO extends DAO<Billet> {
 // -----------------------------------------------------------------------------------------------------------------------
@@ -57,7 +58,7 @@ public class BilletDAO extends DAO<Billet> {
 			pst.setInt(1, code);
 			pst.setInt(2, nbreEntreeRestante);
 			pst.setInt(3, billet.getFormule().getIdFormule());
-			pst.setInt(4, billet.getPiscine().getIdPiscine()); // création class piscine
+			pst.setInt(4, billet.getPiscine().getIdPiscine());
 
 			// Mise à jour de la base de donnée
 			pst.executeUpdate();
@@ -95,7 +96,7 @@ public class BilletDAO extends DAO<Billet> {
 			PreparedStatement pst = Connexion.getInstance().prepareStatement(requete);
 			pst.setInt(1, billet.getNbreEntreeRestante());
 			pst.setInt(2, billet.getFormule().getIdFormule());
-			pst.setInt(3, billet.getPiscine().getIdPiscine()); // ATTENTE CREA
+			pst.setInt(3, billet.getPiscine().getIdPiscine());
 			pst.setInt(4, billet.getCode());
 
 			pst.executeUpdate();
@@ -121,7 +122,7 @@ public class BilletDAO extends DAO<Billet> {
 			int idformule = rs.getInt(FORMULE);
 			Formule formule = FormuleDAO.getInstance().read(idformule);
 			int idpiscine = rs.getInt(PISCINE);
-			Formule piscine = PiscineDAO.getInstance().read(idpiscine); // ATT CREATE
+			Piscine piscine = PiscineDAO.getInstance().read(idpiscine);
 
 			billet = new Billet(code, nbre_entree_restante, formule, piscine);
 		} catch (SQLException e) {

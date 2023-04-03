@@ -11,6 +11,11 @@
 
 <AnchorPane fx:id="administrateur" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.SceneControllerAdministrateur">
    <children>
+	<ImageView fitHeight="400.0" fitWidth="607.0" pickOnBounds="true" preserveRatio="true">
+		<image>
+			<Image url="@../assets/PiscinesVannetaises.png" />
+		</image>
+	</ImageView>
       <HBox alignment="CENTER" prefHeight="40.0" prefWidth="600.0" spacing="70.0">
          <children>
             <TitledPane alignment="CENTER" animated="false" collapsible="false" expanded="false" prefHeight="40.0" prefWidth="580.0" text="ADMINISTRATEUR">

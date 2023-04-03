@@ -66,12 +66,11 @@ public class SceneControllerReservation extends SceneController  {
 	//afficher les détails du cours sélectionné. Il faudra faire coincider les id des boutons avec la base de donnée
 	public void afficherDetailCours(ActionEvent event) {
 		Button btn = (Button) event.getSource();
-		ObservableList nom = ChoiceBoxCours.getItems();
+		String nom = (String) ChoiceBoxCours.getValue();
 		Label lb = LabelTest;
 		Pdetail.setVisible(true);
 		
 		lb.setText("detail de..." + nom);
-
 	}
 	
 	//afficher description db et prix bd
