@@ -4,7 +4,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-
+import java.util.ArrayList;
+import java.util.List;
 
 import controller.Cours;
 
@@ -21,7 +22,7 @@ public class CoursDAO extends DAO<Cours> {
 
 	private final String NOM = "nom";
 	private final String DESCRIPTION = "description";
-	private final String NBRE_SEANCE = "nombre_seance";
+	private final String NBRE_SEANCE = "nombre_seances";
 	private final String TRANCHE_AGE = "tranche_age";
 	private final String TYPE = "type";
 	private final String NBRE_PERSONNE = "nombre_personne";
@@ -304,6 +305,33 @@ public class CoursDAO extends DAO<Cours> {
 			e.printStackTrace();
 		}
 		return result;
+	}
+	
+// ---------- Lire toutes les entrées de la table cours	
+	public List<Cours> readAll() {
+	    List<Cours> coursList = new ArrayList<>();
+	    try {
+	        String requete = "SELECT * FROM " + TABLE;
+	        PreparedStatement pst = Connexion.getInstance().prepareStatement(requete);
+	        ResultSet rs = pst.executeQuery();
+
+	        while (rs.next()) {
+	            int id = rs.getInt(CLE_PRIMAIRE);
+	            String nom = rs.getString(NOM);
+	            String description = rs.getString(DESCRIPTION);
+	            int nbreSeance = rs.getInt(NBRE_SEANCE);
+	            String trancheAge = rs.getString(TRANCHE_AGE);
+	            String type = rs.getString(TYPE);
+	            int nbrePersonne = rs.getInt(NBRE_PERSONNE);
+	            
+	            Cours cours = new Cours(id, nom, description, nbreSeance, trancheAge, type, nbrePersonne);
+	            cours.setListeSeances(SeanceDAO.getInstance().readTable(cours));
+	            coursList.add(cours);
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+	    return coursList;
 	}
 	
 

@@ -32,7 +32,7 @@ public class SceneControllerPayement extends SceneController {
 	}
 	
 	//vérifie si les champs de paiement sont correctement renseignés
-	public void payer(ActionEvent event) {
+	/*public void payer(ActionEvent event) {
 
 		try {
 			numeroCarte = Integer.parseInt(TnumCarte.getText());
@@ -56,5 +56,32 @@ public class SceneControllerPayement extends SceneController {
 			LerreurPaye.setText("Erreur de paiement");
 			LerreurPaye.setVisible(true);
 		}
+	}*/
+	
+	public void payer(ActionEvent event) {
+	    try {
+	        numeroCarte = Integer.parseInt(TnumCarte.getText());
+	        crypto = Integer.parseInt(Tcrypt.getText());
+	        LocalDate date = Date.getValue();
+
+	        if (TnomCarte.getText() != "" && date != null && date.isAfter(LocalDate.now())) {
+	            LerreurPaye.setVisible(false);
+	            PpayeR.setVisible(true);
+	        } else {
+	            LerreurPaye.setText("Entrez un nom de carte et une date valide");
+	            if (date != null && date.isBefore(LocalDate.now())) {
+	                LerreurPaye.setText("Sélectionnez une date valide");
+	            }
+	            LerreurPaye.setVisible(true);
+	        }
+
+	    } catch(NumberFormatException e) {
+	        LerreurPaye.setText("Numéro carte invalide");
+	        LerreurPaye.setVisible(true);
+	    } catch(Exception e) {
+	        LerreurPaye.setText("Erreur de paiement");
+	        LerreurPaye.setVisible(true);
+	    }
 	}
+	
 }

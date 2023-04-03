@@ -1,6 +1,9 @@
 package controller;
 
 import java.io.IOException;
+import java.net.URL;
+import java.util.List;
+import java.util.ResourceBundle;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
@@ -8,6 +11,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import model.CoursDAO;
 
 public class SceneController {
 	
@@ -53,6 +57,8 @@ public class SceneController {
 		stage.setScene(scene);
 		stage.show();
 	}
+	
+    public void initialize(URL location, ResourceBundle resources) {}
 
 	
 }
