@@ -38,7 +38,7 @@ public class Employee {
 	private int idEmployee;
 	private String nom;
 	private String prenom;
-	private String nomMembre;
+	private String pseudo;
 	private String email;
 	private LocalDate dateNaissance;
 	private boolean actif = false;
@@ -67,7 +67,7 @@ public class Employee {
 		this.idEmployee = idEmployee;
 		this.nom = nom;
 		this.prenom = prenom;
-		this.nomMembre = nomMembre;
+		this.pseudo = nomMembre;
 		this.email = email;
 		this.dateNaissance = dateNaissance;
 		this.adresse = adresse;
@@ -89,7 +89,7 @@ public class Employee {
 	super();
 	this.nom = nom;
 	this.prenom = prenom;
-	this.nomMembre = nomMembre;
+	this.pseudo = nomMembre;
 	this.email = email;
 	this.dateNaissance = dateNaissance;
 	this.adresse = adresse;
@@ -138,11 +138,11 @@ public class Employee {
 	}
 
 	public String getNomMembre() {
-		return nomMembre;
+		return pseudo;
 	}
 
 	public void setNomMembre(String nomMembre) {
-		this.nomMembre = nomMembre;
+		this.pseudo = nomMembre;
 	}
 
 	public String getEmail() {
@@ -194,7 +194,7 @@ public class Employee {
 
 	@Override
 	public String toString() {
-		return "Employee [idEmployee=" + idEmployee + ", nom=" + nom + ", prenom=" + prenom + ", nomMembre=" + nomMembre
+		return "Employee [idEmployee=" + idEmployee + ", nom=" + nom + ", prenom=" + prenom + ", nomMembre=" + pseudo
 				+ ", email=" + email + ", dateNaissance=" + dateNaissance + ", adresse=" + adresse + ", administrateur=" + infoAdministrateur + ", professeur=" + infoProfesseur
 				+ "]";
 	}

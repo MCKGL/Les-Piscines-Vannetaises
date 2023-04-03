@@ -12,8 +12,8 @@ public class ProfesseurDAO extends DAO<Employee> {
 	/**
 	 * Attributs
 	 */
-	private static final String CLE_PRIMAIRE = "id_employee";
-	private static final String TABLE = "professeur";
+	private static final String CLE_PRIMAIRE = "id_prof";
+	private static final String TABLE = "info_prof";
 	
 	private static final String SPECIALITES = "specialites";
 

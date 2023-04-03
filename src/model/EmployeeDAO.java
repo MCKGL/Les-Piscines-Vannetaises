@@ -17,14 +17,14 @@ public class EmployeeDAO extends DAO<Employee> {
 	/**
 	 * Attributs
 	 */
-	private final String CLE_PRIMAIRE = "idemployee";
-	private final String TABLE = "employee";
+	private final String CLE_PRIMAIRE = "id_employee";
+	private final String TABLE = "employe";
 
 	private final String NOM = "nom";
 	private final String PRENOM = "prenom";
-	private final String NOM_MEMBRE = "nom_membre";
-	private final String EMAIL = "email";
-	private final String DATE = "date_de_naissance";
+	private final String NOM_MEMBRE = "pseudo";
+	private final String EMAIL = "mail";
+	private final String DATE = "date_naissance";
 	private final String ID_ADRESSE = "id_adresse";
 	private final String ACTIF = "actif";
 

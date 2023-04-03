@@ -19,8 +19,8 @@ public class AdresseDAO extends DAO<Adresse> {
 
 	private static final String VILLE = "ville";
 	private static final String CODE_POSTAL = "code_postal";
-	private static final String RUE = "rue";
-	private static final String NUMERO = "numero";
+	private static final String RUE = "nom_rue";
+	private static final String NUMERO = "num_rue";
 	
 
 	private static AdresseDAO instance=null;

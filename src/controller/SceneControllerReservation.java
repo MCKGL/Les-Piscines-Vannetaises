@@ -3,6 +3,7 @@ package controller;
 import java.io.IOException;
 import java.util.List;
 
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -62,6 +63,17 @@ public class SceneControllerReservation extends SceneController  {
 	    }
 	}
 	
+	//afficher les détails du cours sélectionné. Il faudra faire coincider les id des boutons avec la base de donnée
+	public void afficherDetailCours(ActionEvent event) {
+		Button btn = (Button) event.getSource();
+		ObservableList nom = ChoiceBoxCours.getItems();
+		Label lb = LabelTest;
+		Pdetail.setVisible(true);
+		
+		lb.setText("detail de..." + nom);
+
+	}
+	
 	//afficher description db et prix bd
 	public void afficherAbonnement(ActionEvent event) {
 		PentreeSimple.setVisible(false);
@@ -87,22 +99,6 @@ public class SceneControllerReservation extends SceneController  {
 		Pdetail.setVisible(false);
 	}
 	
-	//afficher les détails du cours sélectionné. Il faudra faire coincider les id des boutons avec la base de donnée
-	public void afficherDetailCours(ActionEvent event) {
-		Button btn = (Button) event.getSource();
-		String nom = btn.getId();
-		Label lb = LabelTest;
-		Pdetail.setVisible(true);
-		
-		// TODO : il faudra remplacer le champs String ci-dessous par la requête :
-		//String requete = "SELECT description FROM cours WHERE nom = ?";
-		//PreparedStatement pst = Connexion.getInstance().prepareStatement(requete, Statement.RETURN_GENERATED_KEYS);
-		//pst.setString(1, cours.getDescription());
-		//lb.setText(requete);
-		
-		lb.setText("detail de..." + nom);
-
-	}
 	
 	//Aller à la page Payement en injectant le contenu du Label Prix dans la page payement selon le cours ou l'abonnement choisit :
 	public void switchToPayement(ActionEvent event) throws IOException {

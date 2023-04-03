@@ -21,6 +21,7 @@ public class FormuleDAO extends DAO<Formule> {
 
 	private String ID_FORMULE = "id_formule";
 	private String TYPE = "type";
+	private String LABEL = "label";
 	private String VALIDITEE = "duree_validitee";
 	private String PRIX = "prix_final";
 	private String NBRE_ENTREE = "nombre_entree";
@@ -44,13 +45,13 @@ public class FormuleDAO extends DAO<Formule> {
 	public boolean create(Formule formule) {
 		boolean succes = false;
 		try {
-			String requete = "INSERT INTO " + TABLE + " ( " + TYPE + ", " + VALIDITEE + ", " + PRIX + ", " + NBRE_ENTREE
-					+ ") VALUES (?, ?, ?, ?)";
+			String requete = "INSERT INTO " + TABLE + " ( " + TYPE + ", " + LABEL + ", " + VALIDITEE + ", " + PRIX + ", " + NBRE_ENTREE+ ") VALUES (?, ?, ?, ?, ?)";
 			PreparedStatement pst = Connexion.getInstance().prepareStatement(requete, Statement.RETURN_GENERATED_KEYS);
 			pst.setString(1, formule.getType());
 			pst.setLong(2, formule.getDureeEnSeconde());
 			pst.setInt(3, formule.getPrixFormule());
 			pst.setInt(4, formule.getNbreEntreeFormule());
+			pst.setString(5, formule.getLabel());
 
 			// Mise à jour de la base de donnée
 			pst.executeUpdate();
@@ -89,7 +90,7 @@ public class FormuleDAO extends DAO<Formule> {
 	public boolean update(Formule formule) {
 		boolean succes = false;
 		try {
-			String requete = "UPDATE " + TABLE + " SET  " + TYPE + " = ?, " + VALIDITEE + " = ?, " + PRIX + " = ?, "
+			String requete = "UPDATE " + TABLE + " SET  " + TYPE + " = ?, " + LABEL + " = ?, " + VALIDITEE + " = ?, " + PRIX + " = ?, "
 					+ NBRE_ENTREE + " = ? WHERE " + ID_FORMULE + " = ?";
 			PreparedStatement pst = Connexion.getInstance().prepareStatement(requete);
 			pst.setString(1, formule.getType());
@@ -97,6 +98,7 @@ public class FormuleDAO extends DAO<Formule> {
 			pst.setInt(3, formule.getPrixFormule());
 			pst.setInt(4, formule.getNbreEntreeFormule());
 			pst.setInt(5, formule.getIdFormule());
+			pst.setString(6, formule.getLabel());
 
 			pst.executeUpdate();
 			succes = true;
@@ -116,11 +118,12 @@ public class FormuleDAO extends DAO<Formule> {
 			rs.next();
 			int id = rs.getInt(ID_FORMULE);
 			String type = rs.getString(TYPE);
+			String label = rs.getString(LABEL);
 			long validitee = rs.getLong(VALIDITEE);
 			int prix = rs.getInt(PRIX);
 			int nbre_entree = rs.getInt(NBRE_ENTREE);
 
-			formule = new Formule(id, type, validitee, prix, nbre_entree);
+			formule = new Formule(id, type, label, validitee, prix, nbre_entree);
 
 		} catch (SQLException e) {
 			e.printStackTrace();

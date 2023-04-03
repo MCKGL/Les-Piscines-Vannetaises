@@ -7,6 +7,7 @@ import java.sql.Statement;
 import java.time.LocalDateTime;
 
 import controller.Billet;
+import controller.Formule;
 
 public class BilletDAO extends DAO<Billet> {
 // -----------------------------------------------------------------------------------------------------------------------
@@ -20,9 +21,10 @@ public class BilletDAO extends DAO<Billet> {
 	private String CLE_PRIMAIRE = "code";
 	private String TABLE = "billet";
 
-	private String DATE_ACHAT = "date_achat";
-	private String DATE_PEREMPTION = "date_peremption";
 	private String NBRE_ENTREE_RESTANTE = "nombre_entre_restante";
+	
+	private final String FORMULE = "id_formule";
+	private final String PISCINE = "id_piscine";
 
 	private static BilletDAO instance = null;
 	
@@ -48,17 +50,14 @@ public class BilletDAO extends DAO<Billet> {
 		boolean succes = true;
 		try {
 			int code = billet.getCode();
-			LocalDateTime dateAchat = billet.getDateAchat();
-			LocalDateTime datePeremption = billet.getDatePeremption();
 			int nbreEntreeRestante = billet.getNbreEntreeRestante();
 
-			String requete = "INSERT INTO " + TABLE + " ( " +CLE_PRIMAIRE+", "+ DATE_ACHAT + ", " + DATE_PEREMPTION +", "
-					+ NBRE_ENTREE_RESTANTE + ") VALUES (?, ?, ?, ?)";
+			String requete = "INSERT INTO " + TABLE + " ( " +CLE_PRIMAIRE+", "+ NBRE_ENTREE_RESTANTE + ", " + FORMULE + ", " + PISCINE + ") VALUES (?, ?, ?, ?)";
 			PreparedStatement pst = Connexion.getInstance().prepareStatement(requete);
 			pst.setInt(1, code);
-			pst.setObject(2, dateAchat);
-			pst.setObject(3, datePeremption);
-			pst.setInt(4, nbreEntreeRestante);
+			pst.setInt(2, nbreEntreeRestante);
+			pst.setInt(3, billet.getFormule().getIdFormule());
+			pst.setInt(4, billet.getPiscine().getIdPiscine()); // création class piscine
 
 			// Mise à jour de la base de donnée
 			pst.executeUpdate();
@@ -92,11 +91,11 @@ public class BilletDAO extends DAO<Billet> {
 	public boolean update(Billet billet) {
 		boolean succes = true;
 		try {
-			String requete = "UPDATE " + TABLE + " SET  " + DATE_ACHAT + " = ?, " + DATE_PEREMPTION + " = ?, "+NBRE_ENTREE_RESTANTE + " = ? WHERE " + CLE_PRIMAIRE + " = ?";
+			String requete = "UPDATE " + TABLE + " SET  "+NBRE_ENTREE_RESTANTE + " = ?, " + FORMULE + " = ?, " + PISCINE + " = ?   WHERE " + CLE_PRIMAIRE + " = ?";
 			PreparedStatement pst = Connexion.getInstance().prepareStatement(requete);
-			pst.setObject(1, billet.getDateAchat());
-			pst.setObject(2, billet.getDatePeremption());
-			pst.setInt(3, billet.getNbreEntreeRestante());
+			pst.setInt(1, billet.getNbreEntreeRestante());
+			pst.setInt(2, billet.getFormule().getIdFormule());
+			pst.setInt(3, billet.getPiscine().getIdPiscine()); // ATTENTE CREA
 			pst.setInt(4, billet.getCode());
 
 			pst.executeUpdate();
@@ -118,11 +117,13 @@ public class BilletDAO extends DAO<Billet> {
 			ResultSet rs = pst.getResultSet();
 			rs.next();
 			int id = rs.getInt(CLE_PRIMAIRE);
-			LocalDateTime date_achat = rs.getTimestamp(DATE_ACHAT).toLocalDateTime();
-			LocalDateTime date_peremption = rs.getTimestamp(DATE_PEREMPTION).toLocalDateTime();
 			int nbre_entree_restante = rs.getInt(NBRE_ENTREE_RESTANTE);
+			int idformule = rs.getInt(FORMULE);
+			Formule formule = FormuleDAO.getInstance().read(idformule);
+			int idpiscine = rs.getInt(PISCINE);
+			Formule piscine = PiscineDAO.getInstance().read(idpiscine); // ATT CREATE
 
-			billet = new Billet(code, date_achat, date_peremption, nbre_entree_restante);
+			billet = new Billet(code, nbre_entree_restante, formule, piscine);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

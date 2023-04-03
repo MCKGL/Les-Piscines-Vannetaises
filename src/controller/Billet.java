@@ -10,33 +10,18 @@ public class Billet {
 	 * ID Date d'achat Date de péremption Code Nombre d'entrée restante
 	 */
 	private int code;
-	private LocalDateTime dateAchat;
-	private LocalDateTime datePeremption;
 	private int nbreEntreeRestante;
 // -----------------------------------------------------------------------------------------------------------------------
 	/**
 	 * TODO
 	 */
-	private Formule formule = null;
-	private Seance seance = null;
-
-//	private Bassin bassin;
-//	private Zone zone;
-//	private LigneEau ligneEau;
+	private Formule formule;
+	private Piscine piscine;
 
 // -----------------------------------------------------------------------------------------------------------------------	
-	public Billet(int code, LocalDateTime dateAchat, LocalDateTime datePeremption, int nbreEntreeRestante) {
+	public Billet(int code, int nbreEntreeRestante, Formule formule, Piscine piscine) {
 		super();
 		this.code = code;
-		this.dateAchat = dateAchat;
-		this.datePeremption = datePeremption;
-		this.nbreEntreeRestante = nbreEntreeRestante;
-	}
-
-	public Billet(int code, LocalDateTime dateAchat, int nbreEntreeRestante) {
-		super();
-		this.code = code;
-		this.dateAchat = dateAchat;
 		this.nbreEntreeRestante = nbreEntreeRestante;
 	}
 
@@ -47,9 +32,6 @@ public class Billet {
 	 * @return
 	 */
 
-	public void setDateAchat(LocalDateTime dateAchat) {
-		this.dateAchat = dateAchat;
-	}
 
 	public void setCode(int code) {
 		this.code = code;
@@ -59,20 +41,20 @@ public class Billet {
 		return code;
 	}
 
-	public LocalDateTime getDateAchat() {
-		return dateAchat;
+	public Formule getFormule() {
+		return formule;
 	}
 
-	public void setDateBillet(LocalDateTime dateBillet) {
-		this.dateAchat = dateBillet;
+	public void setFormule(Formule formule) {
+		this.formule = formule;
 	}
 
-	public LocalDateTime getDatePeremption() {
-		return datePeremption;
+	public Piscine getPiscine() {
+		return piscine;
 	}
 
-	public void setDatePeremption(LocalDateTime datePeremption) {
-		this.datePeremption = datePeremption;
+	public void setPiscine(Piscine piscine) {
+		this.piscine = piscine;
 	}
 
 	public int getNbreEntreeRestante() {
@@ -90,8 +72,7 @@ public class Billet {
 // -----------------------------------------------------------------------------------------------------------------------
 	@Override
 	public String toString() {
-		return "Billet [code=" + code + ", dateAchat=" + dateAchat + ", datePeremption=" + datePeremption
-				+ ", nbreEntreeRestante=" + nbreEntreeRestante + ", formule=" + formule + ", seance=" + seance + "]";
+		return "Billet [code=" + code + ", nbreEntreeRestante=" + nbreEntreeRestante + ", formule=" + formule + ", piscine=" + piscine + "]";
 	}
 }
 

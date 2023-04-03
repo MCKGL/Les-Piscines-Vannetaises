@@ -13,11 +13,10 @@ public class AdministrateurDAO extends DAO<Employee> {
 	/**
 	 * Attributs
 	 */
-	private static final String CLE_PRIMAIRE = "id_employee";
-	private static final String TABLE = "administrateur";
+	private static final String CLE_PRIMAIRE = "id_admin";
+	private static final String TABLE = "info_admin";
 
-	private static final String MDP = "mot_de_passe";
-	private static final String HASHAGE = "hashage";
+	private static final String MDP = "mdp";
 	
 
 	private static AdministrateurDAO instance=null;
@@ -48,11 +47,9 @@ public class AdministrateurDAO extends DAO<Employee> {
 	public boolean create(Employee admin) {
 		boolean succes=true;
 		try {
-			String requete = "INSERT INTO "+TABLE+" ("+CLE_PRIMAIRE+", "+MDP+", "+HASHAGE+") VALUES (?,?,?)";
+			String requete = "INSERT INTO "+TABLE+" ("+CLE_PRIMAIRE+", "+MDP+") VALUES (?,?)";
 			PreparedStatement pst = Connexion.getInstance().prepareStatement(requete);
 			pst.setInt(1, admin.getIdEmployee());
-			pst.setString(2, admin.getInfoAdministrateur().getMdpHash());
-			pst.setString(3, admin.getInfoAdministrateur().getCleHashage());
 			pst.executeUpdate();
 			
 			// On stock l'objet administrateur dans le tableau "donnees"
@@ -96,11 +93,9 @@ public class AdministrateurDAO extends DAO<Employee> {
 	public boolean update(Employee admin) {
 		boolean succes=true;
 		try {
-			String requete = "UPDATE "+TABLE+" SET  "+MDP+" = ?, "+HASHAGE+" = ? WHERE "+CLE_PRIMAIRE+" = ?";
+			String requete = "UPDATE "+TABLE+" SET  "+MDP+" = ? WHERE "+CLE_PRIMAIRE+" = ?";
 			PreparedStatement pst = Connexion.getInstance().prepareStatement(requete) ;
-			pst.setString(1, admin.getInfoAdministrateur().getMdpHash());
-			pst.setString(2, admin.getInfoAdministrateur().getCleHashage());
-			pst.setInt(3, admin.getIdEmployee());
+			pst.setInt(2, admin.getIdEmployee());
 			pst.executeUpdate() ;
 			
 			// On supprimer l'objet administrateur du tableau "donnees"
@@ -129,9 +124,7 @@ public class AdministrateurDAO extends DAO<Employee> {
 		String requete = "SELECT * FROM "+TABLE+" WHERE "+CLE_PRIMAIRE+"="+idAdministrateur+";";
 		ResultSet rs = Connexion.executeQuery(requete);
 		if (rs.next()) {
-			String mdp =rs.getString("mot_de_passe");
-			String hashage =rs.getString("hashage");			
-			administrateur=new InfoAdministrateur(mdp, hashage);
+			String mdp = rs.getString(MDP);
 		}
 		} catch (SQLException e) {
 			e.printStackTrace();
