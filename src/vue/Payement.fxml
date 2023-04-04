@@ -17,19 +17,20 @@
       </HBox>
       <Pane layoutY="35.0" prefHeight="366.0" prefWidth="600.0">
          <children>
-            <Label fx:id="Lsomme" layoutX="265.0" layoutY="37.0" text="Somme : " />
-            <Label layoutX="181.0" layoutY="65.0" text="Insérerez votre carte et suivez les instructions" />
+            <Label fx:id="Lsomme" layoutX="241.0" layoutY="67.0" text="A payer :" />
+            <Label layoutX="180.0" layoutY="96.0" text="Insérerez votre carte et suivez les instructions" />
             <Button fx:id="Bannuler" layoutX="534.0" layoutY="327.0" mnemonicParsing="false" onAction="#switchToHome" text="Annuler" />
-            <TextField fx:id="TnumCarte" layoutX="216.0" layoutY="106.0" />
-            <TextField fx:id="Tcrypt" layoutX="381.0" layoutY="106.0" prefHeight="25.0" prefWidth="39.0" />
-            <TextField fx:id="TnomCarte" layoutX="215.0" layoutY="192.0" />
-            <Label layoutX="216.0" layoutY="89.0" text="Numéro de Carte" />
-            <Label layoutX="215.0" layoutY="175.0" text="Nom figurant sur la carte" />
-            <Label layoutX="381.0" layoutY="89.0" text="Cryptogramme visuel" />
-            <DatePicker fx:id="Date" layoutX="215.0" layoutY="148.0" prefHeight="25.0" prefWidth="101.0" />
-            <Label layoutX="215.0" layoutY="131.0" text="Date d'expiration" />
-            <Button fx:id="Bpayer" layoutX="277.0" layoutY="236.0" mnemonicParsing="false" onAction="#payer" text="Payer" />
+            <TextField fx:id="TnumCarte" layoutX="212.0" layoutY="139.0" />
+            <TextField fx:id="Tcrypt" layoutX="381.0" layoutY="139.0" prefHeight="25.0" prefWidth="39.0" />
+            <TextField fx:id="TnomCarte" layoutX="212.0" layoutY="243.0" />
+            <Label layoutX="213.0" layoutY="123.0" text="Numéro de Carte" />
+            <Label layoutX="211.0" layoutY="226.0" text="Nom figurant sur la carte" />
+            <Label layoutX="381.0" layoutY="123.0" text="Cryptogramme visuel" />
+            <DatePicker fx:id="Date" layoutX="214.0" layoutY="192.0" prefHeight="25.0" prefWidth="101.0" />
+            <Label layoutX="213.0" layoutY="175.0" text="Date d'expiration" />
+            <Button fx:id="Bpayer" layoutX="277.0" layoutY="279.0" mnemonicParsing="false" onAction="#payer" text="Payer" />
             <Label fx:id="LerreurPaye" layoutX="189.0" layoutY="291.0" text="Entrez un nom de carte et une date valide" textFill="#ff0202" visible="false" />
+            <Label fx:id="Lrecap" layoutX="165.0" layoutY="43.0" text="Vous avez séléctionné :" />
          </children>
       </Pane>
       <Pane fx:id="PpayeR" layoutX="87.0" layoutY="63.0" prefHeight="265.0" prefWidth="434.0" style="-fx-background-color: green;" visible="false">

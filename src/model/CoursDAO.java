@@ -310,6 +310,35 @@ public class CoursDAO extends DAO<Cours> {
 	    }
 	    return coursList;
 	}
+
+	public Cours readByName(String nom) {
+		Cours cours = null;
+		try {
+			// Requête dans la table cours
+			String requeteCours = "SELECT * FROM " + TABLE + " WHERE " + NOM + "= ?;";
+			PreparedStatement pst = Connexion.getInstance().prepareStatement(requeteCours);
+			pst.setString(1, nom);
+			pst.execute();
+			
+			// On demande le premier résultat de la requête
+			ResultSet rsCours = pst.getResultSet();
+			rsCours.next();
+			
+			// On associe les valeurs des champs à des variables
+			String description = rsCours.getString(DESCRIPTION);
+			int idformule = rsCours.getInt(FORMULE);
+			Formule formule = FormuleDAO.getInstance().read(idformule);
+			
+			// Création d'un objet à partir des valeurs récupérées de la base de donnée
+			cours = new Cours(nom, description, formule);
+			
+			cours.setListeSeances(SeanceDAO.getInstance().readByCours(cours));		
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return cours;
+	}
 	
 
 }

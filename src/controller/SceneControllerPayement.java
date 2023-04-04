@@ -18,7 +18,7 @@ public class SceneControllerPayement extends SceneController {
 	@FXML
 	Pane PpayeR;
 	@FXML
-	Label Lsomme, LerreurPaye;
+	Label Lsomme, Lrecap, LerreurPaye;
 	@FXML
 	DatePicker Date;
 	@FXML
@@ -27,8 +27,9 @@ public class SceneControllerPayement extends SceneController {
 	TextField TnumCarte, TnomCarte, Tcrypt;
 	
 	//affiche la somme envoyé en argument dans le label Lsomme (la fonction est appelé dans Abonnement et les détails de cours (SceneControllerReservation)
-	public void recupererSomme(String prix) {
-		Lsomme.setText("Somme : "+prix);
+	public void recupererInfo(String prix, String detail) {
+		Lsomme.setText("A payer : "+prix);
+		Lrecap.setText("Vous avez sélectionné : "+detail);
 	}
 	
 	//vérifie si les champs de paiement sont correctement renseignés
@@ -67,6 +68,7 @@ public class SceneControllerPayement extends SceneController {
 	        if (TnomCarte.getText() != "" && date != null && date.isAfter(LocalDate.now())) {
 	            LerreurPaye.setVisible(false);
 	            PpayeR.setVisible(true);
+	            //TODO Methode create Billet -> doit générer code + nbentreerestante = nombre entre id_formule + id_formule + id_piscine
 	        } else {
 	            LerreurPaye.setText("Entrez un nom de carte et une date valide");
 	            if (date != null && date.isBefore(LocalDate.now())) {

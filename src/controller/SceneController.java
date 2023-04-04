@@ -58,7 +58,4 @@ public class SceneController {
 		stage.show();
 	}
 	
-    public void initialize(URL location, ResourceBundle resources) {}
-
-	
 }

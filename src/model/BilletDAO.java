@@ -50,20 +50,17 @@ public class BilletDAO extends DAO<Billet> {
 	public boolean create(Billet billet) {
 		boolean succes = true;
 		try {
-			int code = billet.getCode();
-			int nbreEntreeRestante = billet.getNbreEntreeRestante();
 
 			String requete = "INSERT INTO " + TABLE + " ( " +CLE_PRIMAIRE+", "+ NBRE_ENTREE_RESTANTE + ", " + FORMULE + ", " + PISCINE + ") VALUES (?, ?, ?, ?)";
 			PreparedStatement pst = Connexion.getInstance().prepareStatement(requete);
-			pst.setInt(1, code);
-			pst.setInt(2, nbreEntreeRestante);
+			pst.setInt(1, billet.getCode());
+			pst.setInt(2, billet.getNbreEntreeRestante());
 			pst.setInt(3, billet.getFormule().getIdFormule());
 			pst.setInt(4, billet.getPiscine().getIdPiscine());
 
 			// Mise à jour de la base de donnée
 			pst.executeUpdate();
-			// TODO
-//			donnees.put(billet.getCode(), billet);
+			
 		} catch (SQLException e) {
 			succes = false;
 			e.printStackTrace();

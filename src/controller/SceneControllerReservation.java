@@ -3,7 +3,6 @@ package controller;
 import java.io.IOException;
 import java.util.List;
 
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -17,6 +16,7 @@ import javafx.scene.control.TextArea;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import model.CoursDAO;
+import model.FormuleDAO;
 
 public class SceneControllerReservation extends SceneController  {
 	
@@ -24,6 +24,7 @@ public class SceneControllerReservation extends SceneController  {
 	private Scene scene;
 	private Parent root;
 	private CoursDAO coursDAO;
+	private FormuleDAO formuleDAO;
 	
 	@FXML
 	Pane PentreeSimple, Pcours, Pabonnement, Pdetail;
@@ -32,7 +33,7 @@ public class SceneControllerReservation extends SceneController  {
 	@FXML
 	TextArea Tdetail, TaboSolo, TaboDuo;
 	@FXML
-	Label LabelTest, Lsomme, Lprix, LaboDuo, LaboSolo;
+	Label LDetail, Lsomme, Lprix, LaboDuo, LaboSolo, LCoursSelect, LDetailSolo, LDetailDuo;
 	@FXML
 	ChoiceBox ChoiceBoxCours;
 	
@@ -51,6 +52,7 @@ public class SceneControllerReservation extends SceneController  {
 		Pabonnement.setVisible(false);
 	}
 	
+	// a l'initialisation du Pane "cours", Le ChoiceBox récupère les données de la bd
 	public void afficherCours(ActionEvent event) {
 		PentreeSimple.setVisible(false);
 		Pcours.setVisible(true);
@@ -67,22 +69,35 @@ public class SceneControllerReservation extends SceneController  {
 	public void afficherDetailCours(ActionEvent event) {
 		Button btn = (Button) event.getSource();
 		String nom = (String) ChoiceBoxCours.getValue();
-		Label lb = LabelTest;
+		Label lb = LDetail;
+		Label lp = Lprix;
+		Label lc = LCoursSelect;
 		Pdetail.setVisible(true);
 		
-		lb.setText("detail de..." + nom);
+		coursDAO = new CoursDAO();
+	    Cours cours = coursDAO.readByName(nom);
+		
+	    lc.setText(nom);
+		lb.setText(cours.getDescription());
+		lp.setText(Integer.toString(cours.getFormule().getPrixFormule()) + "€");
 	}
 	
 	//afficher description db et prix bd
 	public void afficherAbonnement(ActionEvent event) {
+		String AboSolo = "Abonnement Solo";
+		String AboDuo = "Abonnement Duo";
 		PentreeSimple.setVisible(false);
 		Pcours.setVisible(false);
 		Pabonnement.setVisible(true);
 		
-		TaboSolo.setText("jfksjfkjsdgkvsdhg hufshgk hkjehfkjhd hdskjhsdjkfhsjdkhg hkjshfjshfshfjsdhkjs hkjehf hsfjkh hshfjkh zehfhgjk fksjfkjsdgkvsdhg hufshgk hkjehfkjhd hdskjhsdjkfhsjdkhg hkjshfjshfshfjsdhkjs hkjehf hsfjkh hshfjkh zehfhgjk");
-		TaboDuo.setText("jfksjfkjsdgkvsdhg hufshgk hkjehfkjhd hdskjhsdjkfhsjdkhg hkjshfjshfshfjsdhkjs hkjehf hsfjkh hshfjkh zehfhgjk fksjfkjsdgkvsdhg hufshgk hkjehfkjhd hdskjhsdjkfhsjdkhg hkjshfjshfshfjsdhkjs hkjehf hsfjkh hshfjkh zehfhgjk");
-		LaboSolo.setText("RelierBDprixSolo");
-		LaboDuo.setText("RelierBDprixDuo");
+		formuleDAO = new FormuleDAO();
+		Formule formuleSolo = formuleDAO.readByTypes(AboSolo);
+		Formule formuleDuo = formuleDAO.readByTypes(AboDuo);
+		
+		LDetailSolo.setText(formuleSolo.getLabel());
+		LDetailDuo.setText(formuleDuo.getLabel());
+		LaboSolo.setText(Integer.toString(formuleSolo.getPrixFormule()) + "€");
+		LaboDuo.setText(Integer.toString(formuleDuo.getPrixFormule()) + "€");
 	
 	}
 	
@@ -103,26 +118,29 @@ public class SceneControllerReservation extends SceneController  {
 	public void switchToPayement(ActionEvent event) throws IOException {
 			if(event.getSource() == BpCours) {
 				String prix = Lprix.getText();
+				String detail = LCoursSelect.getText();
 				FXMLLoader loader = new FXMLLoader(getClass().getResource("/vue/Payement.fxml"));	
 				root = loader.load();	
 				SceneControllerPayement scenePaye = loader.getController();
-				scenePaye.recupererSomme(prix);
+				scenePaye.recupererInfo(prix, detail);
 			}
 			
 			if(event.getSource() == BpayeSolo) {
 				String prix = LaboSolo.getText();
+				String detail = BpayeSolo.getText();
 				FXMLLoader loader = new FXMLLoader(getClass().getResource("/vue/Payement.fxml"));	
 				root = loader.load();	
 				SceneControllerPayement scenePaye = loader.getController();
-				scenePaye.recupererSomme(prix);
+				scenePaye.recupererInfo(prix, detail);
 			}
 			
 			if(event.getSource() == BpayeDuo) {
 				String prix = LaboDuo.getText();
+				String detail = BpayeDuo.getText();
 				FXMLLoader loader = new FXMLLoader(getClass().getResource("/vue/Payement.fxml"));	
 				root = loader.load();	
 				SceneControllerPayement scenePaye = loader.getController();
-				scenePaye.recupererSomme(prix);
+				scenePaye.recupererInfo(prix, detail);
 			}
 		
 			stage = (Stage)((Node)event.getSource()).getScene().getWindow();

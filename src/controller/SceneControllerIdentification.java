@@ -16,7 +16,6 @@ public class SceneControllerIdentification extends SceneController{
 	private Stage stage;
 	private Scene scene;
 	private Parent root;
-	int numeroId ; 
 	
 	@FXML 
     TextField codeField, Tnumid; 		//champ de saisie pour le code
@@ -29,8 +28,7 @@ public class SceneControllerIdentification extends SceneController{
 	
 	public void handleSearchButton(ActionEvent event) {
 		// On utilise un Try pour gérer l'exeption 
-		try {
-			numeroId = Integer.parseInt(Tnumid.getText()); 
+		try { 
 			// si la valeur dans le champ texte est égal à ex:"123456"
 			if(Tnumid.getText().equals("123456")) {
 				//alors on change de page avec notre methode de changement de scene
@@ -45,7 +43,8 @@ public class SceneControllerIdentification extends SceneController{
 			}
 		}
 		catch(Exception e) {
-			System.out.println("c'est la merde.");
+			System.out.println("ERREUR");
+			//e.printStackTrace();
         }
 	}
 	
