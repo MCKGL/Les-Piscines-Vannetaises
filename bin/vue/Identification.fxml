@@ -47,7 +47,7 @@
                </VBox.margin>
             </TextField>
             <!--  bouton recherche____________________________________ -->
-            <Button id="searchButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#handleSearchButton" text="rechercher" textAlignment="CENTER">
+            <Button id="searchButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#rechercher" text="rechercher" textAlignment="CENTER">
             <!--  -->
                <VBox.margin>
                   <Insets />
@@ -62,5 +62,6 @@
             <Button fx:id="Bfermer" layoutX="431.0" layoutY="1.0" mnemonicParsing="false" onAction="#fermerDetail" prefHeight="25.0" prefWidth="20.0" text="X" />
          </children>
       </Pane>
+      <Button layoutY="373.0" mnemonicParsing="false" onAction="#switchToAdmin" text="Espace Admin" />
    </children>
 </AnchorPane>

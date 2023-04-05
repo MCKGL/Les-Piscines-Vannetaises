@@ -56,7 +56,7 @@ public class SceneControllerIdentification extends SceneController{
         }
 	}*/
     
-    public void handleSearchButton(ActionEvent event) {
+    public void rechercher(ActionEvent event) {
 		try { 
 			int id = Integer.parseInt(Tnumid.getText());
 			Billet billet = BilletDAO.getInstance().read(id);

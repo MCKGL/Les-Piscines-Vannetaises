@@ -1,56 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.TitledPane?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane fx:id="administrateur" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.SceneControllerAdministrateur">
    <children>
-      <HBox alignment="CENTER" prefHeight="40.0" prefWidth="600.0" spacing="70.0">
+      <ImageView fitHeight="407.0" fitWidth="610.0" layoutX="-6.0" layoutY="-1.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../assets/PiscinesVannetaises.png" />
+         </image>
+      </ImageView>
+      <TitledPane alignment="CENTER" animated="false" collapsible="false" contentDisplay="CENTER" expanded="false" layoutX="214.0" layoutY="99.0" prefHeight="25.0" prefWidth="172.0" text="Renseignez vos identifiants" />
+      <TitledPane alignment="CENTER" animated="false" collapsible="false" expanded="false" prefHeight="40.0" prefWidth="600.0" text="ADMINISTRATEUR">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </TitledPane>
+      <Button layoutX="14.0" layoutY="367.0" mnemonicParsing="false" onAction="#switchToHome" text="Accueil" textAlignment="CENTER" />
+      <TextField fx:id="TFadmin" layoutX="214.0" layoutY="125.0" prefHeight="25.0" prefWidth="172.0" promptText="Nom administateur" />
+      <Button alignment="CENTER" contentDisplay="CENTER" layoutX="257.0" layoutY="201.0" mnemonicParsing="false" onAction="#connexion" text="CONNEXION" textAlignment="CENTER" />
+      <PasswordField fx:id="PFadmin" layoutX="214.0" layoutY="161.0" prefHeight="25.0" prefWidth="172.0" promptText="Mot de passe" />
+      <Pane fx:id="Pconnect" layoutX="-2.0" prefHeight="405.0" prefWidth="610.0" style="-fx-background-color: #B8F5FF;" visible="false">
          <children>
-            <TitledPane alignment="CENTER" animated="false" collapsible="false" expanded="false" prefHeight="40.0" prefWidth="580.0" text="ADMINISTRATEUR">
-              <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-              </content>
-               <font>
-                  <Font name="System Bold" size="18.0" />
-               </font>
-            </TitledPane>
+            <Button layoutX="510.0" layoutY="366.0" mnemonicParsing="false" onAction="#deconnexion" text="Déconnexion" />
          </children>
-      </HBox>
-		<HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="36.0" style="-fx-background-color: #EA7C80;" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="50.0">
-         <children>
-            <VBox maxHeight="300.0" prefHeight="300.0" prefWidth="200.0" style="-fx-background-color: #B3292E;">
-               <children>
-                  <TitledPane alignment="CENTER" animated="false" collapsible="false" contentDisplay="CENTER" expanded="false" text="Renseignez vos identifiants">
-                    <content>
-                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-                    </content>
-                  </TitledPane>
-                  <PasswordField promptText="Numéro Employé">
-                     <VBox.margin>
-                        <Insets top="80.0" />
-                     </VBox.margin>
-                  </PasswordField>
-                  <PasswordField prefHeight="25.0" prefWidth="172.0" promptText="Mot de passe">
-                     <VBox.margin>
-                        <Insets top="20.0" />
-                     </VBox.margin>
-                  </PasswordField>
-                  <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" text="CONNEXION" textAlignment="CENTER">
-                     <VBox.margin>
-                        <Insets top="50.0" />
-                     </VBox.margin>
-                  </Button>
-               </children>
-            </VBox>
-            <Button mnemonicParsing="false" text="RETOUR" textAlignment="CENTER" />
-         </children></HBox>
+      </Pane>
 	</children>
 
 </AnchorPane>
