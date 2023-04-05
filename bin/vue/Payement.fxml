@@ -30,13 +30,20 @@
             <Label layoutX="213.0" layoutY="175.0" text="Date d'expiration" />
             <Button fx:id="Bpayer" layoutX="277.0" layoutY="279.0" mnemonicParsing="false" onAction="#payer" text="Payer" />
             <Label fx:id="LerreurPaye" layoutX="189.0" layoutY="291.0" text="Entrez un nom de carte et une date valide" textFill="#ff0202" visible="false" />
-            <Label fx:id="Lrecap" layoutX="165.0" layoutY="43.0" text="Vous avez séléctionné :" />
+            <Label layoutX="180.0" layoutY="43.0" text="Et avez séléctionné :" />
+            <Label layoutX="7.0" layoutY="343.0" text="Terminal :" />
+            <Label fx:id="LnomPiscine" layoutX="65.0" layoutY="343.0" text="Piscine des deux Pins" />
+            <Label layoutX="166.0" layoutY="26.0" text="Vous avez optez pour :" />
+            <Label fx:id="LrecapFormule" layoutX="301.0" layoutY="26.0" text="DetailFormule" />
+            <Label fx:id="Lrecap" layoutX="299.0" layoutY="43.0" text="DetailType" />
          </children>
       </Pane>
       <Pane fx:id="PpayeR" layoutX="87.0" layoutY="63.0" prefHeight="265.0" prefWidth="434.0" style="-fx-background-color: green;" visible="false">
          <children>
             <Label layoutX="169.0" layoutY="124.0" text="Payement réussit !" textFill="WHITE" />
             <Button layoutX="201.0" layoutY="158.0" mnemonicParsing="false" onAction="#switchToHome" text="Ok" />
+            <Label fx:id="LcodeClient" layoutX="217.0" layoutY="210.0" text="000000000" />
+            <Label layoutX="79.0" layoutY="210.0" text="Votre code à conserver :" />
          </children>
       </Pane>
    </children>

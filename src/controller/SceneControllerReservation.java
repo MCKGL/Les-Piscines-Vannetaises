@@ -60,6 +60,7 @@ public class SceneControllerReservation extends SceneController  {
 		
 	    coursDAO = new CoursDAO();
 	    List<Cours> listeCours = CoursDAO.getInstance().readAll();
+	    ChoiceBoxCours.setValue(listeCours.get(0).getNom());
 	    for (Cours cours : listeCours) {
 	        ChoiceBoxCours.getItems().add(cours.getNom());
 	    }
@@ -119,28 +120,31 @@ public class SceneControllerReservation extends SceneController  {
 			if(event.getSource() == BpCours) {
 				String prix = Lprix.getText();
 				String detail = LCoursSelect.getText();
+				String detailCouF = "Cours";
 				FXMLLoader loader = new FXMLLoader(getClass().getResource("/vue/Payement.fxml"));	
 				root = loader.load();	
 				SceneControllerPayement scenePaye = loader.getController();
-				scenePaye.recupererInfo(prix, detail);
+				scenePaye.recupererInfo(prix, detail, detailCouF);
 			}
 			
 			if(event.getSource() == BpayeSolo) {
 				String prix = LaboSolo.getText();
 				String detail = BpayeSolo.getText();
+				String detailCouF = "Abonnement Solo";
 				FXMLLoader loader = new FXMLLoader(getClass().getResource("/vue/Payement.fxml"));	
 				root = loader.load();	
 				SceneControllerPayement scenePaye = loader.getController();
-				scenePaye.recupererInfo(prix, detail);
+				scenePaye.recupererInfo(prix, detail, detailCouF);
 			}
 			
 			if(event.getSource() == BpayeDuo) {
 				String prix = LaboDuo.getText();
 				String detail = BpayeDuo.getText();
+				String detailCouF = "Abonnement Duo";
 				FXMLLoader loader = new FXMLLoader(getClass().getResource("/vue/Payement.fxml"));	
 				root = loader.load();	
 				SceneControllerPayement scenePaye = loader.getController();
-				scenePaye.recupererInfo(prix, detail);
+				scenePaye.recupererInfo(prix, detail, detailCouF);
 			}
 		
 			stage = (Stage)((Node)event.getSource()).getScene().getWindow();

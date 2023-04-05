@@ -22,7 +22,7 @@ public class BilletDAO extends DAO<Billet> {
 	private String CLE_PRIMAIRE = "code";
 	private String TABLE = "billet";
 
-	private String NBRE_ENTREE_RESTANTE = "nombre_entre_restante";
+	private String NBRE_ENTREE_RESTANTE = "nb_entree_restante";
 	
 	private final String FORMULE = "id_formule";
 	private final String PISCINE = "id_piscine";
