@@ -126,49 +126,23 @@ public class PiscineDAO extends DAO<Piscine> {
 	}
 	
 	
-	/*public Piscine readByName(String nom) {
-		Piscine piscine = null;
-		try {
-			// Requête dans la table cours
-			String requete = "SELECT * FROM " + TABLE + " WHERE " + NOM + "= ?;";
-			PreparedStatement pst = Connexion.getInstance().prepareStatement(requete);
-			pst.setString(1, nom);
-			pst.execute();
-			
-			// On demande le premier résultat de la requête
-			ResultSet rs = pst.getResultSet();
-			rs.next();
-			
-			// On associe les valeurs des champs à des variables
-			int id = rs.getInt(CLE_PRIMAIRE);
-			int idAdresse = rs.getInt(ADRESSE);
-			Adresse adresse = AdresseDAO.getInstance().read(idAdresse);
-			
-			// Création d'un objet à partir des valeurs récupérées de la base de donnée
-			piscine = new Piscine(id, nom, adresse);	
-			
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return piscine;
-	}*/
-	
 	public Piscine readByName(String nom) {
-		Piscine piscine = null;
-		try {
-			String requete = "SELECT * FROM " + TABLE + " WHERE " + NOM + " = '" + nom + "';";
-			ResultSet rs = Connexion.executeQuery(requete);
-			rs.next();
-			int id = rs.getInt(CLE_PRIMAIRE);
-			int idAdresse = rs.getInt(ADRESSE);
-			Adresse adresse = AdresseDAO.getInstance().read(idAdresse);
+	    Piscine piscine = null;
+	    try {
+	        String requete = "SELECT * FROM " + TABLE + " WHERE " + NOM + " = ?";
+	        PreparedStatement pst = Connexion.getInstance().prepareStatement(requete);
+	        pst.setString(1, nom);
+	        ResultSet rs = pst.executeQuery();
+	        rs.next();
+	        int id = rs.getInt(CLE_PRIMAIRE);
+	        int idAdresse = rs.getInt(ADRESSE);
+	        Adresse adresse = AdresseDAO.getInstance().read(idAdresse);
 
-			piscine = new Piscine(id, nom, adresse);
-
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return piscine;
+	        piscine = new Piscine(id, nom, adresse);
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+	    return piscine;
 	}
 	
 	

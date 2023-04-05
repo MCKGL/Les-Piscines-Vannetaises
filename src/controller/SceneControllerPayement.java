@@ -10,7 +10,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
 import model.BilletDAO;
-import model.CoursDAO;
 import model.FormuleDAO;
 import model.PiscineDAO;
 
@@ -58,7 +57,7 @@ public class SceneControllerPayement extends SceneController {
 		int nbEntree = formule.getNbreEntreeFormule();
 		
 		// TODO creation code unique
-		int code = 1234567;
+		int code = 12345678;
 		
 		// Créer un objet billet avec les valeurs récupérées
 		billet.setCode(code);

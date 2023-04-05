@@ -23,6 +23,8 @@ public class Billet {
 		super();
 		this.code = code;
 		this.nbreEntreeRestante = nbreEntreeRestante;
+		this.formule = formule;
+		this.piscine = piscine;
 	}
 
 // -----------------------------------------------------------------------------------------------------------------------

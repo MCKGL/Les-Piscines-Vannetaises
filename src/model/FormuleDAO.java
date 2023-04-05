@@ -113,13 +113,15 @@ public class FormuleDAO extends DAO<Formule> {
 	}
 
 	@Override
-	public Formule read(int idFormule) {
+	public Formule read(int id) {
 		Formule formule = null;
 		try {
-			String requete = "SELECT * FROM " + TABLE + " WHERE " + CLE_PRIMAIRE + " = " + idFormule + ";";
-			ResultSet rs = Connexion.executeQuery(requete);
+			String requete = "SELECT * FROM " + TABLE + " WHERE " + CLE_PRIMAIRE + "= ?;";
+			PreparedStatement pst = Connexion.getInstance().prepareStatement(requete);
+			pst.setInt(1, id);
+			pst.execute();
+			ResultSet rs = pst.getResultSet();
 			rs.next();
-			int id = rs.getInt(ID_FORMULE);
 			String type = rs.getString(TYPE);
 			String label = rs.getString(LABEL);
 			long validite = rs.getLong(VALIDITE);
