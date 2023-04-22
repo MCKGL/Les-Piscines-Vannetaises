@@ -2,6 +2,8 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.TitledPane?>
 <?import javafx.scene.image.Image?>
@@ -30,6 +32,16 @@
       <Pane fx:id="Pconnect" layoutX="-2.0" prefHeight="405.0" prefWidth="610.0" style="-fx-background-color: #B8F5FF;" visible="false">
          <children>
             <Button layoutX="510.0" layoutY="366.0" mnemonicParsing="false" onAction="#deconnexion" text="Déconnexion" />
+            <Button fx:id="BaffEmployee" layoutX="33.0" layoutY="68.0" mnemonicParsing="false" onAction="#afficherData" text="Afficher liste employés" />
+            <TableView fx:id="TableProf" layoutX="275.0" layoutY="20.0" prefHeight="332.0" prefWidth="307.0">
+              <columns>
+                <TableColumn fx:id="nom" prefWidth="75.0" text="nom" />
+                  <TableColumn fx:id="prenom" prefWidth="75.0" text="prenom" />
+                  <TableColumn fx:id="mail" prefWidth="75.0" text="mail" />
+                  <TableColumn fx:id="date_naissance" prefWidth="75.0" text="date_naissance" />
+              </columns>
+            </TableView>
+            <Button fx:id="BaffSeance" layoutX="33.0" layoutY="119.0" mnemonicParsing="false" onAction="#afficherData" text="Afficher liste séances" />
          </children>
       </Pane>
 	</children>
