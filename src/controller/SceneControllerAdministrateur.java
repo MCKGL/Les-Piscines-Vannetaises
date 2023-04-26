@@ -15,18 +15,20 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
 import model.EmployeeDAO;
+import model.SeanceDAO;
 import service.Employee;
+import service.Seance;
 
 public class SceneControllerAdministrateur extends SceneController {
 
 	/*TODO
 	 * Relier l'identification à la bd admin
-	 * Afficher la liste des profs sur le pane
 	 * Supprimer un Prof
 	 * Update un Prof
 	 * Créer un prof
 	 */
 	private ObservableList<Employee> empData = FXCollections.observableArrayList();
+	private ObservableList<Seance> seanceData = FXCollections.observableArrayList();
 	
     @FXML
     TextField TFadmin;
@@ -43,7 +45,17 @@ public class SceneControllerAdministrateur extends SceneController {
 	@FXML
 	private TableColumn<Employee, String> mail;
 	@FXML
-	private TableColumn<Employee, Date> date_naissance;
+	private TableColumn<Employee, String> date_naissance;
+    @FXML
+    private TableView<Seance> TableSeance;
+    @FXML
+	private TableColumn<Seance, String> jour;
+    @FXML
+	private TableColumn<Seance, String> debut;
+	@FXML
+	private TableColumn<Seance, String> fin;
+	@FXML
+	private TableColumn<Seance, String> typeCours;
 	@FXML
 	Button BaffEmployee, BaffSeance;
 
@@ -76,14 +88,18 @@ public class SceneControllerAdministrateur extends SceneController {
 			return empData;
 		}
 	   
+	   public ObservableList<Seance> getSeanceData() {
+			return seanceData;
+		}
+	   
 	   public void afficherData(ActionEvent event) {
 		   if(event.getSource() == BaffEmployee) {
 			   TableProf.setVisible(true);
+			   TableSeance.setVisible(false);
 			   nom.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getNom()));
 			   prenom.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getPrenom()));
 			   mail.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getEmail()));
-			   // TODO : Régler le soucis affichage date (problème de format)
-			   //date_naissance.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getDateNaissanceSQL()));
+			   date_naissance.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().toStringDateNaissance()));
 		   
 		   
 			   EmployeeDAO employeeDAO = EmployeeDAO.getInstance();
@@ -94,7 +110,20 @@ public class SceneControllerAdministrateur extends SceneController {
 			   System.out.println(empData);
 		   }
 		   if(event.getSource() == BaffSeance) {
-			   //TODO : afficher les seances 
+			   TableProf.setVisible(false);
+			   TableSeance.setVisible(true);
+			   jour.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getJourSemaine()));
+			   debut.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().toStringHeureDebut()));
+			   fin.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().toStringHeureFin()));
+			   typeCours.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getCours().getNom()));
+			   
+			   SeanceDAO seanceDAO = SeanceDAO.getInstance();
+			   List<Seance> seances = seanceDAO.readAll();
+			   seanceData.clear();
+			   seanceData.addAll(seances);
+			   TableSeance.setItems(seanceData);
+			   System.out.println(seanceData);
+			   
 		   }
 		   
 	   }

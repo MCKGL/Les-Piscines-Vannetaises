@@ -1,6 +1,7 @@
 package service;
 
-import java.time.LocalDate;
+import java.sql.Date;
+import java.text.SimpleDateFormat;
 
 public class Employee {
 // -----------------------------------------------------------------------------------------------------------------------
@@ -40,7 +41,7 @@ public class Employee {
 	private String prenom;
 	private String pseudo;
 	private String email;
-	private LocalDate dateNaissance;
+	private Date dateNaissance;
 	private boolean actif = false;
 
 	// Attribut Adresse
@@ -62,7 +63,7 @@ public class Employee {
 	 * @param email
 	 * @param dateNaissance
 	 */
-	public Employee(int idEmployee, String nom, String prenom, String nomMembre, String email, LocalDate dateNaissance, Adresse adresse) {
+	public Employee(int idEmployee, String nom, String prenom, String nomMembre, String email, Date dateNaissance, Adresse adresse) {
 		super();
 		this.idEmployee = idEmployee;
 		this.nom = nom;
@@ -84,7 +85,7 @@ public class Employee {
 	 * @param administrateur
 	 * @param professeur
 	 */
-	public Employee(String nom, String prenom, String nomMembre, String email, LocalDate dateNaissance,
+	public Employee(String nom, String prenom, String nomMembre, String email, Date dateNaissance,
 		Adresse adresse, InfoAdministrateur administrateur, InfoProfesseur professeur) {
 	super();
 	this.nom = nom;
@@ -105,11 +106,7 @@ public class Employee {
 		this.idEmployee = idEmployee;
 	}
 
-	public LocalDate getDateNaissanceSQL() {
-		return dateNaissance;
-	}
-
-	public void setDateNaissance(LocalDate dateNaissance) {
+	public void setDateNaissance(Date dateNaissance) {
 		this.dateNaissance = dateNaissance;
 	}
 
@@ -165,7 +162,7 @@ public class Employee {
 	public void setInfoProfesseur(InfoProfesseur infoProfesseur) {
 		this.infoProfesseur = infoProfesseur;
 	}
-	public LocalDate getDateNaissance() {
+	public Date getDateNaissance() {
 		return dateNaissance;
 	}
 	public InfoAdministrateur getInfoAdministrateur() {
@@ -188,6 +185,10 @@ public class Employee {
 	}
 // -----------------------------------------------------------------------------------------------------------------------
 
+	public String toStringDateNaissance() {
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+	    return sdf.format(dateNaissance);
+	}
 	
 // -----------------------------------------------------------------------------------------------------------------------
 

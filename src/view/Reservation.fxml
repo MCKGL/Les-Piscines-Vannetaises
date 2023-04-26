@@ -19,7 +19,6 @@
 	</ImageView>
       <HBox alignment="TOP_CENTER" layoutY="14.0" prefHeight="27.0" prefWidth="600.0" spacing="50.0">
          <children>
-            <Button mnemonicParsing="false" onAction="#switchToHome" text="Accueil" />
             <Button mnemonicParsing="false" onAction="#switchToRervation" text="Reservation" />
             <Button mnemonicParsing="false" onAction="#switchToInformation" text="Information" />
             <Button mnemonicParsing="false" onAction="#switchToIdentification" text="Identification" />
