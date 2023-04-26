@@ -1,3 +1,6 @@
+/module-info.class
+/view/
+/service/
 /controller/
-/vue/
 /model/
+/application/

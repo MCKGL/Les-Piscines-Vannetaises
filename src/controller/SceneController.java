@@ -24,7 +24,7 @@ public class SceneController {
 	
 	//Aller à la page Acceuil 
 	public void switchToHome(ActionEvent event) throws IOException {
-		root = FXMLLoader.load(getClass().getResource("/vue/Home.fxml"));
+		root = FXMLLoader.load(getClass().getResource("/view/Home.fxml"));
 		stage = (Stage)((Node)event.getSource()).getScene().getWindow();
 		scene = new Scene(root);
 		stage.setScene(scene);
@@ -33,7 +33,7 @@ public class SceneController {
 	
 	//Aller à la page Reservation
 	public void switchToRervation(ActionEvent event) throws IOException {
-		root = FXMLLoader.load(getClass().getResource("/vue/Reservation.fxml"));
+		root = FXMLLoader.load(getClass().getResource("/view/Reservation.fxml"));
 		stage = (Stage)((Node)event.getSource()).getScene().getWindow();
 		scene = new Scene(root);
 		stage.setScene(scene);
@@ -42,7 +42,7 @@ public class SceneController {
 	
 	//Aller à la page Information
 	public void switchToInformation(ActionEvent event) throws IOException {
-		root = FXMLLoader.load(getClass().getResource("/vue/Information.fxml"));
+		root = FXMLLoader.load(getClass().getResource("/view/Information.fxml"));
 		stage = (Stage)((Node)event.getSource()).getScene().getWindow();
 		scene = new Scene(root);
 		stage.setScene(scene);
@@ -51,7 +51,7 @@ public class SceneController {
 	
 	//Aller à la page Identification
 	public void switchToIdentification(ActionEvent event) throws IOException {
-		root = FXMLLoader.load(getClass().getResource("/vue/Identification.fxml"));
+		root = FXMLLoader.load(getClass().getResource("/view/Identification.fxml"));
 		stage = (Stage)((Node)event.getSource()).getScene().getWindow();
 		scene = new Scene(root);
 		stage.setScene(scene);
@@ -59,7 +59,7 @@ public class SceneController {
 	}
 	
 	public void switchToAdmin(ActionEvent event) throws IOException {
-		root = FXMLLoader.load(getClass().getResource("/vue/Administrateur.fxml"));
+		root = FXMLLoader.load(getClass().getResource("/view/Administrateur.fxml"));
 		stage = (Stage)((Node)event.getSource()).getScene().getWindow();
 		scene = new Scene(root);
 		stage.setScene(scene);

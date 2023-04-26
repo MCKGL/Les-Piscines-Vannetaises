@@ -5,8 +5,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import controller.InfoAdministrateur;
-import controller.Employee;
+import service.Employee;
+import service.InfoAdministrateur;
 
 public class AdministrateurDAO extends DAO<Employee> {
 // -----------------------------------------------------------------------------------------------------------------------

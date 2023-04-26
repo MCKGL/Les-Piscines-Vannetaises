@@ -9,8 +9,8 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
-import controller.Cours;
-import controller.Seance;
+import service.Cours;
+import service.Seance;
 
 public class SeanceDAO extends DAO<Seance> {
 	// -----------------------------------------------------------------------------------------------------------------------

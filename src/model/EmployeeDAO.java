@@ -9,10 +9,10 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-import controller.Adresse;
-import controller.Employee;
-import controller.InfoAdministrateur;
-import controller.InfoProfesseur;
+import service.Adresse;
+import service.Employee;
+import service.InfoAdministrateur;
+import service.InfoProfesseur;
 
 public class EmployeeDAO extends DAO<Employee> {
 	// -----------------------------------------------------------------------------------------------------------------------

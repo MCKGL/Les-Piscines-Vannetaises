@@ -6,9 +6,9 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.LocalDateTime;
 
-import controller.Billet;
-import controller.Formule;
-import controller.Piscine;
+import service.Billet;
+import service.Formule;
+import service.Piscine;
 
 public class BilletDAO extends DAO<Billet> {
 // -----------------------------------------------------------------------------------------------------------------------

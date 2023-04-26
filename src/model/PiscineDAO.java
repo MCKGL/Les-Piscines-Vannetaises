@@ -5,8 +5,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-import controller.Adresse;
-import controller.Piscine;
+import service.Adresse;
+import service.Piscine;
 
 public class PiscineDAO extends DAO<Piscine> {
 

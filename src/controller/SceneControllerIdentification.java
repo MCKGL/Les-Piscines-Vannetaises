@@ -12,6 +12,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import model.BilletDAO;
+import service.Billet;
 import javafx.scene.layout.Pane;
 
 public class SceneControllerIdentification extends SceneController{

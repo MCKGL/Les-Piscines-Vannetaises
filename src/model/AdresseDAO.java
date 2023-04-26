@@ -5,7 +5,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-import controller.Adresse;
+import service.Adresse;
 
 public class AdresseDAO extends DAO<Adresse> {
 	

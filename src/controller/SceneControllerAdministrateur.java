@@ -15,6 +15,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
 import model.EmployeeDAO;
+import service.Employee;
 
 public class SceneControllerAdministrateur extends SceneController {
 

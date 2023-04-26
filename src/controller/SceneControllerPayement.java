@@ -14,6 +14,9 @@ import javafx.scene.layout.Pane;
 import model.BilletDAO;
 import model.FormuleDAO;
 import model.PiscineDAO;
+import service.Billet;
+import service.Formule;
+import service.Piscine;
 
 public class SceneControllerPayement extends SceneController {
 

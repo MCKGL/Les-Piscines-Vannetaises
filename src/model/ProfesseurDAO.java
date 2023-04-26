@@ -4,8 +4,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import controller.Employee;
-import controller .InfoProfesseur;
+import service.Employee;
+import service.InfoProfesseur;
 
 public class ProfesseurDAO extends DAO<Employee> {
 // -----------------------------------------------------------------------------------------------------------------------

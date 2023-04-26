@@ -7,8 +7,8 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import controller.Cours;
-import controller.Formule;
+import service.Cours;
+import service.Formule;
 
 public class FormuleDAO extends DAO<Formule> {
 	// -----------------------------------------------------------------------------------------------------------------------
