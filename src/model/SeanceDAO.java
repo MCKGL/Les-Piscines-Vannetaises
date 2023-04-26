@@ -4,7 +4,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -156,13 +155,14 @@ public class SeanceDAO extends DAO<Seance> {
 			LocalTime timeD = rs.getTime(HEURE_DEBUT).toLocalTime();
 			LocalTime timeF = rs.getTime(HEURE_FIN).toLocalTime();
 			String jourSemaine = rs.getString(JOUR_SEMAINE);
-//			int idCours = rs.getInt(ID_COURS);
+			int idCours = rs.getInt(ID_COURS);
+			Cours cours = CoursDAO.getInstance().read(idCours);
 
 			// On ne récupère pas le cours correspondant à la séance pour éviter une boucle infini
 			//Cours cours = CoursDAO.getInstance().read(idCours);
 
 			// Création d'un objet à partir des valeurs récupérées de la base de donnée
-			seance = new Seance(id, jourSemaine, timeD, timeF, null);
+			seance = new Seance(id, jourSemaine, timeD, timeF, cours);
 
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -202,5 +202,34 @@ public class SeanceDAO extends DAO<Seance> {
 		return liste;
 	}
 	// -----------------------------------------------------------------------------------------------------------------------
+	
+	public List<Seance> readAll() {
+		List<Seance> seances = new ArrayList<>();
+
+		try {
+			String requete = "SELECT * FROM " + TABLE + ";";
+			PreparedStatement pst = Connexion.getInstance().prepareStatement(requete);
+			pst.execute();
+			ResultSet rs = pst.getResultSet();
+
+			while (rs.next()) {
+				int id = rs.getInt(CLE_PRIMAIRE);
+				LocalTime timeD = rs.getTime(HEURE_DEBUT).toLocalTime();
+				LocalTime timeF = rs.getTime(HEURE_FIN).toLocalTime();
+				String jourSemaine = rs.getString(JOUR_SEMAINE);
+				int idCours = rs.getInt(ID_COURS);
+				Cours cours = CoursDAO.getInstance().read(idCours);
+
+				Seance seance = new Seance(id, jourSemaine, timeD, timeF, cours);
+
+				seances.add(seance);
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return seances;
+	}
 
 }

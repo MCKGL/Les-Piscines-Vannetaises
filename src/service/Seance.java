@@ -1,8 +1,8 @@
 package service;
 
 
-import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 
 
 public class Seance {
@@ -14,7 +14,7 @@ public class Seance {
 	private LocalTime heureDebut;
 	private LocalTime heureFin;
 	private String jourSemaine;
-	private Cours cours;
+	private Cours id_cours;
 	// -----------------------------------------------------------------------------------------------------------------------
 	/**
 	 * Constructeur global
@@ -31,7 +31,7 @@ public class Seance {
 		this.idSeance = idSeance;
 		this.heureDebut = heureDebut;
 		this.heureFin = heureFin;
-		this.cours = cours;
+		this.id_cours = cours;
 		this.jourSemaine = jourSemaine;
 	}
 	/**
@@ -47,7 +47,7 @@ public class Seance {
 		super();
 		this.heureDebut = heureDebut;
 		this.heureFin = heureFin;
-		this.cours = cours;
+		this.id_cours = cours;
 		this.jourSemaine = jourSemaine;
 	}
 
@@ -77,10 +77,10 @@ public class Seance {
 	}
 
 	public Cours getCours() {
-		return cours;
+		return id_cours;
 	}
 	public void setCours(Cours cours) {
-		this.cours = cours;
+		this.id_cours = cours;
 	}
 	
 	public String getJourSemaine() {
@@ -88,6 +88,14 @@ public class Seance {
 	}
 	public void setJourSemaine(String jourSemaine) {
 		this.jourSemaine = jourSemaine;
+	}
+	
+	public String toStringHeureDebut() {
+	    return getHeureDebut().format(DateTimeFormatter.ofPattern("HH:mm"));
+	}
+	
+	public String toStringHeureFin() {
+	    return getHeureFin().format(DateTimeFormatter.ofPattern("HH:mm"));
 	}
 	
 	@Override
