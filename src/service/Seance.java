@@ -1,4 +1,4 @@
-package controller;
+package service;
 
 
 import java.time.LocalDate;
@@ -11,11 +11,9 @@ public class Seance {
 	 * Attributs
 	 */
 	private int idSeance;
-	private LocalDate date;
 	private LocalTime heureDebut;
 	private LocalTime heureFin;
-	private int prix;
-	private int nbrePlace;
+	private String jourSemaine;
 	private Cours cours;
 	// -----------------------------------------------------------------------------------------------------------------------
 	/**
@@ -28,15 +26,13 @@ public class Seance {
 	 * @param nbrePlace
 	 * @param cours
 	 */
-	public Seance(int idSeance, LocalDate date, LocalTime heureDebut, LocalTime heureFin, int prix, int nbrePlace, Cours cours) {
+	public Seance(int idSeance, String jourSemaine, LocalTime heureDebut, LocalTime heureFin, Cours cours) {
 		super();
 		this.idSeance = idSeance;
-		this.date = date;
 		this.heureDebut = heureDebut;
 		this.heureFin = heureFin;
-		this.prix = prix;
-		this.nbrePlace = nbrePlace;
 		this.cours = cours;
+		this.jourSemaine = jourSemaine;
 	}
 	/**
 	 * Controleur sans ID
@@ -47,14 +43,12 @@ public class Seance {
 	 * @param nbrePlace
 	 * @param cours
 	 */
-	public Seance(LocalDate date, LocalTime heureDebut, LocalTime heureFin, int prix, int nbrePlace, Cours cours) {
+	public Seance(String jourSemaine, LocalTime heureDebut, LocalTime heureFin, Cours cours) {
 		super();
-		this.date = date;
 		this.heureDebut = heureDebut;
 		this.heureFin = heureFin;
-		this.prix = prix;
-		this.nbrePlace = nbrePlace;
 		this.cours = cours;
+		this.jourSemaine = jourSemaine;
 	}
 
 	// -----------------------------------------------------------------------------------------------------------------------
@@ -68,12 +62,7 @@ public class Seance {
 	public void setIdSeance(int idSeance) {
 		this.idSeance = idSeance;
 	}
-	public LocalDate getDate() {
-		return date;
-	}
-	public void setDate(LocalDate date) {
-		this.date = date;
-	}
+
 	public LocalTime getHeureDebut() {
 		return heureDebut;
 	}
@@ -86,18 +75,7 @@ public class Seance {
 	public void setHeureFin(LocalTime heureFin) {
 		this.heureFin = heureFin;
 	}
-	public int getPrix() {
-		return prix;
-	}
-	public void setPrix(int prix) {
-		this.prix = prix;
-	}
-	public int getNbrePlace() {
-		return nbrePlace;
-	}
-	public void setNbrePlace(int nbrePlace) {
-		this.nbrePlace = nbrePlace;
-	}
+
 	public Cours getCours() {
 		return cours;
 	}
@@ -105,9 +83,16 @@ public class Seance {
 		this.cours = cours;
 	}
 	
+	public String getJourSemaine() {
+		return jourSemaine;
+	}
+	public void setJourSemaine(String jourSemaine) {
+		this.jourSemaine = jourSemaine;
+	}
+	
 	@Override
 	public String toString() {
-		return "Seance [idSeance=" + idSeance + ", date=" + date + ", heureDebut=" + heureDebut + ", heureFin="+ heureFin + ", prix=" + prix + ", nbrePlace=" + nbrePlace + "]\n";
+		return "Seance [idSeance=" + idSeance + ", jourSemaine=" + jourSemaine + " heureDebut=" + heureDebut + ", heureFin="+ heureFin + "]\n";
 	}
 	
 }

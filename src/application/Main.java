@@ -1,12 +1,13 @@
 package application;
 	
-import controller.Employee;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import model.EmployeeDAO;
+import service.Adresse;
+import service.Employee;
 
 
 public class Main extends Application {
@@ -28,7 +29,7 @@ public class Main extends Application {
 	@Override
 	public void start(Stage stage) {
 		try {
-			Parent root = FXMLLoader.load(getClass().getResource("/vue/Home.fxml"));
+			Parent root = FXMLLoader.load(getClass().getResource("/view/Home.fxml"));
 			Scene scene = new Scene(root);
 			stage.setScene(scene);
 			stage.show();
@@ -40,15 +41,15 @@ public class Main extends Application {
 	public static void main(String[] args) {
 
 		launch(args);
-//		String ville = "Vannes";
-//		int codePostal = 56100;
-//		String rue = "pouetpouet";
-//		int numero = 68;
-//		
-//		Adresse adresse = new Adresse(ville, codePostal, rue, numero);
-//		System.out.println(adresse);
+		/*String ville = "Vannes";
+		int codePostal = 56100;
+		String rue = "pouetpouet";
+		int numero = 68;
 		
-//		 Employee employee = EmployeeDAO.getInstanceEmployeeDAO().read(1);
+		Adresse adresse = new Adresse(ville, codePostal, rue, numero);
+		System.out.println(adresse);*/
+		
+//		 Employee employee = EmployeeDAO.getInstance().read(1);
 //		 System.out.println(employee);
 //		 Connexion.fermer();
 //		 Adresse adresse = AdresseDAO.getInstanceAdresseDAO().read(1);

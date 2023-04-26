@@ -1,4 +1,4 @@
-package controller;
+package service;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,10 +14,11 @@ public class Formule {
 	 * nombre d'entrée de la formule
 	 */
 	private int idFormule;
-	private String type;
-	private long dureeEnSeconde;
 	private int prixFormule;
+	private long dureeValidite;
 	private int nbreEntreeFormule;
+	private String label;
+	private String type;
 	private List<Seance> listeSeance = new ArrayList<Seance>();
 	
 	/**
@@ -29,11 +30,12 @@ public class Formule {
 	 * @param prixFormule
 	 * @param nbreEntreeFormule
 	 */
-	public Formule(int idFormule, String type, long dureeEnSeconde, int prixFormule, int nbreEntreeFormule) {
+	public Formule(int idFormule, String type, String label, long dureeEnSeconde, int prixFormule, int nbreEntreeFormule) {
 		super();
 		this.idFormule = idFormule;
 		this.type = type;
-		this.dureeEnSeconde = dureeEnSeconde;
+		this.label = label;
+		this.dureeValidite = dureeEnSeconde;
 		this.prixFormule = prixFormule;
 		this.nbreEntreeFormule = nbreEntreeFormule;
 	}
@@ -46,12 +48,13 @@ public class Formule {
 	 * @param prixFormule
 	 * @param nbreEntreeFormule
 	 */
-	public Formule(String type, long dureeEnSeconde, int prixFormule, int nbreEntreeFormule) {
+	public Formule(String type, String label, long dureeEnSeconde, int prixFormule, int nbreEntreeFormule) {
 		super();
 		this.type = type;
-		this.dureeEnSeconde = dureeEnSeconde;
+		this.dureeValidite = dureeEnSeconde;
 		this.prixFormule = prixFormule;
 		this.nbreEntreeFormule = nbreEntreeFormule;
+		this.label = label;
 	}
 	/**
 	 * Getter 
@@ -72,13 +75,21 @@ public class Formule {
 	public void setType(String type) {
 		this.type = type;
 	}
+	
+	public String getLabel() {
+		return label;
+	}
+	
+	public void setLabel(String label) {
+		this.label = label;
+	}
 
 	public long getDureeEnSeconde() {
-		return dureeEnSeconde;
+		return dureeValidite;
 	}
 
 	public void setDureeEnSeconde(long dureeEnSeconde) {
-		this.dureeEnSeconde = dureeEnSeconde;
+		this.dureeValidite = dureeEnSeconde;
 	}
 
 	public int getPrixFormule() {

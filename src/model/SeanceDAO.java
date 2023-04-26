@@ -9,8 +9,8 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
-import controller.Cours;
-import controller.Seance;
+import service.Cours;
+import service.Seance;
 
 public class SeanceDAO extends DAO<Seance> {
 	// -----------------------------------------------------------------------------------------------------------------------
@@ -20,12 +20,9 @@ public class SeanceDAO extends DAO<Seance> {
 	private final String CLE_PRIMAIRE = "id_seance";
 	private final String TABLE = "seance";
 
-	private final String ID_SEANCE = "id_seance";
-	private final String DATE = "date";
+	private final String JOUR_SEMAINE = "jour_semaine";
 	private final String HEURE_DEBUT = "heure_debut";
 	private final String HEURE_FIN = "heure_fin";
-	private final String PRIX = "prix_unitaire";
-	private final String NBRE_PLACE = "nombre_place_reserve";
 	private final String ID_COURS = "id_cours";
 
 	private static SeanceDAO instance = null;
@@ -65,17 +62,14 @@ public class SeanceDAO extends DAO<Seance> {
 				seance.getCours().setIdCours(id);
 			}
 
-			String requete = "INSERT INTO " + TABLE + " (" + DATE + ", " + HEURE_DEBUT + ", " + HEURE_FIN + ", " + PRIX
-					+ ", " + NBRE_PLACE + ", " + ID_COURS + ") VALUES (?,?,?,?,?,?)";
+			String requete = "INSERT INTO " + TABLE + " (" + HEURE_DEBUT + ", " + HEURE_FIN + ", " + ID_COURS + ", " + JOUR_SEMAINE + ") VALUES (?,?,?,?)";
 			PreparedStatement pst = Connexion.getInstance().prepareStatement(requete, Statement.RETURN_GENERATED_KEYS);
 
 			// On associe les ? avec une valeur
-			pst.setObject(1, seance.getDate());
-			pst.setObject(2, seance.getHeureDebut());
-			pst.setObject(3, seance.getHeureFin());
-			pst.setInt(4, seance.getPrix());
-			pst.setInt(5, seance.getNbrePlace());
-			pst.setInt(6, seance.getCours().getIdCours());
+			pst.setObject(1, seance.getHeureDebut());
+			pst.setObject(2, seance.getHeureFin());
+			pst.setInt(3, seance.getCours().getIdCours());
+			pst.setString(4, seance.getJourSemaine());
 
 			// On exécute la requete
 			pst.executeUpdate();
@@ -120,17 +114,13 @@ public class SeanceDAO extends DAO<Seance> {
 	public boolean update(Seance seance) {
 		boolean succes = true;
 		try {
-			String requete = "UPDATE " + TABLE + " SET  " + DATE + " = ?, " + HEURE_DEBUT + " = ?, " + HEURE_FIN
-					+ " = ?, " + PRIX + " = ?, " + NBRE_PLACE + " = ?, " + ID_COURS + " = ? WHERE " + CLE_PRIMAIRE
-					+ " = ?";
+			String requete = "UPDATE " + TABLE + " SET  " + HEURE_DEBUT + " = ?, " + HEURE_FIN + " = ?, " + ID_COURS + " = ?, " + JOUR_SEMAINE + " = ? WHERE " + CLE_PRIMAIRE + " = ?";
 			PreparedStatement pst = Connexion.getInstance().prepareStatement(requete);
-			pst.setObject(1, seance.getDate());
-			pst.setObject(2, seance.getHeureDebut());
-			pst.setObject(3, seance.getHeureFin());
-			pst.setInt(4, seance.getPrix());
-			pst.setInt(5, seance.getNbrePlace());
-			pst.setInt(6, seance.getCours().getIdCours());
-			pst.setInt(7, seance.getIdSeance());
+			pst.setObject(1, seance.getHeureDebut());
+			pst.setObject(2, seance.getHeureFin());
+			pst.setInt(3, seance.getCours().getIdCours());
+			pst.setInt(4, seance.getIdSeance());
+			pst.setString(5, seance.getJourSemaine());
 
 			pst.executeUpdate();
 
@@ -163,18 +153,16 @@ public class SeanceDAO extends DAO<Seance> {
 			rs.next();
 
 			// On associe les valeurs des champs à des variables
-			LocalDate date = rs.getDate(DATE).toLocalDate();
 			LocalTime timeD = rs.getTime(HEURE_DEBUT).toLocalTime();
 			LocalTime timeF = rs.getTime(HEURE_FIN).toLocalTime();
-			int prix = rs.getInt(PRIX);
-			int nbrePlace = rs.getInt(NBRE_PLACE);
+			String jourSemaine = rs.getString(JOUR_SEMAINE);
 //			int idCours = rs.getInt(ID_COURS);
 
 			// On ne récupère pas le cours correspondant à la séance pour éviter une boucle infini
 			//Cours cours = CoursDAO.getInstance().read(idCours);
 
 			// Création d'un objet à partir des valeurs récupérées de la base de donnée
-			seance = new Seance(id, date, timeD, timeF, prix, nbrePlace, null);
+			seance = new Seance(id, jourSemaine, timeD, timeF, null);
 
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -188,7 +176,7 @@ public class SeanceDAO extends DAO<Seance> {
 	 * @param Cours cours
 	 * @return liste<Seance>
 	 */
-	public List<Seance> readTable(Cours cours) {
+	public List<Seance> readByCours(Cours cours) {
 		List<Seance> liste = new ArrayList<Seance>();
 		int idCours = cours.getIdCours();
 		Seance seance = null;
@@ -202,7 +190,7 @@ public class SeanceDAO extends DAO<Seance> {
 			ResultSet rs = pst.getResultSet();
 			System.err.println("readTable : "+ rs.next());
 			while (rs.next()) {
-				int id = rs.getInt(ID_SEANCE);
+				int id = rs.getInt(CLE_PRIMAIRE);
 				System.err.println("while :"+id);
 				seance = SeanceDAO.getInstance().read(id);
 				seance.setCours(cours);
