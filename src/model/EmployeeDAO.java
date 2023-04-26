@@ -1,11 +1,11 @@
 package model;
 
 
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -83,7 +83,7 @@ public class EmployeeDAO extends DAO<Employee> {
 			pst.setString(2, employee.getPrenom());
 			pst.setString(3, employee.getNomMembre());
 			pst.setString(4, employee.getEmail());
-			pst.setObject(5, employee.getDateNaissanceSQL());
+			pst.setObject(5, employee.getDateNaissance());
 			pst.setInt(6, employee.getAdresse().getIdAdresse());
 			pst.setInt(7, 1);
 			// Rendre l'employer actif
@@ -205,7 +205,7 @@ public class EmployeeDAO extends DAO<Employee> {
 			pst.setString(2, employee.getPrenom());
 			pst.setString(3, employee.getNomMembre());
 			pst.setString(4, employee.getEmail());
-			pst.setObject(5, employee.getDateNaissanceSQL());
+			pst.setObject(5, employee.getDateNaissance());
 			pst.setInt(6, employee.getAdresse().getIdAdresse());
 			pst.setInt(7, employee.getIdEmployee());
 			pst.executeUpdate() ;
@@ -252,7 +252,7 @@ public class EmployeeDAO extends DAO<Employee> {
 			String prenom = rs.getString(PRENOM);
 			String nomMembre = rs.getString(NOM_MEMBRE);
 			String email = rs.getString(EMAIL);
-			LocalDate date = rs.getDate(DATE).toLocalDate();
+			Date date = rs.getDate(DATE);
 			int idAdresse = rs.getInt(ID_ADRESSE);
 
 			// Lire la table adresse associé à un employé
@@ -291,7 +291,7 @@ public class EmployeeDAO extends DAO<Employee> {
 	            String prenom = rs.getString(PRENOM);
 	            String nomMembre = rs.getString(NOM_MEMBRE);
 	            String email = rs.getString(EMAIL);
-	            LocalDate date = rs.getDate(DATE).toLocalDate();
+	            Date date = rs.getDate(DATE);
 	            int idAdresse = rs.getInt(ID_ADRESSE);
 
 	            // Lire la table adresse associé à un employé
