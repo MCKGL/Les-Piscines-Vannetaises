@@ -16,6 +16,9 @@ import javafx.scene.control.TextArea;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import model.CoursDAO;
+import model.FormuleDAO;
+import service.Cours;
+import service.Formule;
 
 public class SceneControllerReservation extends SceneController  {
 	
@@ -23,6 +26,7 @@ public class SceneControllerReservation extends SceneController  {
 	private Scene scene;
 	private Parent root;
 	private CoursDAO coursDAO;
+	private FormuleDAO formuleDAO;
 	
 	@FXML
 	Pane PentreeSimple, Pcours, Pabonnement, Pdetail;
@@ -31,7 +35,7 @@ public class SceneControllerReservation extends SceneController  {
 	@FXML
 	TextArea Tdetail, TaboSolo, TaboDuo;
 	@FXML
-	Label LabelTest, Lsomme, Lprix, LaboDuo, LaboSolo;
+	Label LDetail, Lsomme, Lprix, LaboDuo, LaboSolo, LCoursSelect, LDetailSolo, LDetailDuo;
 	@FXML
 	ChoiceBox ChoiceBoxCours;
 	
@@ -50,6 +54,7 @@ public class SceneControllerReservation extends SceneController  {
 		Pabonnement.setVisible(false);
 	}
 	
+	// a l'initialisation du Pane "cours", Le ChoiceBox récupère les données de la bd
 	public void afficherCours(ActionEvent event) {
 		PentreeSimple.setVisible(false);
 		Pcours.setVisible(true);
@@ -57,21 +62,45 @@ public class SceneControllerReservation extends SceneController  {
 		
 	    coursDAO = new CoursDAO();
 	    List<Cours> listeCours = CoursDAO.getInstance().readAll();
+	    ChoiceBoxCours.setValue(listeCours.get(0).getNom());
 	    for (Cours cours : listeCours) {
 	        ChoiceBoxCours.getItems().add(cours.getNom());
 	    }
 	}
 	
+	//afficher les détails du cours sélectionné. Il faudra faire coincider les id des boutons avec la base de donnée
+	public void afficherDetailCours(ActionEvent event) {
+		Button btn = (Button) event.getSource();
+		String nom = (String) ChoiceBoxCours.getValue();
+		Label lb = LDetail;
+		Label lp = Lprix;
+		Label lc = LCoursSelect;
+		Pdetail.setVisible(true);
+		
+		coursDAO = new CoursDAO();
+	    Cours cours = coursDAO.readByName(nom);
+		
+	    lc.setText(nom);
+		lb.setText(cours.getDescription());
+		lp.setText(Integer.toString(cours.getFormule().getPrixFormule()) + "€");
+	}
+	
 	//afficher description db et prix bd
 	public void afficherAbonnement(ActionEvent event) {
+		String AboSolo = "Abonnement Solo";
+		String AboDuo = "Abonnement Duo";
 		PentreeSimple.setVisible(false);
 		Pcours.setVisible(false);
 		Pabonnement.setVisible(true);
 		
-		TaboSolo.setText("jfksjfkjsdgkvsdhg hufshgk hkjehfkjhd hdskjhsdjkfhsjdkhg hkjshfjshfshfjsdhkjs hkjehf hsfjkh hshfjkh zehfhgjk fksjfkjsdgkvsdhg hufshgk hkjehfkjhd hdskjhsdjkfhsjdkhg hkjshfjshfshfjsdhkjs hkjehf hsfjkh hshfjkh zehfhgjk");
-		TaboDuo.setText("jfksjfkjsdgkvsdhg hufshgk hkjehfkjhd hdskjhsdjkfhsjdkhg hkjshfjshfshfjsdhkjs hkjehf hsfjkh hshfjkh zehfhgjk fksjfkjsdgkvsdhg hufshgk hkjehfkjhd hdskjhsdjkfhsjdkhg hkjshfjshfshfjsdhkjs hkjehf hsfjkh hshfjkh zehfhgjk");
-		LaboSolo.setText("RelierBDprixSolo");
-		LaboDuo.setText("RelierBDprixDuo");
+		formuleDAO = new FormuleDAO();
+		Formule formuleSolo = formuleDAO.readByTypes(AboSolo);
+		Formule formuleDuo = formuleDAO.readByTypes(AboDuo);
+		
+		LDetailSolo.setText(formuleSolo.getLabel());
+		LDetailDuo.setText(formuleDuo.getLabel());
+		LaboSolo.setText(Integer.toString(formuleSolo.getPrixFormule()) + "€");
+		LaboDuo.setText(Integer.toString(formuleDuo.getPrixFormule()) + "€");
 	
 	}
 	
@@ -87,47 +116,37 @@ public class SceneControllerReservation extends SceneController  {
 		Pdetail.setVisible(false);
 	}
 	
-	//afficher les détails du cours sélectionné. Il faudra faire coincider les id des boutons avec la base de donnée
-	public void afficherDetailCours(ActionEvent event) {
-		Button btn = (Button) event.getSource();
-		String nom = btn.getId();
-		Label lb = LabelTest;
-		Pdetail.setVisible(true);
-		
-		// TODO : il faudra remplacer le champs String ci-dessous par la requête :
-		//String requete = "SELECT description FROM cours WHERE nom = ?";
-		//PreparedStatement pst = Connexion.getInstance().prepareStatement(requete, Statement.RETURN_GENERATED_KEYS);
-		//pst.setString(1, cours.getDescription());
-		//lb.setText(requete);
-		
-		lb.setText("detail de..." + nom);
-
-	}
 	
 	//Aller à la page Payement en injectant le contenu du Label Prix dans la page payement selon le cours ou l'abonnement choisit :
 	public void switchToPayement(ActionEvent event) throws IOException {
 			if(event.getSource() == BpCours) {
 				String prix = Lprix.getText();
+				String detail = LCoursSelect.getText();
+				String detailCouF = "Cours";
 				FXMLLoader loader = new FXMLLoader(getClass().getResource("/vue/Payement.fxml"));	
 				root = loader.load();	
 				SceneControllerPayement scenePaye = loader.getController();
-				scenePaye.recupererSomme(prix);
+				scenePaye.recupererInfo(prix, detail, detailCouF);
 			}
 			
 			if(event.getSource() == BpayeSolo) {
 				String prix = LaboSolo.getText();
+				String detail = BpayeSolo.getText();
+				String detailCouF = "Abonnement Solo";
 				FXMLLoader loader = new FXMLLoader(getClass().getResource("/vue/Payement.fxml"));	
 				root = loader.load();	
 				SceneControllerPayement scenePaye = loader.getController();
-				scenePaye.recupererSomme(prix);
+				scenePaye.recupererInfo(prix, detail, detailCouF);
 			}
 			
 			if(event.getSource() == BpayeDuo) {
 				String prix = LaboDuo.getText();
+				String detail = BpayeDuo.getText();
+				String detailCouF = "Abonnement Duo";
 				FXMLLoader loader = new FXMLLoader(getClass().getResource("/vue/Payement.fxml"));	
 				root = loader.load();	
 				SceneControllerPayement scenePaye = loader.getController();
-				scenePaye.recupererSomme(prix);
+				scenePaye.recupererInfo(prix, detail, detailCouF);
 			}
 		
 			stage = (Stage)((Node)event.getSource()).getScene().getWindow();

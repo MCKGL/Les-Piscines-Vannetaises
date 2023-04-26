@@ -1,13 +1,13 @@
 package application;
 	
-import controller.Adresse;
-import controller.Employee;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import model.EmployeeDAO;
+import service.Adresse;
+import service.Employee;
 
 
 public class Main extends Application {
@@ -29,7 +29,7 @@ public class Main extends Application {
 	@Override
 	public void start(Stage stage) {
 		try {
-			Parent root = FXMLLoader.load(getClass().getResource("/vue/Home.fxml"));
+			Parent root = FXMLLoader.load(getClass().getResource("/view/Home.fxml"));
 			Scene scene = new Scene(root);
 			stage.setScene(scene);
 			stage.show();

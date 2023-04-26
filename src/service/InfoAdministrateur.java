@@ -1,4 +1,4 @@
-package controller;
+package service;
 
 public class InfoAdministrateur {
 	
@@ -12,7 +12,6 @@ public class InfoAdministrateur {
 	 * hashage
 	 */
 	private String mdpHasher;
-	private String clefHashage;
 	
 // -----------------------------------------------------------------------------------------------------------------------
 	/**
@@ -21,10 +20,9 @@ public class InfoAdministrateur {
 	 * @param mdp
 	 * @param hashage
 	 */
-	public InfoAdministrateur(String mdp, String hashage) {
+	public InfoAdministrateur(String mdp) {
 		super();
 		this.mdpHasher = mdp;
-		this.clefHashage = hashage;
 	}
 
 	
@@ -40,14 +38,6 @@ public class InfoAdministrateur {
 		this.mdpHasher = mdp;
 	}
 
-	public String getCleHashage() {
-		return clefHashage;
-	}
-
-	public void setHashage(String hashage) {
-		this.clefHashage = hashage;
-	}
-
 	// -----------------------------------------------------------------------------------------------------------------------
 	/**
 	 * Methodes
@@ -59,7 +49,7 @@ public class InfoAdministrateur {
 // -----------------------------------------------------------------------------------------------------------------------
 	@Override
 	public String toString() {
-		return "Administrateur [ mdp=" + mdpHasher + ", hashage=" + clefHashage + "]";
+		return "Administrateur [ mdp=" + mdpHasher + "]";
 	}
 
 }

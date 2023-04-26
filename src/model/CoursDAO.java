@@ -7,7 +7,8 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import controller.Cours;
+import service.Cours;
+import service.Formule;
 
 
 
@@ -19,14 +20,11 @@ public class CoursDAO extends DAO<Cours> {
 	 */
 	private final String CLE_PRIMAIRE = "id_cours";
 	private final String TABLE = "cours";
+	private final String TABLE_COURS_PROF = "cours_prof";
 
 	private final String NOM = "nom";
 	private final String DESCRIPTION = "description";
-	private final String NBRE_SEANCE = "nombre_seances";
-	private final String TRANCHE_AGE = "tranche_age";
-	private final String TYPE = "type";
-	private final String NBRE_PERSONNE = "nombre_personne";
-	private final String ACTIF = "actif";
+	private final String FORMULE = "id_formule";
 
 	private static CoursDAO instance = null;
 
@@ -62,18 +60,13 @@ public class CoursDAO extends DAO<Cours> {
 			/**
 			 * Création d'un tuple dans la base de donnée cours
 			 */
-			String requete = "INSERT INTO " + TABLE + " (" + NOM + ", " + DESCRIPTION + ", " + NBRE_SEANCE + ", "
-					+ TRANCHE_AGE + ", " + TYPE + ", " + NBRE_PERSONNE +", "+ACTIF+ ") VALUES (?,?,?,?,?,?,?)";
+			String requete = "INSERT INTO " + TABLE + " (" + NOM + ", " + DESCRIPTION + ", " + FORMULE + ") VALUES (?,?,?)";
 			PreparedStatement pst = Connexion.getInstance().prepareStatement(requete, Statement.RETURN_GENERATED_KEYS);
 
 			// On associe les ? avec une valeur
 			pst.setString(1, cours.getNom());
 			pst.setString(2, cours.getDescription());
-			pst.setInt(3, cours.getNbreSeance());
-			pst.setString(4, cours.getTrancheAge());
-			pst.setString(5, cours.getType());
-			pst.setInt(6, cours.getNbrePersonne());
-			pst.setInt(7, cours.getActif());			
+			pst.setInt(3, cours.getFormule().getIdFormule());
 
 			// On exécute la requete
 			pst.executeUpdate();
@@ -125,18 +118,12 @@ public class CoursDAO extends DAO<Cours> {
 	public boolean update(Cours cours) {
 		boolean succes = true;
 		try {
-			String requete = "UPDATE " + TABLE + " SET  " + NOM + " = ?, " + DESCRIPTION + " = ?, " + NBRE_SEANCE
-					+ " = ?, " + TRANCHE_AGE + " = ?, " + TYPE + " = ?, " + NBRE_PERSONNE + " = ?, "+ACTIF+" = ? WHERE " + CLE_PRIMAIRE
-					+ " = ?";
+			String requete = "UPDATE " + TABLE + " SET  " + NOM + " = ?, " + DESCRIPTION + " = ?, " + FORMULE + " = ? WHERE " + CLE_PRIMAIRE+ " = ?";
 			PreparedStatement pst = Connexion.getInstance().prepareStatement(requete);
 			pst.setString(1, cours.getNom());
 			pst.setString(2, cours.getDescription());
-			pst.setInt(3, cours.getNbreSeance());
-			pst.setString(4, cours.getTrancheAge());
-			pst.setString(5, cours.getType());
-			pst.setInt(6, cours.getNbrePersonne());
-			pst.setInt(7, cours.getActif());
-			pst.setInt(8, cours.getIdCours());
+			pst.setInt(3, cours.getFormule().getIdFormule());
+			pst.setInt(4, cours.getIdCours());
 
 			pst.executeUpdate();
 
@@ -174,15 +161,13 @@ public class CoursDAO extends DAO<Cours> {
 			// On associe les valeurs des champs à des variables
 			String nom = rsCours.getString(NOM);
 			String description = rsCours.getString(DESCRIPTION);
-			int nbreSeance = rsCours.getInt(NBRE_SEANCE);
-			String trancheAge = rsCours.getString(TRANCHE_AGE);
-			String type = rsCours.getString(TYPE);
-			int nbrePersonne = rsCours.getInt(NBRE_PERSONNE);
+			int idformule = rsCours.getInt(FORMULE);
+			Formule formule = FormuleDAO.getInstance().read(idformule);
 			
 			// Création d'un objet à partir des valeurs récupérées de la base de donnée
-			cours = new Cours(id, nom, description, nbreSeance, trancheAge, type, nbrePersonne);
+			cours = new Cours(id, nom, description, formule);
 			
-			cours.setListeSeances(SeanceDAO.getInstance().readTable(cours));		
+			cours.setListeSeances(SeanceDAO.getInstance().readByCours(cours));		
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -216,14 +201,11 @@ public class CoursDAO extends DAO<Cours> {
 	public boolean existe(Cours cours) {
 		boolean result = false;
 		try {
-			String requete = "SELECT * FROM " + TABLE + " WHERE " + NOM + " = ? AND " + TYPE + " = ? AND " + NBRE_SEANCE
-					+ " = ?";
+			String requete = "SELECT * FROM " + TABLE + " WHERE " + NOM + " = ?";
 
 			// Préparation de la requête
 			PreparedStatement pst = Connexion.getInstance().prepareStatement(requete);
 			pst.setString(1, cours.getNom());
-			pst.setString(2, cours.getType());
-			pst.setInt(3, cours.getNbreSeance());
 
 			// On execute la requête préparé
 			pst.execute();
@@ -252,14 +234,11 @@ public class CoursDAO extends DAO<Cours> {
 		try {
 
 			// Requête pour chercher une adresse correspondante
-			String requete = "SELECT * FROM " + TABLE + " WHERE " + NOM + " = ? AND " + TYPE + " = ? AND " + NBRE_SEANCE
-					+ " = ?";
+			String requete = "SELECT * FROM " + TABLE + " WHERE " + NOM + " = ?";
 
 			// Préparation de la requête
 			PreparedStatement pst = Connexion.getInstance().prepareStatement(requete);
 			pst.setString(1, cours.getNom());
-			pst.setString(2, cours.getType());
-			pst.setInt(3, cours.getNbreSeance());
 
 			// On execute la requête préparé
 			pst.execute();
@@ -319,19 +298,46 @@ public class CoursDAO extends DAO<Cours> {
 	            int id = rs.getInt(CLE_PRIMAIRE);
 	            String nom = rs.getString(NOM);
 	            String description = rs.getString(DESCRIPTION);
-	            int nbreSeance = rs.getInt(NBRE_SEANCE);
-	            String trancheAge = rs.getString(TRANCHE_AGE);
-	            String type = rs.getString(TYPE);
-	            int nbrePersonne = rs.getInt(NBRE_PERSONNE);
+	            int idformule = rs.getInt(FORMULE);
+				Formule formule = FormuleDAO.getInstance().read(idformule);
 	            
-	            Cours cours = new Cours(id, nom, description, nbreSeance, trancheAge, type, nbrePersonne);
-	            cours.setListeSeances(SeanceDAO.getInstance().readTable(cours));
+	            Cours cours = new Cours(id, nom, description, formule);
+	            cours.setListeSeances(SeanceDAO.getInstance().readByCours(cours));
 	            coursList.add(cours);
 	        }
 	    } catch (SQLException e) {
 	        e.printStackTrace();
 	    }
 	    return coursList;
+	}
+
+	public Cours readByName(String nom) {
+		Cours cours = null;
+		try {
+			// Requête dans la table cours
+			String requeteCours = "SELECT * FROM " + TABLE + " WHERE " + NOM + "= ?;";
+			PreparedStatement pst = Connexion.getInstance().prepareStatement(requeteCours);
+			pst.setString(1, nom);
+			pst.execute();
+			
+			// On demande le premier résultat de la requête
+			ResultSet rsCours = pst.getResultSet();
+			rsCours.next();
+			
+			// On associe les valeurs des champs à des variables
+			String description = rsCours.getString(DESCRIPTION);
+			int idformule = rsCours.getInt(FORMULE);
+			Formule formule = FormuleDAO.getInstance().read(idformule);
+			
+			// Création d'un objet à partir des valeurs récupérées de la base de donnée
+			cours = new Cours(nom, description, formule);
+			
+			cours.setListeSeances(SeanceDAO.getInstance().readByCours(cours));		
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return cours;
 	}
 	
 

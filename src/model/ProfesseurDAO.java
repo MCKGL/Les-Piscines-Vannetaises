@@ -4,18 +4,18 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import controller.Employee;
-import controller .InfoProfesseur;
+import service.Employee;
+import service.InfoProfesseur;
 
 public class ProfesseurDAO extends DAO<Employee> {
 // -----------------------------------------------------------------------------------------------------------------------
 	/**
 	 * Attributs
 	 */
-	private static final String CLE_PRIMAIRE = "id_employee";
-	private static final String TABLE = "professeur";
+	private static final String CLE_PRIMAIRE = "id_prof";
+	private static final String TABLE = "info_prof";
 	
-	private static final String SPECIALITES = "specialites";
+	private static final String SPECIALITES = "specialite";
 
 	private static ProfesseurDAO instance=null;
 // -----------------------------------------------------------------------------------------------------------------------
@@ -114,7 +114,7 @@ public class ProfesseurDAO extends DAO<Employee> {
 		String requete = "SELECT * FROM "+TABLE+" WHERE "+CLE_PRIMAIRE+"="+idProfesseur+";";
 		ResultSet rs = Connexion.executeQuery(requete);
 		rs.next();
-		String specialites = rs.getString("specialites");
+		String specialites = rs.getString(SPECIALITES);
 		professeur = new InfoProfesseur(specialites);
 		
 		} catch (SQLException e) {

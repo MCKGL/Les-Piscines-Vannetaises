@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.SceneControllerPayement">
+   <children>
+      <HBox alignment="CENTER" layoutX="1.0" layoutY="1.0" prefHeight="34.0" prefWidth="597.0" style="-fx-background-color: green;">
+         <children>
+            <Label text="Payement" textFill="WHITE" />
+         </children>
+      </HBox>
+      <Pane layoutY="35.0" prefHeight="366.0" prefWidth="600.0">
+         <children>
+            <Label fx:id="Lsomme" layoutX="241.0" layoutY="67.0" text="A payer :" />
+            <Label layoutX="180.0" layoutY="96.0" text="Insérerez votre carte et suivez les instructions" />
+            <Button fx:id="Bannuler" layoutX="534.0" layoutY="327.0" mnemonicParsing="false" onAction="#switchToHome" text="Annuler" />
+            <TextField fx:id="TnumCarte" layoutX="212.0" layoutY="139.0" />
+            <TextField fx:id="Tcrypt" layoutX="381.0" layoutY="139.0" prefHeight="25.0" prefWidth="39.0" />
+            <TextField fx:id="TnomCarte" layoutX="212.0" layoutY="243.0" />
+            <Label layoutX="213.0" layoutY="123.0" text="Numéro de Carte" />
+            <Label layoutX="211.0" layoutY="226.0" text="Nom figurant sur la carte" />
+            <Label layoutX="381.0" layoutY="123.0" text="Cryptogramme visuel" />
+            <DatePicker fx:id="Date" layoutX="214.0" layoutY="192.0" prefHeight="25.0" prefWidth="101.0" />
+            <Label layoutX="213.0" layoutY="175.0" text="Date d'expiration" />
+            <Button fx:id="Bpayer" layoutX="277.0" layoutY="279.0" mnemonicParsing="false" onAction="#payer" text="Payer" />
+            <Label fx:id="LerreurPaye" layoutX="189.0" layoutY="291.0" text="Entrez un nom de carte et une date valide" textFill="#ff0202" visible="false" />
+            <Label layoutX="180.0" layoutY="43.0" text="Et avez séléctionné :" />
+            <Label layoutX="7.0" layoutY="343.0" text="Terminal :" />
+            <Label fx:id="LnomPiscine" layoutX="65.0" layoutY="343.0" text="Piscine des deux Pins" />
+            <Label layoutX="166.0" layoutY="26.0" text="Vous avez optez pour :" />
+            <Label fx:id="LrecapFormule" layoutX="301.0" layoutY="26.0" text="DetailFormule" />
+            <Label fx:id="Lrecap" layoutX="299.0" layoutY="43.0" text="DetailType" />
+         </children>
+      </Pane>
+      <Pane fx:id="PpayeR" layoutX="87.0" layoutY="63.0" prefHeight="265.0" prefWidth="434.0" style="-fx-background-color: green;" visible="false">
+         <children>
+            <Label layoutX="169.0" layoutY="124.0" text="Payement réussit !" textFill="WHITE" />
+            <Button layoutX="201.0" layoutY="158.0" mnemonicParsing="false" onAction="#switchToHome" text="Ok" />
+            <Label fx:id="LcodeClient" layoutX="217.0" layoutY="210.0" text="000000000" />
+            <Label layoutX="79.0" layoutY="210.0" text="Votre code à conserver :" />
+         </children>
+      </Pane>
+   </children>
+</AnchorPane>

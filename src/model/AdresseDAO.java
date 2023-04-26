@@ -5,7 +5,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-import controller.Adresse;
+import service.Adresse;
 
 public class AdresseDAO extends DAO<Adresse> {
 	
@@ -19,8 +19,8 @@ public class AdresseDAO extends DAO<Adresse> {
 
 	private static final String VILLE = "ville";
 	private static final String CODE_POSTAL = "code_postal";
-	private static final String RUE = "rue";
-	private static final String NUMERO = "numero";
+	private static final String RUE = "nom_rue";
+	private static final String NUMERO = "num_rue";
 	
 
 	private static AdresseDAO instance=null;

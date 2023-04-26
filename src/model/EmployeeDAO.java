@@ -6,25 +6,27 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
-import controller.Adresse;
-import controller.Employee;
-import controller.InfoAdministrateur;
-import controller.InfoProfesseur;
+import service.Adresse;
+import service.Employee;
+import service.InfoAdministrateur;
+import service.InfoProfesseur;
 
 public class EmployeeDAO extends DAO<Employee> {
 	// -----------------------------------------------------------------------------------------------------------------------
 	/**
 	 * Attributs
 	 */
-	private final String CLE_PRIMAIRE = "idemployee";
-	private final String TABLE = "employee";
+	private final String CLE_PRIMAIRE = "id_employe";
+	private final String TABLE = "employe";
 
 	private final String NOM = "nom";
 	private final String PRENOM = "prenom";
-	private final String NOM_MEMBRE = "nom_membre";
-	private final String EMAIL = "email";
-	private final String DATE = "date_de_naissance";
+	private final String NOM_MEMBRE = "pseudo";
+	private final String EMAIL = "mail";
+	private final String DATE = "date_naissance";
 	private final String ID_ADRESSE = "id_adresse";
 	private final String ACTIF = "actif";
 
@@ -276,6 +278,49 @@ public class EmployeeDAO extends DAO<Employee> {
 		}
 		return employee;
 	}
+	
+	
+	public List<Employee> readAll() {
+	    List<Employee> employees = new ArrayList<>();
+	    try {
+	        String requete = "SELECT * FROM " + TABLE;
+	        ResultSet rs = Connexion.executeQuery(requete);
+	        while (rs.next()) {
+	            int idEmployee = rs.getInt(CLE_PRIMAIRE);
+	            String nom = rs.getString(NOM);
+	            String prenom = rs.getString(PRENOM);
+	            String nomMembre = rs.getString(NOM_MEMBRE);
+	            String email = rs.getString(EMAIL);
+	            LocalDate date = rs.getDate(DATE).toLocalDate();
+	            int idAdresse = rs.getInt(ID_ADRESSE);
+
+	            // Lire la table adresse associé à un employé
+	            Adresse adresse = AdresseDAO.getInstance().read(idAdresse);
+
+	            // Instancier la classe employee
+	            Employee employee = new Employee(idEmployee, nom , prenom , nomMembre , email , date, adresse);
+
+	            // Lire la table administrateur associé à un employé
+	            if (AdministrateurDAO.getInstance().existe(idEmployee)) {
+	                InfoAdministrateur admin = AdministrateurDAO.getInstance().readInfoAdministrateur(idEmployee);
+	                employee.setInfoAdministrateur(admin);
+	            }
+
+	            // Lire la table professeur associé à un employé
+	            if (ProfesseurDAO.getInstance().existe(idEmployee)) {
+	                InfoProfesseur professeur = ProfesseurDAO.getInstance().readInfoProfesseur(idEmployee);
+	                employee.setInfoProfesseur(professeur);
+	            }
+
+	            employees.add(employee);
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+	    return employees;
+	}
+	
+	
 }
 
 
