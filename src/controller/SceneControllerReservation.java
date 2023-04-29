@@ -123,7 +123,7 @@ public class SceneControllerReservation extends SceneController  {
 				String prix = Lprix.getText();
 				String detail = LCoursSelect.getText();
 				String detailCouF = "Cours";
-				FXMLLoader loader = new FXMLLoader(getClass().getResource("/vue/Payement.fxml"));	
+				FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/Payement.fxml"));	
 				root = loader.load();	
 				SceneControllerPayement scenePaye = loader.getController();
 				scenePaye.recupererInfo(prix, detail, detailCouF);
@@ -133,7 +133,7 @@ public class SceneControllerReservation extends SceneController  {
 				String prix = LaboSolo.getText();
 				String detail = BpayeSolo.getText();
 				String detailCouF = "Abonnement Solo";
-				FXMLLoader loader = new FXMLLoader(getClass().getResource("/vue/Payement.fxml"));	
+				FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/Payement.fxml"));	
 				root = loader.load();	
 				SceneControllerPayement scenePaye = loader.getController();
 				scenePaye.recupererInfo(prix, detail, detailCouF);
@@ -143,7 +143,7 @@ public class SceneControllerReservation extends SceneController  {
 				String prix = LaboDuo.getText();
 				String detail = BpayeDuo.getText();
 				String detailCouF = "Abonnement Duo";
-				FXMLLoader loader = new FXMLLoader(getClass().getResource("/vue/Payement.fxml"));	
+				FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/Payement.fxml"));	
 				root = loader.load();	
 				SceneControllerPayement scenePaye = loader.getController();
 				scenePaye.recupererInfo(prix, detail, detailCouF);
