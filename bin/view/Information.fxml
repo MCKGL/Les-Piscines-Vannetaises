@@ -25,9 +25,9 @@
       <TableView fx:id="TableSeance" layoutX="13.0" layoutY="54.0" prefHeight="332.0" prefWidth="577.0">
          <columns>
             <TableColumn fx:id="jour" prefWidth="151.33330821990967" text="jour" />
-            <TableColumn fx:id="debut" prefWidth="138.00001525878906" text="debut" />
             <TableColumn fx:id="fin" prefWidth="114.6666259765625" text="fin" />
             <TableColumn fx:id="typeCours" prefWidth="172.66665649414062" text="type de cours" />
+            <TableColumn fx:id="prof" prefWidth="138.00001525878906" text="prof" />
          </columns>
       </TableView>
    </children>

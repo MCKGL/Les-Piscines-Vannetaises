@@ -1,6 +1,5 @@
 package controller;
 
-import java.sql.Date;
 import java.util.List;
 
 import javafx.beans.property.SimpleStringProperty;
@@ -14,9 +13,9 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
-import model.EmployeeDAO;
+import model.ProfesseurDAO;
 import model.SeanceDAO;
-import service.Employee;
+import service.InfoProfesseur;
 import service.Seance;
 
 public class SceneControllerAdministrateur extends SceneController {
@@ -27,7 +26,7 @@ public class SceneControllerAdministrateur extends SceneController {
 	 * Update un Prof
 	 * Créer un prof
 	 */
-	private ObservableList<Employee> empData = FXCollections.observableArrayList();
+	private ObservableList<InfoProfesseur> empData = FXCollections.observableArrayList();
 	private ObservableList<Seance> seanceData = FXCollections.observableArrayList();
 	
     @FXML
@@ -37,25 +36,25 @@ public class SceneControllerAdministrateur extends SceneController {
     @FXML
     Pane Pconnect;
     @FXML
-    private TableView<Employee> TableProf;
+    private TableView<InfoProfesseur> TableProf;
     @FXML
-	private TableColumn<Employee, String> nom;
+	private TableColumn<InfoProfesseur, String> nom;
 	@FXML
-	private TableColumn<Employee, String> prenom;
+	private TableColumn<InfoProfesseur, String> prenom;
 	@FXML
-	private TableColumn<Employee, String> mail;
+	private TableColumn<InfoProfesseur, String> mail;
 	@FXML
-	private TableColumn<Employee, String> date_naissance;
+	private TableColumn<InfoProfesseur, String> date_naissance;
     @FXML
     private TableView<Seance> TableSeance;
     @FXML
 	private TableColumn<Seance, String> jour;
-    @FXML
-	private TableColumn<Seance, String> debut;
 	@FXML
 	private TableColumn<Seance, String> fin;
 	@FXML
 	private TableColumn<Seance, String> typeCours;
+    @FXML
+	private TableColumn<Seance, String> prof;
 	@FXML
 	Button BaffEmployee, BaffSeance;
 
@@ -84,7 +83,7 @@ public class SceneControllerAdministrateur extends SceneController {
 	   }
 	
 	   
-	   public ObservableList<Employee> getEmpData() {
+	   public ObservableList<InfoProfesseur> getEmpData() {
 			return empData;
 		}
 	   
@@ -96,26 +95,26 @@ public class SceneControllerAdministrateur extends SceneController {
 		   if(event.getSource() == BaffEmployee) {
 			   TableProf.setVisible(true);
 			   TableSeance.setVisible(false);
-			   nom.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getNom()));
-			   prenom.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getPrenom()));
-			   mail.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getEmail()));
-			   date_naissance.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().toStringDateNaissance()));
+			   nom.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getIdEmployee().getNom()));
+			   prenom.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getIdEmployee().getPrenom()));
+			   mail.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getIdEmployee().getMail()));
+			   date_naissance.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getIdEmployee().toStringDateNaissance()));
 		   
 		   
-			   EmployeeDAO employeeDAO = EmployeeDAO.getInstance();
-			   List<Employee> employees = employeeDAO.readAll();
+			   ProfesseurDAO professeurDAO = ProfesseurDAO.getInstance();
+			   List<InfoProfesseur> profs = professeurDAO.readAll();
 			   empData.clear();
-			   empData.addAll(employees);
+			   empData.addAll(profs);
 			   TableProf.setItems(empData);
 			   System.out.println(empData);
 		   }
 		   if(event.getSource() == BaffSeance) {
 			   TableProf.setVisible(false);
 			   TableSeance.setVisible(true);
-			   jour.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getJourSemaine()));
-			   debut.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().toStringHeureDebut()));
-			   fin.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().toStringHeureFin()));
-			   typeCours.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getCours().getNom()));
+			   jour.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().toStringDate()));
+			   fin.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().toStringDuree()));
+			   typeCours.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getIdCours().getNom()));
+			   prof.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getIdProf().getIdEmployee().getPrenom()));
 			   
 			   SeanceDAO seanceDAO = SeanceDAO.getInstance();
 			   List<Seance> seances = seanceDAO.readAll();

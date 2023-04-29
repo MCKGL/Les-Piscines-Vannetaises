@@ -3,19 +3,21 @@ package model;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import service.Employee;
 import service.InfoProfesseur;
 
-public class ProfesseurDAO extends DAO<Employee> {
+public class ProfesseurDAO extends DAO<InfoProfesseur> {
 // -----------------------------------------------------------------------------------------------------------------------
 	/**
 	 * Attributs
 	 */
 	private static final String CLE_PRIMAIRE = "id_prof";
 	private static final String TABLE = "info_prof";
-	
 	private static final String SPECIALITES = "specialite";
+	private final String EMPLOYEE = "id_employe";
 
 	private static ProfesseurDAO instance=null;
 // -----------------------------------------------------------------------------------------------------------------------
@@ -37,106 +39,106 @@ public class ProfesseurDAO extends DAO<Employee> {
 		super();
 	}
 // -----------------------------------------------------------------------------------------------------------------------
-	/**
-	 * Création d'une ligne professeur dans la base de donnée
-	 */
 	@Override
-	public boolean create(Employee prof) {
-		boolean succes=true;
+	public boolean create(InfoProfesseur prof) {
+		boolean succes = true;
 		try {
-			String requete = "INSERT INTO "+TABLE+" ("+CLE_PRIMAIRE+", "+SPECIALITES+") VALUES (?,?)";
+
+			String requete = "INSERT INTO " + TABLE + " ( " +CLE_PRIMAIRE+", "+ SPECIALITES + ", " + EMPLOYEE + ") VALUES (?, ?, ?)";
 			PreparedStatement pst = Connexion.getInstance().prepareStatement(requete);
-			pst.setInt(1, prof.getIdEmployee());
-			pst.setString(2, prof.getInfoProfesseur().getSpecialites());
+			pst.setInt(1, prof.getIdProf());
+			pst.setString(2, prof.getSpecialite());
+			pst.setInt(3, prof.getIdEmployee().getIdEmployee());
+
+			// Mise à jour de la base de donnée
 			pst.executeUpdate();
 			
-			
-			donnees.put(prof.getIdEmployee(), prof);
 		} catch (SQLException e) {
-			succes=false;
+			succes = false;
 			e.printStackTrace();
 		}
 		return succes;
 	}
-// -----------------------------------------------------------------------------------------------------------------------
-	/**
-	 * Suppression d'une ligne professeur dans la base de donnée
-	 */
+	
 	@Override
-	public boolean delete(Employee prof) {
-		boolean succes=true;
-		int id = prof.getIdEmployee();
+	public boolean update(InfoProfesseur prof) {
+		boolean succes = true;
 		try {
-			String requete = "DELETE FROM "+TABLE+" WHERE "+CLE_PRIMAIRE+" = ?";
-			PreparedStatement pst = Connexion.getInstance().prepareStatement(requete) ;
-			pst.setInt(1, id) ;
-			pst.executeUpdate() ;
-			donnees.remove(id);
-		} catch (SQLException e) {
-			succes = false;
-			e.printStackTrace();
-		} 
-		return succes;		
-	}
-// -----------------------------------------------------------------------------------------------------------------------
-	/**
-	 * Mise à jour d'une ligne professeur dans la base de donnee
-	 */
-	@Override
-	public boolean update(Employee prof) {
-		boolean succes=true;
-		try {
-			String requete = "UPDATE "+TABLE+" SET  "+SPECIALITES+" = ? WHERE "+CLE_PRIMAIRE+" = ?";
-			PreparedStatement pst = Connexion.getInstance().prepareStatement(requete) ;
-			pst.setString(1, prof.getInfoProfesseur().getSpecialites());
-			pst.setInt(2, prof.getIdEmployee());
-			pst.executeUpdate() ;
+			String requete = "UPDATE " + TABLE + " SET " + SPECIALITES + " = ?, " + EMPLOYEE + " = ? WHERE " + CLE_PRIMAIRE + " = ?";
+			PreparedStatement pst = Connexion.getInstance().prepareStatement(requete);
+			pst.setString(1, prof.getSpecialite());
+			pst.setInt(2, prof.getIdEmployee().getIdEmployee());
+			pst.setInt(3, prof.getIdProf());
+
+			// Mise à jour de la base de donnée
+			pst.executeUpdate();
 			
 		} catch (SQLException e) {
 			succes = false;
 			e.printStackTrace();
-		} 
-		return succes;	
+		}
+		return succes;
 	}
 	
-// -----------------------------------------------------------------------------------------------------------------------
 	@Override
-	public Employee read(int id) {
-		throw new IllegalArgumentException();
-	}
-// -----------------------------------------------------------------------------------------------------------------------
-	/**
-	 * Lecture d'un professeur de la base de donnée dans la table professeur
-	 */
-	public InfoProfesseur readInfoProfesseur(int idProfesseur) {
-		InfoProfesseur professeur = null;
+	public boolean delete(InfoProfesseur prof) {
+		boolean succes = true;
+		int idProf = prof.getIdProf();
 		try {
-		String requete = "SELECT * FROM "+TABLE+" WHERE "+CLE_PRIMAIRE+"="+idProfesseur+";";
-		ResultSet rs = Connexion.executeQuery(requete);
-		rs.next();
-		String specialites = rs.getString(SPECIALITES);
-		professeur = new InfoProfesseur(specialites);
-		
+			String requete = "DELETE FROM " + TABLE + " WHERE " + CLE_PRIMAIRE + " = ?";
+			PreparedStatement pst = Connexion.getInstance().prepareStatement(requete);
+			pst.setInt(1, idProf);
+
+			// Mise à jour de la base de donnée
+			pst.executeUpdate();
+			
+		} catch (SQLException e) {
+			succes = false;
+			e.printStackTrace();
+		}
+		return succes;
+	}
+
+	@Override
+	public InfoProfesseur read(int idProf) {
+		InfoProfesseur prof = null;
+		try {
+			String requete = "SELECT * FROM " + TABLE + " WHERE " + CLE_PRIMAIRE + " = ?";
+			PreparedStatement pst = Connexion.getInstance().prepareStatement(requete);
+			pst.setInt(1, idProf);
+			ResultSet rs = pst.executeQuery();
+			rs.next();
+			String spes = rs.getString(SPECIALITES);
+			int idEmployee = rs.getInt(EMPLOYEE);
+			Employee employee = EmployeeDAO.getInstance().read(idEmployee);
+					
+			prof = new InfoProfesseur(spes, employee);
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return professeur;
+		return prof;
 	}
-// -----------------------------------------------------------------------------------------------------------------------
-	/**
-	* Savoir si un tuple existe
-	*/
-	public boolean existe(int id) {
-		boolean result = false;
-		try {
-			String requete = "SELECT * FROM "+TABLE+" WHERE "+CLE_PRIMAIRE+"="+id;
-			ResultSet rs = Connexion.executeQuery(requete);
-			if (rs.next()) {
-				result = true;
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return result;
-		}
+	
+	public List<InfoProfesseur> readAll() {
+	    List<InfoProfesseur> professeurs = new ArrayList<>();
+	    try {
+	        String requete = "SELECT * FROM " + TABLE;
+	        PreparedStatement pst = Connexion.getInstance().prepareStatement(requete);
+	        ResultSet rs = pst.executeQuery();
+	        while (rs.next()) {
+	            int idProf = rs.getInt(CLE_PRIMAIRE);
+	            String spes = rs.getString(SPECIALITES);
+	            int idEmployee = rs.getInt(EMPLOYEE);
+	            Employee employee = EmployeeDAO.getInstance().read(idEmployee);
+	            InfoProfesseur professeur = new InfoProfesseur(spes, employee);
+	            professeur.setIdProf(idProf);
+	            professeurs.add(professeur);
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+	    return professeurs;
+	}
+	
 }

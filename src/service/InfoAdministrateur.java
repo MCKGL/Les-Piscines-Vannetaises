@@ -2,55 +2,45 @@ package service;
 
 public class InfoAdministrateur {
 	
-// -----------------------------------------------------------------------------------------------------------------------
+	private int idAdmin;
+	private String mdp;
+	private Employee idEmployee;
 	
-	/**
-	 * ATTRIBUTS
-	 * 
-	 * id administrateur 
-	 * mot de passe 
-	 * hashage
-	 */
-	private String mdpHasher;
-	
-// -----------------------------------------------------------------------------------------------------------------------
-	/**
-	 * Constructeur avec ID
-	 * @param idAdmin
-	 * @param mdp
-	 * @param hashage
-	 */
-	public InfoAdministrateur(String mdp) {
+	public InfoAdministrateur(String mdp, Employee idEmployee) {
 		super();
-		this.mdpHasher = mdp;
+		this.mdp = mdp;
+		this.idEmployee = idEmployee;
 	}
 
-	
-// -----------------------------------------------------------------------------------------------------------------------
-	
+	public int getIdAdmin() {
+		return idAdmin;
+	}
 
+	public void setIdAdmin(int idAdmin) {
+		this.idAdmin = idAdmin;
+	}
 
-	public String getMdpHash() {
-		return mdpHasher;
+	public String getMdp() {
+		return mdp;
 	}
 
 	public void setMdp(String mdp) {
-		this.mdpHasher = mdp;
+		this.mdp = mdp;
 	}
 
-	// -----------------------------------------------------------------------------------------------------------------------
-	/**
-	 * Methodes
-	 */
-	public void modifierOffre() {
-		
+	public Employee getIdEmployee() {
+		return idEmployee;
 	}
-	
-// -----------------------------------------------------------------------------------------------------------------------
+
+	public void setIdEmployee(Employee idEmployee) {
+		this.idEmployee = idEmployee;
+	}
+
 	@Override
 	public String toString() {
-		return "Administrateur [ mdp=" + mdpHasher + "]";
+		return "InfoAdministrateur [idAdmin=" + idAdmin + ", mdp=" + mdp + ", idEmployee=" + idEmployee + "]";
 	}
-
+	
+	
 }
 

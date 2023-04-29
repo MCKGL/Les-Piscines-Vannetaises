@@ -11,10 +11,6 @@ public class Billet {
 	 */
 	private int code;
 	private int nbreEntreeRestante;
-// -----------------------------------------------------------------------------------------------------------------------
-	/**
-	 * TODO
-	 */
 	private Formule formule;
 	private Piscine piscine;
 

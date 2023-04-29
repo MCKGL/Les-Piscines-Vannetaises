@@ -3,8 +3,6 @@ package model;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
-import java.time.LocalDateTime;
 
 import service.Billet;
 import service.Formule;
@@ -21,9 +19,7 @@ public class BilletDAO extends DAO<Billet> {
 	 */
 	private String CLE_PRIMAIRE = "code";
 	private String TABLE = "billet";
-
 	private String NBRE_ENTREE_RESTANTE = "nb_entree_restante";
-	
 	private final String FORMULE = "id_formule";
 	private final String PISCINE = "id_piscine";
 
@@ -76,9 +72,7 @@ public class BilletDAO extends DAO<Billet> {
 			PreparedStatement pst = Connexion.getInstance().prepareStatement(requete);
 			pst.setInt(1, code);
 			pst.executeUpdate();
-			
-			// TODO
-//			donnees.remove();
+
 		} catch (SQLException e) {
 			succes = false;
 			e.printStackTrace();
@@ -114,7 +108,6 @@ public class BilletDAO extends DAO<Billet> {
 			pst.execute();
 			ResultSet rs = pst.getResultSet();
 			rs.next();
-			int id = rs.getInt(CLE_PRIMAIRE);
 			int nbre_entree_restante = rs.getInt(NBRE_ENTREE_RESTANTE);
 			int idformule = rs.getInt(FORMULE);
 			Formule formule = FormuleDAO.getInstance().read(idformule);

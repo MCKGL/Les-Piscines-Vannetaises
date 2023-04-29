@@ -1,9 +1,7 @@
 package service;
 
-
-import java.time.LocalTime;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-
 
 public class Seance {
 	// -----------------------------------------------------------------------------------------------------------------------
@@ -11,10 +9,10 @@ public class Seance {
 	 * Attributs
 	 */
 	private int idSeance;
-	private LocalTime heureDebut;
-	private LocalTime heureFin;
-	private String jourSemaine;
-	private Cours id_cours;
+	private LocalDateTime date;
+	private int duree;
+	private Cours idCours;
+	private InfoProfesseur idProf;
 	// -----------------------------------------------------------------------------------------------------------------------
 	/**
 	 * Constructeur global
@@ -26,13 +24,13 @@ public class Seance {
 	 * @param nbrePlace
 	 * @param cours
 	 */
-	public Seance(int idSeance, String jourSemaine, LocalTime heureDebut, LocalTime heureFin, Cours cours) {
+	public Seance(int idSeance, LocalDateTime date, int duree, InfoProfesseur prof, Cours cours) {
 		super();
 		this.idSeance = idSeance;
-		this.heureDebut = heureDebut;
-		this.heureFin = heureFin;
-		this.id_cours = cours;
-		this.jourSemaine = jourSemaine;
+		this.date = date;
+		this.duree = duree;
+		this.idProf = prof;
+		this.idCours = cours;
 	}
 	/**
 	 * Controleur sans ID
@@ -43,64 +41,62 @@ public class Seance {
 	 * @param nbrePlace
 	 * @param cours
 	 */
-	public Seance(String jourSemaine, LocalTime heureDebut, LocalTime heureFin, Cours cours) {
+	public Seance(LocalDateTime date, int duree, InfoProfesseur prof, Cours cours) {
 		super();
-		this.heureDebut = heureDebut;
-		this.heureFin = heureFin;
-		this.id_cours = cours;
-		this.jourSemaine = jourSemaine;
+		this.date = date;
+		this.duree = duree;
+		this.idProf = prof;
+		this.idCours = cours;
 	}
 
 	// -----------------------------------------------------------------------------------------------------------------------
-	/**
-	 * Getter
-	 * Setter
-	 */
+	
 	public int getIdSeance() {
 		return idSeance;
 	}
 	public void setIdSeance(int idSeance) {
 		this.idSeance = idSeance;
 	}
-
-	public LocalTime getHeureDebut() {
-		return heureDebut;
+	public LocalDateTime getDate() {
+		return date;
 	}
-	public void setHeureDebut(LocalTime heureDebut) {
-		this.heureDebut = heureDebut;
+	public void setDate(LocalDateTime date) {
+		this.date = date;
 	}
-	public LocalTime getHeureFin() {
-		return heureFin;
+	public int getDuree() {
+		return duree;
 	}
-	public void setHeureFin(LocalTime heureFin) {
-		this.heureFin = heureFin;
+	public void setDuree(int duree) {
+		this.duree = duree;
 	}
-
-	public Cours getCours() {
-		return id_cours;
+	public Cours getIdCours() {
+		return idCours;
 	}
-	public void setCours(Cours cours) {
-		this.id_cours = cours;
+	public void setIdCours(Cours idCours) {
+		this.idCours = idCours;
 	}
-	
-	public String getJourSemaine() {
-		return jourSemaine;
+	public InfoProfesseur getIdProf() {
+		return idProf;
 	}
-	public void setJourSemaine(String jourSemaine) {
-		this.jourSemaine = jourSemaine;
+	public void setIdProf(InfoProfesseur idProf) {
+		this.idProf = idProf;
 	}
 	
-	public String toStringHeureDebut() {
-	    return getHeureDebut().format(DateTimeFormatter.ofPattern("HH:mm"));
+	public String toStringDate() {
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("EEEE dd MMMM yyyy HH:mm");
+	    return date.format(formatter);
 	}
 	
-	public String toStringHeureFin() {
-	    return getHeureFin().format(DateTimeFormatter.ofPattern("HH:mm"));
+	public String toStringDuree() {
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
+	    LocalDateTime endTime = date.plusMinutes(duree);
+	    return endTime.format(formatter);
 	}
 	
 	@Override
 	public String toString() {
-		return "Seance [idSeance=" + idSeance + ", jourSemaine=" + jourSemaine + " heureDebut=" + heureDebut + ", heureFin="+ heureFin + "]\n";
+		return "Seance [idSeance=" + idSeance + ", date=" + date + ", duree=" + duree + ", id_cours=" + idCours
+				+ ", id_prof=" + idProf + "]";
 	}
-	
+
 }

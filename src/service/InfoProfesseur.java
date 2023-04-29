@@ -1,55 +1,44 @@
 package service;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class InfoProfesseur {
-// -----------------------------------------------------------------------------------------------------------------------
-	/**
-	 * Attributs
-	 */
-	private String specialites;
-	private List<Cours> listeCours = new ArrayList<Cours>();
 
-// -----------------------------------------------------------------------------------------------------------------------
-	/**
-	 * TODO
-	 * 
-	 * Constructeur
-	 * 
-	 * @param idProfesseur
-	 * @param specialites
-	 */
-	public InfoProfesseur(String specialites) {
+	private int idProf;
+	private String specialite;
+	private Employee idEmployee;
+	
+	public InfoProfesseur(String specialite, Employee idEmployee) {
 		super();
-		this.specialites = specialites;
+		this.specialite = specialite;
+		this.idEmployee = idEmployee;
 	}
 
-	// -----------------------------------------------------------------------------------------------------------------------
-	/**
-	 * Getter Setter
-	 */
-
-	public String getSpecialites() {
-		return specialites;
+	public int getIdProf() {
+		return idProf;
 	}
 
-	public void setSpecialites(String specialites) {
-		this.specialites = specialites;
+	public void setIdProf(int idProf) {
+		this.idProf = idProf;
 	}
 
-	public List<Cours> getListeCours() {
-		return listeCours;
+	public String getSpecialite() {
+		return specialite;
 	}
 
-	public void setListeCours(List<Cours> listeCours) {
-		this.listeCours = listeCours;
+	public void setSpecialite(String specialite) {
+		this.specialite = specialite;
 	}
 
-	// -----------------------------------------------------------------------------------------------------------------------
+	public Employee getIdEmployee() {
+		return idEmployee;
+	}
+
+	public void setIdEmployee(Employee idEmployee) {
+		this.idEmployee = idEmployee;
+	}
+
 	@Override
 	public String toString() {
-		return "Professeur [ specialite=" + specialites + "]";
+		return "InfoProfesseur [idProf=" + idProf + ", specialite=" + specialite + ", idEmployee=" + idEmployee + "]";
 	}
 
 }

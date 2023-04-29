@@ -20,7 +20,7 @@
          </image>
       </ImageView>
       <TitledPane alignment="CENTER" animated="false" collapsible="false" contentDisplay="CENTER" expanded="false" layoutX="214.0" layoutY="99.0" prefHeight="25.0" prefWidth="172.0" text="Renseignez vos identifiants" />
-      <TitledPane alignment="CENTER" animated="false" collapsible="false" expanded="false" prefHeight="40.0" prefWidth="600.0" text="ADMINISTRATEUR">
+      <TitledPane alignment="CENTER" animated="false" collapsible="false" expanded="false" prefHeight="40.0" prefWidth="610.0" text="ADMINISTRATEUR">
          <font>
             <Font name="System Bold" size="18.0" />
          </font>
@@ -32,24 +32,24 @@
       <Pane fx:id="Pconnect" layoutX="-2.0" prefHeight="405.0" prefWidth="610.0" style="-fx-background-color: #B8F5FF;" visible="false">
          <children>
             <Button layoutX="510.0" layoutY="366.0" mnemonicParsing="false" onAction="#deconnexion" text="Déconnexion" />
-            <Button fx:id="BaffEmployee" layoutX="33.0" layoutY="68.0" mnemonicParsing="false" onAction="#afficherData" text="Afficher liste employés" />
-            <TableView fx:id="TableProf" layoutX="275.0" layoutY="20.0" prefHeight="332.0" prefWidth="307.0" visible="false">
+            <Button fx:id="BaffEmployee" layoutX="14.0" layoutY="8.0" mnemonicParsing="false" onAction="#afficherData" text="Afficher liste employés" />
+            <TableView fx:id="TableProf" layoutX="15.0" layoutY="40.0" prefHeight="312.0" prefWidth="584.0" visible="false">
               <columns>
-                <TableColumn fx:id="nom" prefWidth="75.0" text="nom" />
-                  <TableColumn fx:id="prenom" prefWidth="75.0" text="prenom" />
-                  <TableColumn fx:id="mail" prefWidth="75.0" text="mail" />
-                  <TableColumn fx:id="date_naissance" prefWidth="75.0" text="date_naissance" />
+                <TableColumn fx:id="nom" prefWidth="115.33333969116211" text="nom" />
+                  <TableColumn fx:id="prenom" prefWidth="138.6666717529297" text="prenom" />
+                  <TableColumn fx:id="mail" prefWidth="144.00006103515625" text="mail" />
+                  <TableColumn fx:id="date_naissance" prefWidth="183.33328247070312" text="date_naissance" />
               </columns>
             </TableView>
-            <Button fx:id="BaffSeance" layoutX="33.0" layoutY="119.0" mnemonicParsing="false" onAction="#afficherData" text="Afficher liste séances" />
-            <TableView fx:id="TableSeance" layoutX="275.0" layoutY="21.0" prefHeight="332.0" prefWidth="307.0" visible="false">
+            <TableView fx:id="TableSeance" layoutX="14.0" layoutY="41.0" prefHeight="312.0" prefWidth="584.0" visible="false">
                <columns>
-                  <TableColumn fx:id="jour" prefWidth="75.0" text="jour" />
-                  <TableColumn fx:id="debut" prefWidth="75.0" text="debut" />
-                  <TableColumn fx:id="fin" prefWidth="75.0" text="fin" />
-                  <TableColumn fx:id="typeCours" prefWidth="75.0" text="type de cours" />
+                  <TableColumn fx:id="jour" prefWidth="174.66665172576904" text="jour" />
+                  <TableColumn fx:id="fin" prefWidth="152.6666717529297" text="fin" />
+                  <TableColumn fx:id="typeCours" prefWidth="124.0" text="type de cours" />
+                  <TableColumn fx:id="prof" prefWidth="131.33328247070312" text="prof" />
                </columns>
             </TableView>
+            <Button fx:id="BaffSeance" layoutX="163.0" layoutY="8.0" mnemonicParsing="false" onAction="#afficherData" text="Afficher liste séances" />
          </children>
       </Pane>
 	</children>
