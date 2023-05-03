@@ -20,10 +20,5 @@
             <Button mnemonicParsing="false" onAction="#switchToIdentification" text="Identification" />
          </children>
       </HBox>
-      <ImageView fitHeight="335.0" fitWidth="574.0" layoutX="14.0" layoutY="50.0" pickOnBounds="true">
-         <image>
-            <Image url="@../../../../Projet%20Groupe%20Java/PhotoAccueil.jpg" />
-         </image>
-      </ImageView>
    </children>
 </AnchorPane>

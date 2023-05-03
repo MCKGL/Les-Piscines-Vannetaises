@@ -39,14 +39,6 @@ public class SceneControllerReservation extends SceneController  {
 	@FXML
 	ChoiceBox ChoiceBoxCours;
 	
-	//retourne le prix de la sélection
-	public void recupererPrixBd() {
-		//TODO relier à la base de donnée et retourner le prix des cours.
-		//String requete = "SELECT prix FROM formule WHERE nom = ?"; etc
-		//PreparedStatement pst = Connexion.getInstance().prepareStatement(requete, Statement.RETURN_GENERATED_KEYS);
-		//pst.setString(1, cours.getDescription());
-		//lb.setText(requete);
-	}
 	
 	public void afficherEntreeSimple(ActionEvent event) {
 		PentreeSimple.setVisible(true);
