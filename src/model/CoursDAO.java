@@ -21,7 +21,6 @@ public class CoursDAO extends DAO<Cours> {
 	private final String CLE_PRIMAIRE = "id_cours";
 	private final String TABLE = "cours";
 	private final String TABLE_COURS_PROF = "cours_prof";
-
 	private final String NOM = "nom";
 	private final String DESCRIPTION = "description";
 	private final String FORMULE = "id_formule";
@@ -165,9 +164,7 @@ public class CoursDAO extends DAO<Cours> {
 			Formule formule = FormuleDAO.getInstance().read(idformule);
 			
 			// Création d'un objet à partir des valeurs récupérées de la base de donnée
-			cours = new Cours(id, nom, description, formule);
-			
-			cours.setListeSeances(SeanceDAO.getInstance().readByCours(cours));		
+			cours = new Cours(id, nom, description, formule);	
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -302,7 +299,6 @@ public class CoursDAO extends DAO<Cours> {
 				Formule formule = FormuleDAO.getInstance().read(idformule);
 	            
 	            Cours cours = new Cours(id, nom, description, formule);
-	            cours.setListeSeances(SeanceDAO.getInstance().readByCours(cours));
 	            coursList.add(cours);
 	        }
 	    } catch (SQLException e) {
@@ -331,8 +327,7 @@ public class CoursDAO extends DAO<Cours> {
 			
 			// Création d'un objet à partir des valeurs récupérées de la base de donnée
 			cours = new Cours(nom, description, formule);
-			
-			cours.setListeSeances(SeanceDAO.getInstance().readByCours(cours));		
+					
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
