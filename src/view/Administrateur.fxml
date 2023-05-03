@@ -33,7 +33,8 @@
          <children>
             <Button layoutX="510.0" layoutY="366.0" mnemonicParsing="false" onAction="#deconnexion" text="Déconnexion" />
             <Button fx:id="BaffEmployee" layoutX="14.0" layoutY="8.0" mnemonicParsing="false" onAction="#afficherData" text="Afficher liste employés" />
-            <TableView fx:id="TableProf" layoutX="15.0" layoutY="40.0" prefHeight="312.0" prefWidth="584.0" visible="false">
+            <Button fx:id="BaffSeance" layoutX="163.0" layoutY="8.0" mnemonicParsing="false" onAction="#afficherData" text="Afficher liste séances" />
+            <TableView fx:id="TableProf" layoutX="15.0" layoutY="40.0" onMouseClicked="#Ontupple" prefHeight="312.0" prefWidth="584.0" visible="false">
               <columns>
                 <TableColumn fx:id="nom" prefWidth="115.33333969116211" text="nom" />
                   <TableColumn fx:id="prenom" prefWidth="138.6666717529297" text="prenom" />
@@ -41,17 +42,18 @@
                   <TableColumn fx:id="date_naissance" prefWidth="183.33328247070312" text="date_naissance" />
               </columns>
             </TableView>
-            <TableView fx:id="TableSeance" layoutX="14.0" layoutY="41.0" prefHeight="312.0" prefWidth="584.0" visible="false">
+            <TableView fx:id="TableSeance" layoutX="14.0" layoutY="41.0" onMouseClicked="#Ontupple" prefHeight="312.0" prefWidth="584.0" visible="false">
                <columns>
-                  <TableColumn fx:id="jour" prefWidth="174.66665172576904" text="jour" />
-                  <TableColumn fx:id="fin" prefWidth="152.6666717529297" text="fin" />
-                  <TableColumn fx:id="typeCours" prefWidth="124.0" text="type de cours" />
-                  <TableColumn fx:id="prof" prefWidth="131.33328247070312" text="prof" />
+                  <TableColumn fx:id="jour" prefWidth="125.3333387374878" text="jour" />
+                  <TableColumn fx:id="fin" prefWidth="96.00006103515625" text="fin" />
+                  <TableColumn fx:id="typeCours" prefWidth="150.66664123535156" text="type de cours" />
+                  <TableColumn fx:id="prof" prefWidth="68.66668701171875" text="prof" />
+                  <TableColumn fx:id="annulerSeance" prefWidth="137.99996948242188" text="annuler séance" />
                </columns>
             </TableView>
-            <Button fx:id="BaffSeance" layoutX="163.0" layoutY="8.0" mnemonicParsing="false" onAction="#afficherData" text="Afficher liste séances" />
          </children>
       </Pane>
+      <Pane fx:id="Pdetail" layoutX="199.0" layoutY="86.0" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: blue;" visible="false" />
 	</children>
 
 </AnchorPane>

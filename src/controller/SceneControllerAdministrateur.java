@@ -12,6 +12,7 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import model.ProfesseurDAO;
 import model.SeanceDAO;
@@ -34,7 +35,7 @@ public class SceneControllerAdministrateur extends SceneController {
     @FXML
     PasswordField PFadmin;
     @FXML
-    Pane Pconnect;
+    Pane Pconnect, Pdetail;
     @FXML
     private TableView<InfoProfesseur> TableProf;
     @FXML
@@ -126,6 +127,15 @@ public class SceneControllerAdministrateur extends SceneController {
 		   }
 		   
 	   }
+	   
+	   // permet de sélectionner une tupple
+	   public void Ontupple(MouseEvent event) {
+		    // Récupérer la ligne sélectionnée
+		    Seance seance = TableSeance.getSelectionModel().getSelectedItem();
+		    if (seance != null) {
+		    	Pdetail.setVisible(true);
+		    }
+		}
 		
 	
 }
