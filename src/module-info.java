@@ -7,7 +7,7 @@ module aqua {
 	requires java.desktop;
 	
 	opens application to javafx.graphics, javafx.fxml;
-	opens controller to javafx.graphics, javafx.fxml;
+	opens controleur to javafx.graphics, javafx.fxml;
 
 	
 }

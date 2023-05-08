@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.TitledPane?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="administrateur" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controleur.SceneControllerAdministrateur">
+   <children>
+      <ImageView fitHeight="405.0" fitWidth="610.0" layoutX="-6.0" layoutY="-1.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../assets/PiscinesVannetaises.png" />
+         </image>
+      </ImageView>
+      <TitledPane alignment="CENTER" animated="false" collapsible="false" contentDisplay="CENTER" expanded="false" layoutX="214.0" layoutY="99.0" prefHeight="25.0" prefWidth="172.0" text="Renseignez vos identifiants" />
+      <TitledPane alignment="CENTER" animated="false" collapsible="false" expanded="false" prefHeight="39.0" prefWidth="604.0" text="ADMINISTRATEUR">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </TitledPane>
+      <Button layoutX="14.0" layoutY="367.0" mnemonicParsing="false" onAction="#allerAccueil" text="Accueil" textAlignment="CENTER" />
+      <TextField fx:id="textFieldAdmin" layoutX="214.0" layoutY="125.0" prefHeight="25.0" prefWidth="172.0" promptText="Nom administateur" />
+      <Button alignment="CENTER" contentDisplay="CENTER" layoutX="257.0" layoutY="201.0" mnemonicParsing="false" onAction="#connexion" text="CONNEXION" textAlignment="CENTER" />
+      <PasswordField fx:id="passwordFieldAdmin" layoutX="214.0" layoutY="161.0" prefHeight="25.0" prefWidth="172.0" promptText="Mot de passe" />
+      <Pane fx:id="paneConnexion" layoutX="-4.0" prefHeight="400.0" prefWidth="605.0" style="-fx-background-color: #B8F5FF;" visible="false">
+         <children>
+            <ImageView fitHeight="405.0" fitWidth="610.0" layoutX="-2.0" layoutY="-2.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../assets/PiscinesVannetaises.png" />
+               </image>
+            </ImageView>
+            <Button layoutX="510.0" layoutY="366.0" mnemonicParsing="false" onAction="#deconnexion" text="Déconnexion" />
+            <Button fx:id="boutonAffEmploye" layoutX="14.0" layoutY="8.0" mnemonicParsing="false" onAction="#afficherData" text="Afficher liste employés" />
+            <Button fx:id="boutonAffSeance" layoutX="163.0" layoutY="8.0" mnemonicParsing="false" onAction="#afficherData" text="Afficher liste séances" />
+            <TableView fx:id="tableProf" layoutX="15.0" layoutY="40.0" prefHeight="312.0" prefWidth="584.0" visible="false">
+              <columns>
+                <TableColumn fx:id="nom" prefWidth="115.33333969116211" text="nom" />
+                  <TableColumn fx:id="prenom" prefWidth="138.6666717529297" text="prenom" />
+                  <TableColumn fx:id="mail" prefWidth="144.00006103515625" text="mail" />
+                  <TableColumn fx:id="dateNaissance" prefWidth="183.33328247070312" text="date_naissance" />
+              </columns>
+            </TableView>
+            <TableView fx:id="tableSeance" layoutX="14.0" layoutY="41.0" onMouseClicked="#selectionLigne" prefHeight="312.0" prefWidth="584.0" visible="false">
+               <columns>
+                  <TableColumn fx:id="jour" prefWidth="125.3333387374878" text="jour" />
+                  <TableColumn fx:id="fin" prefWidth="96.00006103515625" text="fin" />
+                  <TableColumn fx:id="typeCours" prefWidth="150.66664123535156" text="type de cours" />
+                  <TableColumn fx:id="prof" prefWidth="68.66668701171875" text="prof" />
+                  <TableColumn fx:id="annulerSeance" prefWidth="137.99996948242188" text="annuler séance" />
+               </columns>
+            </TableView>
+            <TableView fx:id="tableFormule" layoutX="16.0" layoutY="40.0" onMouseClicked="#selectionLigne" prefHeight="312.0" prefWidth="584.0" visible="false">
+               <columns>
+                  <TableColumn fx:id="type" prefWidth="79.33331680297852" text="type" />
+                  <TableColumn fx:id="prix" prefWidth="62.66668701171875" text="prix" />
+                  <TableColumn fx:id="dureeVal" prefWidth="104.0" text="durée validité" />
+                  <TableColumn fx:id="nbEntree" prefWidth="117.3333740234375" text="nombre d'entrée" />
+                  <TableColumn fx:id="label" prefWidth="152.0" text="label" />
+                  <TableColumn fx:id="active" prefWidth="66.0" text="active" />
+               </columns>
+            </TableView>
+            <Button fx:id="boutonAffFormule" layoutX="305.0" layoutY="8.0" mnemonicParsing="false" onAction="#afficherData" text="Afficher liste formules" />
+            <Button fx:id="boutonAffCours" layoutX="451.0" layoutY="8.0" mnemonicParsing="false" onAction="#afficherData" text="Afficher liste cours" />
+            <TableView fx:id="tableCours" layoutX="14.0" layoutY="42.0" onMouseClicked="#selectionLigne" prefHeight="312.0" prefWidth="584.0" visible="false">
+               <columns>
+                  <TableColumn fx:id="nomCours" prefWidth="143.33334350585938" text="cours" />
+                  <TableColumn fx:id="description" prefWidth="190.00001525878906" text="description" />
+               </columns>
+            </TableView>
+         </children>
+      </Pane>
+      <Pane fx:id="paneMaJ" layoutX="8.0" layoutY="38.0" prefHeight="318.0" prefWidth="586.0" style="-fx-background-color: #B8F5FF;" visible="false">
+         <children>
+            <Button fx:id="boutonFermer" layoutX="560.0" layoutY="2.0" mnemonicParsing="false" onAction="#fermerPaneMaJ" prefHeight="25.0" prefWidth="20.0" text="X" />
+            <Button fx:id="boutonSupprimer" layoutX="100.0" layoutY="262.0" mnemonicParsing="false" onAction="#supprimerSelection" text="Supprimer" />
+            <Button fx:id="MaJ" layoutX="413.0" layoutY="262.0" mnemonicParsing="false" text="Mettre à jour" />
+            <TextArea fx:id="textAreaLigneSelect" editable="false" layoutX="88.0" layoutY="27.0" prefHeight="200.0" prefWidth="395.0" />
+            <Label fx:id="labelTitreMaj" layoutX="272.0" layoutY="6.0" text="Label" />
+         </children>
+      </Pane>
+      <Pane fx:id="paneAlert" layoutX="87.0" layoutY="64.0" prefHeight="265.0" prefWidth="429.0" style="-fx-background-color: red;">
+         <children>
+            <Label layoutX="66.0" layoutY="35.0" text="Attention : en désactivant les formules de type &quot;Cours&quot;, &#10;vous supprimerez les cours et les séances associées. &#10;Êtes-vous sûre de votre choix ?" textAlignment="CENTER" textFill="#fffdfd" />
+            <Button fx:id="boutonConfimSupp" layoutX="66.0" layoutY="187.0" mnemonicParsing="false" onAction="#confirmSupp" text="Oui" />
+            <Button fx:id="boutonInfirmSupp" layoutX="326.0" layoutY="187.0" mnemonicParsing="false" onAction="#confirmSupp" text="Non" />
+         </children>
+      </Pane>
+	</children>
+
+</AnchorPane>
