@@ -42,17 +42,21 @@ public class SeanceDAO extends DAO<Seance> {
 	public boolean create(Seance seance) {
 		boolean succes = true;
 		try {
-			String requete = "INSERT INTO " + TABLE + " ( " +CLE_PRIMAIRE+", "+ DATE + ", "+ DUREE + ", " + ID_COURS + ", " + ID_PROF + ") VALUES (?, ?, ?, ?)";
+			String requete = "INSERT INTO " + TABLE + " ("+ DATE + ", "+ DUREE + ", "+ ID_COURS + ", " + ID_PROF + ") VALUES (?, ?, ?, ?)";
 			PreparedStatement pst = Connexion.getInstance().prepareStatement(requete);
-			pst.setInt(1, seance.getIdSeance());
-			pst.setObject(2, seance.getDate());
-			pst.setInt(3, seance.getDuree());
-			pst.setInt(4, seance.getIdCours().getIdCours());
-			pst.setInt(5, seance.getIdProf().getIdProf());
+			pst.setObject(1, seance.getDate());
+			pst.setInt(2, seance.getDuree());
+			pst.setInt(3, seance.getIdCours().getIdCours());
+			pst.setInt(4, seance.getIdProf().getIdProf());
 
 			// Mise à jour de la base de donnée
 			pst.executeUpdate();
 			
+			ResultSet rs = pst.getGeneratedKeys();
+			if (rs.next()) {
+				seance.setIdSeance(rs.getInt(1));
+			}
+			succes = true;
 		} catch (SQLException e) {
 			succes = false;
 			e.printStackTrace();
@@ -104,7 +108,7 @@ public class SeanceDAO extends DAO<Seance> {
 		try {
 			String requete = "SELECT * FROM " + TABLE + " WHERE " + CLE_PRIMAIRE + " = ?;";
 			PreparedStatement pst = Connexion.getInstance().prepareStatement(requete);
-			pst.setFloat(1, id);
+			pst.setInt(1, id);
 			pst.execute();
 			ResultSet rs = pst.getResultSet();
 			rs.next();

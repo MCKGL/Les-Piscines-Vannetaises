@@ -46,13 +46,14 @@ public class Formule {
 	 * @param prixFormule
 	 * @param nbreEntreeFormule
 	 */
-	public Formule(String type, String label, int dureeValidite, int prixFormule, int nbreEntreeFormule) {
+	public Formule(String type, String label, int dureeValidite, int prixFormule, int nbreEntreeFormule, boolean active) {
 		super();
 		this.type = type;
 		this.dureeValidite = dureeValidite;
 		this.prixFormule = prixFormule;
 		this.nbreEntreeFormule = nbreEntreeFormule;
 		this.label = label;
+		this.active = active;
 	}
 	/**
 	 * Getter 
@@ -82,7 +83,7 @@ public class Formule {
 		this.label = label;
 	}
 
-	public long getDureeValidite() {
+	public int getDureeValidite() {
 		return dureeValidite;
 	}
 
@@ -114,10 +115,12 @@ public class Formule {
 		this.active = active;
 	}
 	
+
 	@Override
 	public String toString() {
 		return "Formule [idFormule=" + idFormule + ", prixFormule=" + prixFormule + ", dureeValidite=" + dureeValidite
-				+ ", nbreEntreeFormule=" + nbreEntreeFormule + ", label=" + label + ", type=" + type + "]";
+				+ ", nbreEntreeFormule=" + nbreEntreeFormule + ", label=" + label + ", type=" + type + ", active="
+				+ active + "]";
 	}
 
 	public String getNbEntreeToString() {

@@ -30,17 +30,19 @@ public class SceneControllerReservation extends SceneController implements Initi
 	private Parent root;
 	
 	@FXML
-	private Pane paneEntreeSimple, paneCours, paneAbonnement, paneDetail;
+	private Pane paneCours, paneAbonnement, paneDetail;
 	@FXML
 	private Button boutonEntreeSimple, boutonCours, boutonFermer, boutonAbonnement, boutonAquabike, boutonPayerSolo, boutonPayerDuo, boutonPayerCours;
 	@FXML
-	private Label labelDetail, labelPrix, labelAboDuo, labelAboSolo, labelCoursSelect, labelDetailSolo, labelDetailDuo;
+	private Label labelDetail, labelPrix, labelAboDuo, labelAboSolo, labelCoursSelect, labelDetailSolo, labelDetailDuo, labelPrixEntreeSimple;
 	@FXML
 	private ChoiceBox<String> choiceBoxCours;
 	
+	//méthode appelé à l'initialisation de la page (doit être implementé au niveau de la déclaration de Class)
 	@Override
 	public void initialize(java.net.URL arg0, ResourceBundle arg1) {
 
+		// on va associer au bouton les types de formules
 		FormuleDAO formuleDAO = FormuleDAO.getInstance();
 		Map<String, Button> boutons = new HashMap<>();
 
@@ -49,6 +51,7 @@ public class SceneControllerReservation extends SceneController implements Initi
 		boutons.put("Cours", boutonCours);
 		boutons.put("Entree libre", boutonEntreeSimple);
 
+		// Si la formule concernée est inactive, rendre le bouton inactif
 		for (Map.Entry<String, Button> entry : boutons.entrySet()) {
 		    Formule formule = formuleDAO.readByTypes(entry.getKey());
 		    if (!formule.getActive()) {
@@ -57,17 +60,16 @@ public class SceneControllerReservation extends SceneController implements Initi
 		        entry.getValue().setDisable(false);
 		    }
 		}
-	}
-	
-	public void afficherEntreeSimple(ActionEvent event) {
-		paneEntreeSimple.setVisible(true);
-		paneCours.setVisible(false);
-		paneAbonnement.setVisible(false);
+		
+        //methode pour l'implementation du prix d'un billet via le bouton entrée libre
+        String type = "Entree libre";
+        FormuleDAO formuleDao = FormuleDAO.getInstance();
+        Formule entreSimple = formuleDao.readByTypes(type);
+        labelPrixEntreeSimple.setText(Integer.toString(entreSimple.getPrixFormule()) + "€");
 	}
 	
 	// a l'initialisation du Pane "cours", Le ChoiceBox récupère les données de la bd
 	public void afficherCours(ActionEvent event) {
-		paneEntreeSimple.setVisible(false);
 		paneCours.setVisible(true);
 		paneAbonnement.setVisible(false);
 		
@@ -98,7 +100,6 @@ public class SceneControllerReservation extends SceneController implements Initi
 	public void afficherAbonnement(ActionEvent event) {
 		String AboSolo = "Abonnement Solo";
 		String AboDuo = "Abonnement Duo";
-		paneEntreeSimple.setVisible(false);
 		paneCours.setVisible(false);
 		paneAbonnement.setVisible(true);
 		
@@ -115,7 +116,6 @@ public class SceneControllerReservation extends SceneController implements Initi
 	
 	//ferme les panes 1er niveau
 	public void retourReservation(ActionEvent event) {
-		paneEntreeSimple.setVisible(false);
 		paneCours.setVisible(false);
 		paneAbonnement.setVisible(false);
 	}
@@ -128,36 +128,36 @@ public class SceneControllerReservation extends SceneController implements Initi
 	
 	//Aller à la page Payement en injectant le contenu du Label Prix dans la page payement selon le cours ou l'abonnement choisit :
 	public void allerPayement(ActionEvent event) throws IOException {
+		String prix = "";
+		String detail = "";
+		String detailCouF = "";
 			if(event.getSource() == boutonPayerCours) {
-				String prix = labelPrix.getText();
-				String detail = labelCoursSelect.getText();
-				String detailCouF = "Cours";
-				FXMLLoader loader = new FXMLLoader(getClass().getResource("/vue/Payement.fxml"));	
-				root = loader.load();	
-				SceneControllerPayement scenePaye = loader.getController();
-				scenePaye.recupererInfo(prix, detail, detailCouF);
+				prix = labelPrix.getText();
+				detail = labelCoursSelect.getText();
+				detailCouF = "Cours";	
 			}
 			
 			if(event.getSource() == boutonPayerSolo) {
-				String prix = labelAboSolo.getText();
-				String detail = boutonPayerSolo.getText();
-				String detailCouF = "Abonnement Solo";
-				FXMLLoader loader = new FXMLLoader(getClass().getResource("/vue/Payement.fxml"));	
-				root = loader.load();	
-				SceneControllerPayement scenePaye = loader.getController();
-				scenePaye.recupererInfo(prix, detail, detailCouF);
+				prix = labelAboSolo.getText();
+				detail = boutonPayerSolo.getText();
+				detailCouF = "Abonnement Solo";	
 			}
 			
 			if(event.getSource() == boutonPayerDuo) {
-				String prix = labelAboDuo.getText();
-				String detail = boutonPayerDuo.getText();
-				String detailCouF = "Abonnement Duo";
-				FXMLLoader loader = new FXMLLoader(getClass().getResource("/vue/Payement.fxml"));	
-				root = loader.load();	
-				SceneControllerPayement scenePaye = loader.getController();
-				scenePaye.recupererInfo(prix, detail, detailCouF);
+				prix = labelAboDuo.getText();
+				detail = boutonPayerDuo.getText();
+				detailCouF = "Abonnement Duo";	
 			}
-		
+            if(event.getSource() == boutonEntreeSimple) {
+                prix = labelPrixEntreeSimple.getText();
+                detail = boutonEntreeSimple.getText();
+                detailCouF = "Entrée simple"; 
+            }
+            
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/vue/Payement.fxml"));
+            root = loader.load();	
+			SceneControllerPayement scenePaye = loader.getController();
+			scenePaye.recupererInfo(prix, detail, detailCouF);
 			stage = (Stage)((Node)event.getSource()).getScene().getWindow();
 			scene = new Scene(root);
 			stage.setScene(scene);

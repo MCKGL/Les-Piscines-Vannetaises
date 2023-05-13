@@ -1,10 +1,22 @@
 package application;
 
+import java.sql.Date;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.Month;
+
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import modele.bd.CoursDAO;
+import modele.bd.ProfesseurDAO;
+import modele.bd.SeanceDAO;
+import modele.metier.Cours;
+import modele.metier.InfoProfesseur;
+import modele.metier.Seance;
 
 
 public class Main extends Application {

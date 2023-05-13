@@ -110,7 +110,7 @@ public class EmployeDAO extends DAO<Employe> {
 			int idAdresse = rs.getInt(ID_ADRESSE);
 			Adresse adresse = AdresseDAO.getInstance().read(idAdresse);
 	
-			employee = new Employe(nom, prenom, mail, dateNaissance, adresse);
+			employee = new Employe(id, nom, prenom, mail, dateNaissance, adresse);
 
 		} catch (SQLException e) {
 			e.printStackTrace();

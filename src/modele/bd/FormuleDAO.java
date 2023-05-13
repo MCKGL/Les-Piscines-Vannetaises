@@ -51,10 +51,10 @@ public class FormuleDAO extends DAO<Formule> {
 					+ ACTIVE + ") VALUES (?, ?, ?, ?, ?, ?)";
 			PreparedStatement pst = Connexion.getInstance().prepareStatement(requete, Statement.RETURN_GENERATED_KEYS);
 			pst.setString(1, formule.getType());
-			pst.setLong(2, formule.getDureeValidite());
-			pst.setInt(3, formule.getPrixFormule());
-			pst.setInt(4, formule.getNbreEntreeFormule());
-			pst.setString(5, formule.getLabel());
+			pst.setString(2, formule.getLabel());
+			pst.setInt(3, formule.getDureeValidite());
+			pst.setInt(4, formule.getPrixFormule());
+			pst.setInt(5, formule.getNbreEntreeFormule());
 			pst.setBoolean(6, formule.getActive());
 
 			// Mise à jour de la base de donnée
@@ -99,7 +99,7 @@ public class FormuleDAO extends DAO<Formule> {
 			PreparedStatement pst = Connexion.getInstance().prepareStatement(requete);
 			pst.setString(1, formule.getType());
 			pst.setString(2, formule.getLabel());
-			pst.setLong(3, formule.getDureeValidite());
+			pst.setInt(3, formule.getDureeValidite());
 			pst.setInt(4, formule.getPrixFormule());
 			pst.setInt(5, formule.getNbreEntreeFormule());
 			pst.setBoolean(6, formule.getActive());

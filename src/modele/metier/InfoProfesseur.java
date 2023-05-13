@@ -4,12 +4,19 @@ public class InfoProfesseur {
 
 	private int idProf;
 	private String specialite;
-	private Employe idEmployee;
+	private Employe employe;
 	
-	public InfoProfesseur(String specialite, Employe idEmployee) {
+	public InfoProfesseur(int idProf, String specialite, Employe employe) {
+	    super();
+	    this.idProf = idProf;
+	    this.specialite = specialite;
+	    this.employe = employe;
+	}
+	
+	public InfoProfesseur(String specialite, Employe employe) {
 		super();
 		this.specialite = specialite;
-		this.idEmployee = idEmployee;
+		this.employe = employe;
 	}
 
 	public int getIdProf() {
@@ -29,16 +36,16 @@ public class InfoProfesseur {
 	}
 
 	public Employe getIdEmployee() {
-		return idEmployee;
+		return employe;
 	}
 
 	public void setIdEmployee(Employe idEmployee) {
-		this.idEmployee = idEmployee;
+		this.employe = idEmployee;
 	}
 
 	@Override
 	public String toString() {
-		return "InfoProfesseur [idProf=" + idProf + ", specialite=" + specialite + ", idEmployee=" + idEmployee + "]";
+		return "InfoProfesseur [idProf=" + idProf + ", specialite=" + specialite + ", idEmployee=" + employe + "]";
 	}
 
 }

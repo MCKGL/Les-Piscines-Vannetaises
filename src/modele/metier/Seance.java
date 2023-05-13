@@ -95,8 +95,8 @@ public class Seance {
 	
 	@Override
 	public String toString() {
-		return "Seance [idSeance=" + idSeance + ", date=" + date + ", duree=" + duree + ", id_cours=" + idCours
-				+ ", id_prof=" + idProf + "]";
+	    return "Seance [idSeance=" + idSeance + ", date=" + date + ", duree=" + duree + ", idCours=" + idCours
+	            + ", idProf=" + idProf + "]";
 	}
 
 }

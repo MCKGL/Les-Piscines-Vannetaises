@@ -260,9 +260,10 @@ public class CoursDAO extends DAO<Cours> {
 			String description = rsCours.getString(DESCRIPTION);
 			int idformule = rsCours.getInt(FORMULE);
 			Formule formule = FormuleDAO.getInstance().read(idformule);
+			int idCours = rsCours.getInt(CLE_PRIMAIRE);
 			
 			// Création d'un objet à partir des valeurs récupérées de la base de donnée
-			cours = new Cours(nom, description, formule);
+			cours = new Cours(idCours, nom, description, formule);
 					
 			
 		} catch (SQLException e) {

@@ -23,18 +23,16 @@ public class SceneControllerInformation extends SceneController implements Initi
 	private TableColumn<Seance, String> jour, fin, typeCours, prof;
 	
 	public void afficherData() {
-		   jour.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().toStringDate()));
-		   fin.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().toStringDuree()));
-		   typeCours.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getIdCours().getNom()));
-		   prof.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getIdProf().getIdEmployee().getPrenom()));
+		jour.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().toStringDate()));
+		fin.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().toStringDuree()));
+		typeCours.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getIdCours().getNom()));
+		prof.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getIdProf().getIdEmployee().getPrenom()));
 
 		SeanceDAO seanceDAO = SeanceDAO.getInstance();
 		List<Seance> seances = seanceDAO.readAll();
 		seanceData.clear();
 		seanceData.addAll(seances);
 		tableSeance.setItems(seanceData);
-		//System.out.println(seanceData);
-		System.out.println(seanceDAO.read(1).getDate());
 		
 	}
 

@@ -53,6 +53,11 @@ public class ProfesseurDAO extends DAO<InfoProfesseur> {
 			// Mise à jour de la base de donnée
 			pst.executeUpdate();
 			
+            ResultSet rs = pst.getGeneratedKeys();
+            if (rs.next()) {
+                prof.setIdProf(rs.getInt(1));
+            }
+			
 		} catch (SQLException e) {
 			succes = false;
 			e.printStackTrace();
@@ -112,7 +117,7 @@ public class ProfesseurDAO extends DAO<InfoProfesseur> {
 			int idEmployee = rs.getInt(EMPLOYEE);
 			Employe employee = EmployeDAO.getInstance().read(idEmployee);
 					
-			prof = new InfoProfesseur(spes, employee);
+			prof = new InfoProfesseur(idProf, spes, employee);
 
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -139,6 +144,30 @@ public class ProfesseurDAO extends DAO<InfoProfesseur> {
 	        e.printStackTrace();
 	    }
 	    return professeurs;
+	}
+	
+	public InfoProfesseur readByPrenom(String prenom) {
+	    InfoProfesseur prof = null;
+//	    String TABLE2 = "employe";
+//	    String COLONNE1 = "info_prof.id_employe";
+//	    String COLONNE2 = "employe.id_employe";
+//	    String COLONNE = "id.employe";
+	    //TODO sécurisé requête
+	    try {
+	        String requete = "SELECT info_prof.*, employe.* FROM employe JOIN info_prof ON employe.id_employe = info_prof.id_employe WHERE prenom = ?";
+	        PreparedStatement pst = Connexion.getInstance().prepareStatement(requete);
+	        pst.setString(1, prenom);
+	        ResultSet rs = pst.executeQuery();
+	        if(rs.next()){
+	            String spes = rs.getString(SPECIALITES);
+	            int idProf = rs.getInt(CLE_PRIMAIRE);
+	            Employe employee = EmployeDAO.getInstance().read(rs.getInt("id_employe"));
+	            prof = new InfoProfesseur(idProf, spes, employee);
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+	    return prof;
 	}
 	
 }

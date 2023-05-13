@@ -20,7 +20,6 @@ public class SceneControllerPayement extends SceneController {
 
 	int numeroCarte;
 	int crypto;
-	private BilletDAO billetDAO;
 	
 	@FXML
 	Pane panePayer;
@@ -67,8 +66,8 @@ public class SceneControllerPayement extends SceneController {
 		billet.setNbreEntreeRestante(nbEntree);
 		billet.setPiscine(piscine);
 		billet.setFormule(formule);
-		
-		billetDAO = new BilletDAO();
+	    
+	    BilletDAO billetDAO = BilletDAO.getInstance();
 	    billetDAO.create(billet);
 	    
 	    // va permettre d'afficher le code au client (il faut convertir en String)

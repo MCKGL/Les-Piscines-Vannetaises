@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
-<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.TitledPane?>
 <?import javafx.scene.image.Image?>
@@ -31,7 +32,7 @@
       <TextField fx:id="textFieldAdmin" layoutX="214.0" layoutY="125.0" prefHeight="25.0" prefWidth="172.0" promptText="Nom administateur" />
       <Button alignment="CENTER" contentDisplay="CENTER" layoutX="257.0" layoutY="201.0" mnemonicParsing="false" onAction="#connexion" text="CONNEXION" textAlignment="CENTER" />
       <PasswordField fx:id="passwordFieldAdmin" layoutX="214.0" layoutY="161.0" prefHeight="25.0" prefWidth="172.0" promptText="Mot de passe" />
-      <Pane fx:id="paneConnexion" layoutX="-4.0" prefHeight="400.0" prefWidth="605.0" style="-fx-background-color: #B8F5FF;" visible="false">
+      <Pane fx:id="paneConnexion" layoutX="-4.0" prefHeight="400.0" prefWidth="605.0" style="-fx-background-color: #B8F5FF;">
          <children>
             <ImageView fitHeight="405.0" fitWidth="610.0" layoutX="-2.0" layoutY="-2.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -76,18 +77,69 @@
                   <TableColumn fx:id="description" prefWidth="190.00001525878906" text="description" />
                </columns>
             </TableView>
+            <Button fx:id="boutonAjouter" layoutX="14.0" layoutY="366.0" mnemonicParsing="false" onAction="#ajouterDonnee" text="Ajouter" />
+            <Pane fx:id="paneMajFormule" layoutX="19.0" layoutY="48.0" prefHeight="305.0" prefWidth="575.0" style="-fx-background-color: #B8F5FF;" visible="false">
+               <children>
+                  <Label layoutX="178.0" layoutY="50.0" text="Prix :" />
+                  <Label layoutX="63.0" layoutY="98.0" text="Durée de validité en jours :" />
+                  <Label layoutX="57.0" layoutY="144.0" text="Nombre d'entrées initiales :" />
+                  <TextField fx:id="textFieldPrixForm" layoutX="213.0" layoutY="46.0" promptText="Prix" />
+                  <TextField fx:id="textFieldDureeValForm" layoutX="213.0" layoutY="94.0" promptText="durée validité (jours)" />
+                  <TextField fx:id="textFieldNbEntreeForm" layoutX="213.0" layoutY="140.0" promptText="nb entrées" />
+                  <TextField fx:id="textFieldLabelForm" layoutX="213.0" layoutY="189.0" promptText="label" />
+                  <TextField fx:id="textFieldTypeCoursForm" layoutX="213.0" layoutY="239.0" promptText="type cours" />
+                  <Label layoutX="98.0" layoutY="193.0" text="Courte description :" />
+                  <Label layoutX="122.0" layoutY="243.0" text="Type de cours :" />
+                  <Button fx:id="boutonCreerFormule" layoutX="419.0" layoutY="279.0" mnemonicParsing="false" onAction="#creerNouvelleEntree" text="Créer" />
+                  <Button layoutX="549.0" layoutY="2.0" mnemonicParsing="false" onAction="#fermerPaneMaj" text="X" />
+                  <Button fx:id="boutonUpdFormule" layoutX="244.0" layoutY="279.0" mnemonicParsing="false" text="Mettre à jour" />
+                  <Button fx:id="boutonSuppFormule" layoutX="79.0" layoutY="279.0" mnemonicParsing="false" onAction="#supprimerSelection" text="Supprimer" />
+               </children>
+            </Pane>
+            <Pane fx:id="paneMajCours" layoutX="18.0" layoutY="42.0" prefHeight="305.0" prefWidth="575.0" style="-fx-background-color: #B8F5FF;" visible="false">
+               <children>
+                  <Button fx:id="boutonCreerCours" layoutX="422.0" layoutY="271.0" mnemonicParsing="false" onAction="#creerNouvelleEntree" text="Créer" />
+                  <TextField fx:id="textFieldNomCours" layoutX="213.0" layoutY="69.0" promptText="Nom cours" />
+                  <TextField fx:id="textFieldDescCours" layoutX="213.0" layoutY="128.0" promptText="Description cours" />
+                  <Label layoutX="122.0" layoutY="73.0" text="Nom du cours :" />
+                  <Label layoutX="87.0" layoutY="132.0" text="Description du cours :" />
+                  <Button layoutX="549.0" layoutY="2.0" mnemonicParsing="false" onAction="#fermerPaneMaj" text="X" />
+                  <Button fx:id="boutonSuppCours" layoutX="86.0" layoutY="271.0" mnemonicParsing="false" onAction="#supprimerSelection" text="Supprimer" />
+                  <Button fx:id="boutonUpdCours" layoutX="245.0" layoutY="271.0" mnemonicParsing="false" text="Mettre à jour" />
+               </children>
+            </Pane>
+            <Pane fx:id="paneMajSeance" layoutX="16.0" layoutY="42.0" prefHeight="305.0" prefWidth="575.0" style="-fx-background-color: #B8F5FF;" visible="false">
+               <children>
+                  <Button fx:id="boutonCreerSeance" layoutX="424.0" layoutY="277.0" mnemonicParsing="false" onAction="#creerNouvelleEntree" text="Créer" />
+                  <Button layoutX="549.0" layoutY="1.0" mnemonicParsing="false" onAction="#fermerPaneMaj" text="X" />
+                  <DatePicker fx:id="datePickerSeance" layoutX="114.0" layoutY="140.0" />
+                  <TextField fx:id="textFieldHeureSeance" layoutX="397.0" layoutY="180.0" prefHeight="25.0" prefWidth="39.0" />
+                  <TextField fx:id="textFieldMinSeance" layoutX="455.0" layoutY="180.0" prefHeight="25.0" prefWidth="39.0" />
+                  <Label layoutX="443.0" layoutY="184.0" text=":" />
+                  <TextField fx:id="textFieldDureeSeance" layoutX="114.0" layoutY="180.0" prefHeight="25.0" prefWidth="39.0" />
+                  <ChoiceBox fx:id="choiceBoxProf" layoutX="113.0" layoutY="222.0" prefWidth="150.0" />
+                  <ChoiceBox fx:id="choiceBoxCours" layoutX="399.0" layoutY="222.0" prefWidth="150.0" />
+                  <Label layoutX="110.0" layoutY="123.0" text="Nouvelle date de seance :" />
+                  <Label layoutX="397.0" layoutY="164.0" text="Nouvelle heure de seance :" />
+                  <Label layoutX="110.0" layoutY="164.0" text="Nouvelle durée de seance :" />
+                  <Label layoutX="112.0" layoutY="205.0" text="Nouveau prof en charge de seance :" />
+                  <Label layoutX="399.0" layoutY="205.0" text="Nouveau type du cours :" />
+                  <Button fx:id="boutonSuppSeance" layoutX="85.0" layoutY="278.0" mnemonicParsing="false" onAction="#supprimerSelection" text="Supprimer" />
+                  <Button fx:id="boutonUpdSeance" layoutX="240.0" layoutY="277.0" mnemonicParsing="false" text="Mettre à jour" />
+                  <Label layoutX="102.0" layoutY="18.0" text="Date du cours :" />
+                  <Label fx:id="labelDateSeance" layoutX="186.0" layoutY="18.0" text="23-23-23 15:00:00" />
+                  <Label layoutX="100.0" layoutY="44.0" text="Durée de la seance :" />
+                  <Label fx:id="labelDureeSeance" layoutX="213.0" layoutY="44.0" text="30" />
+                  <Label layoutX="118.0" layoutY="106.0" text="-----------------------------------------------------------------------" />
+                  <Label layoutX="102.0" layoutY="70.0" text="Type de cours :" />
+                  <Label layoutX="100.0" layoutY="98.0" text="Prof en charge :" />
+                  <Label fx:id="labelCoursSeance" layoutX="192.0" layoutY="70.0" text="cours" />
+                  <Label fx:id="labelProfSeance" layoutX="190.0" layoutY="98.0" text="prof" />
+               </children>
+            </Pane>
          </children>
       </Pane>
-      <Pane fx:id="paneMaJ" layoutX="8.0" layoutY="38.0" prefHeight="318.0" prefWidth="586.0" style="-fx-background-color: #B8F5FF;" visible="false">
-         <children>
-            <Button fx:id="boutonFermer" layoutX="560.0" layoutY="2.0" mnemonicParsing="false" onAction="#fermerPaneMaJ" prefHeight="25.0" prefWidth="20.0" text="X" />
-            <Button fx:id="boutonSupprimer" layoutX="100.0" layoutY="262.0" mnemonicParsing="false" onAction="#supprimerSelection" text="Supprimer" />
-            <Button fx:id="MaJ" layoutX="413.0" layoutY="262.0" mnemonicParsing="false" text="Mettre à jour" />
-            <TextArea fx:id="textAreaLigneSelect" editable="false" layoutX="88.0" layoutY="27.0" prefHeight="200.0" prefWidth="395.0" />
-            <Label fx:id="labelTitreMaj" layoutX="272.0" layoutY="6.0" text="Label" />
-         </children>
-      </Pane>
-      <Pane fx:id="paneAlert" layoutX="87.0" layoutY="64.0" prefHeight="265.0" prefWidth="429.0" style="-fx-background-color: red;">
+      <Pane fx:id="paneAlert" layoutX="87.0" layoutY="64.0" prefHeight="265.0" prefWidth="429.0" style="-fx-background-color: red;" visible="false">
          <children>
             <Label layoutX="66.0" layoutY="35.0" text="Attention : en désactivant les formules de type &quot;Cours&quot;, &#10;vous supprimerez les cours et les séances associées. &#10;Êtes-vous sûre de votre choix ?" textAlignment="CENTER" textFill="#fffdfd" />
             <Button fx:id="boutonConfimSupp" layoutX="66.0" layoutY="187.0" mnemonicParsing="false" onAction="#confirmSupp" text="Oui" />
