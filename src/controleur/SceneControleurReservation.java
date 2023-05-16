@@ -23,7 +23,7 @@ import modele.bd.FormuleDAO;
 import modele.metier.Cours;
 import modele.metier.Formule;
 
-public class SceneControllerReservation extends SceneController implements Initializable  {
+public class SceneControleurReservation extends SceneControleur implements Initializable  {
 	
 	private Stage stage;
 	private Scene scene;
@@ -134,6 +134,7 @@ public class SceneControllerReservation extends SceneController implements Initi
 			if(event.getSource() == boutonPayerCours) {
 				prix = labelPrix.getText();
 				detail = labelCoursSelect.getText();
+				// Attention, detailCouF doit reprendre exactement le même nom que le type dans la bd !
 				detailCouF = "Cours";	
 			}
 			
@@ -150,13 +151,13 @@ public class SceneControllerReservation extends SceneController implements Initi
 			}
             if(event.getSource() == boutonEntreeSimple) {
                 prix = labelPrixEntreeSimple.getText();
-                detail = boutonEntreeSimple.getText();
-                detailCouF = "Entrée simple"; 
+                detail = boutonEntreeSimple.getText(); 
+                detailCouF = "Entree libre"; 
             }
             
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/vue/Payement.fxml"));
             root = loader.load();	
-			SceneControllerPayement scenePaye = loader.getController();
+			SceneControleurPayement scenePaye = loader.getController();
 			scenePaye.recupererInfo(prix, detail, detailCouF);
 			stage = (Stage)((Node)event.getSource()).getScene().getWindow();
 			scene = new Scene(root);

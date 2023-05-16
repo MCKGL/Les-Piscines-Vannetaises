@@ -31,12 +31,13 @@ import modele.metier.Seance;
 /**
  * La class ControleurInterfaceAdmin va proposer les méthodes d'affichages de l'espace admin afin de soulager un peu la SceneControleurAdministrateur
  * Elle ne contiendra pas les méthodes de gestions des formules / cours / seance (create, update, delete), juste l'affichage.
- * La majore partie de ses méthodes et variables sont "protected" pour permettre à la class fille d'en profiter
  * ControleurInterfaceAdmin est extends par SceneControleurAdministrateur
  * ControleurInterfaceAdmin extends SceneController afin de récupérer les méthodes générales à toute l'application
+ * "protected" pour permettre à la class fille d'user des méthodes
+ * "public" quand les méthodes vont aussi concerner Administrateur.fxml
  */
 
-public class ControleurInterfaceAdmin extends SceneController {
+public class ControleurInterfaceAdmin extends SceneControleur {
 	
 	protected ObservableList<InfoProfesseur> empData = FXCollections.observableArrayList();
 	protected ObservableList<Seance> seanceData = FXCollections.observableArrayList();
@@ -76,11 +77,11 @@ public class ControleurInterfaceAdmin extends SceneController {
 	
 	public void connexion(ActionEvent event) {
 		try { 
-			int mdp = Integer.parseInt(passwordFieldAdmin.getText());
+			String mdp = passwordFieldAdmin.getText();
 			String nom = textFieldAdmin.getText();
 			// TODO créer méthode loggin à appeller ici
 
-			if(mdp == 123456 && nom.equals("Maurice")) {
+			if(mdp.equals("toto") && nom.equals("admin")) {
 				paneConnexion.setVisible(true);
 				afficherTableProf();
 			}else {
@@ -289,7 +290,19 @@ public class ControleurInterfaceAdmin extends SceneController {
 	}
 	
 	public void fermerPaneMaj(ActionEvent event) {
-		//TODO : effacer données saisie ou affiché à la fermeture des panes
+		// effacer données saisie ou affiché à la fermeture des panes
+		textFieldPrixForm.clear();
+		textFieldDureeValForm.clear();
+		textFieldNbEntreeForm.clear();
+		textFieldLabelForm.clear();
+		textFieldTypeCoursForm.clear();
+		textFieldNomCours.clear();
+		textFieldDescCours.clear();
+		labelDateSeance.setText("");
+		labelDureeSeance.setText("");
+		labelProfSeance.setText("");
+		labelCoursSeance.setText("");
+		
 		paneMajSeance.setVisible(false);
 		paneMajFormule.setVisible(false);
 		paneMajCours.setVisible(false);

@@ -8,7 +8,7 @@ import modele.bd.BilletDAO;
 import modele.metier.Billet;
 import javafx.scene.layout.Pane;
 
-public class SceneControllerIdentification extends SceneController {
+public class SceneControleurIdentification extends SceneControleur {
 	
 	@FXML 
     TextField textFieldNumBillet; 		//champ de saisie pour le code

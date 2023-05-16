@@ -20,48 +20,7 @@ import modele.metier.Seance;
  * Voir ControleurInterfaceAdmin.
  */
 
-public class SceneControllerAdministrateur extends ControleurInterfaceAdmin {
-
-	// Confirmation de la suppression.
-	public void confirmSupp(ActionEvent event) {
-		Formule formule = tableFormule.getSelectionModel().getSelectedItem();
-		if(event.getSource() == boutonConfimSupp) {
-			/*
-			 * Si la formule type "cours" est supprimé, tous les cours aussi et les séances aussi.
-			 * On commence par supprimer les seances, puis les cours, puis les formules. 
-			 * Sans quoi on aura un soucis avec les clefs étrangères
-			 */
-			SeanceDAO seanceDAO = SeanceDAO.getInstance();
-			List<Seance> seanceList = seanceDAO.readAll();
-			for (Seance seance : seanceList) {
-				seanceDAO.delete(seance);
-				seanceData.remove(seance);
-			}
-
-			CoursDAO coursDAO = CoursDAO.getInstance();
-			List<Cours> coursList = coursDAO.readAll();
-			for (Cours cours : coursList) {
-				coursDAO.delete(cours);
-				coursData.remove(cours);
-			}
-
-			// On va avoir un problème ici : les billets contiennent une formule, on ne peut pas 
-			// supprimer les formules sans invalider les billets. Création donc d'un champ active
-			// dans la bd, le champ passera à false, désactivant la formule.
-			formule.setActive(false);
-			FormuleDAO formuleDAO = FormuleDAO.getInstance();
-			formuleDAO.update(formule);
-			// Mettre à jour le tableau
-			int index = formuleData.indexOf(formule);
-			if (index != -1) {
-				formuleData.set(index, formule);
-			}
-
-		}else {
-			paneMajFormule.setVisible(true);
-		}
-		paneAlert.setVisible(false);
-	}
+public class SceneControleurAdministrateur extends ControleurInterfaceAdmin {
 
 	/* Lorsque l'admin clique sur supprimer, la ligne concernée est supprimé de la bd.
 	 * Dans le cas où il supprime les formules de types Cours, il devra confirmer son choix
@@ -116,6 +75,47 @@ public class SceneControllerAdministrateur extends ControleurInterfaceAdmin {
 		paneMajCours.setVisible(false);
 	}
 	
+	// Confirmation de la suppression.
+	public void confirmSupp(ActionEvent event) {
+		Formule formule = tableFormule.getSelectionModel().getSelectedItem();
+		if(event.getSource() == boutonConfimSupp) {
+			/*
+			 * Si la formule type "cours" est supprimé, tous les cours aussi et les séances aussi.
+			 * On commence par supprimer les seances, puis les cours, puis les formules. 
+			 * Sans quoi on aura un soucis avec les clefs étrangères
+			 */
+			SeanceDAO seanceDAO = SeanceDAO.getInstance();
+			List<Seance> seanceList = seanceDAO.readAll();
+			for (Seance seance : seanceList) {
+				seanceDAO.delete(seance);
+				seanceData.remove(seance);
+			}
+
+			CoursDAO coursDAO = CoursDAO.getInstance();
+			List<Cours> coursList = coursDAO.readAll();
+			for (Cours cours : coursList) {
+				coursDAO.delete(cours);
+				coursData.remove(cours);
+			}
+
+			// On va avoir un problème ici : les billets contiennent une formule, on ne peut pas 
+			// supprimer les formules sans invalider les billets. Création donc d'un champ active
+			// dans la bd, le champ passera à false, désactivant la formule.
+			formule.setActive(false);
+			FormuleDAO formuleDAO = FormuleDAO.getInstance();
+			formuleDAO.update(formule);
+			// Mettre à jour le tableau
+			int index = formuleData.indexOf(formule);
+			if (index != -1) {
+				formuleData.set(index, formule);
+			}
+
+		}else {
+			paneMajFormule.setVisible(true);
+		}
+		paneAlert.setVisible(false);
+	}
+	
 	// Créer une nouvelle formule / cours / seance (en fonction du bouton cliqué)
 	public void creerNouvelleEntree(ActionEvent event) {
 		if(event.getSource() == boutonCreerFormule) {
@@ -155,8 +155,6 @@ public class SceneControllerAdministrateur extends ControleurInterfaceAdmin {
 			
 			SeanceDAO seanceDAO = SeanceDAO.getInstance(); // L'instruction doit être exécutée avant de pouvoir obtenir des résultats. Ceci dit ça marche
 			seanceDAO.create(seance);
-			
-
 		}
 		if(event.getSource() == boutonCreerCours) {
 			Cours cours = new Cours(null, null, null);
@@ -173,8 +171,23 @@ public class SceneControllerAdministrateur extends ControleurInterfaceAdmin {
 
 			CoursDAO coursDAO = CoursDAO.getInstance();
 			coursDAO.create(cours);
-
 		}
+	}
+	
+	public void mettreAJourSelection() {
+		//TODO si champ pas vide, mettre à jour la valeur concernée sinon garder l'ancienne. Pour l'exemple :
+//		Seance seance = tableSeance.getSelectionModel().getSelectedItem();
+//		Formule formule = tableFormule.getSelectionModel().getSelectedItem();
+//		Cours cours = tableCours.getSelectionModel().getSelectedItem();
+		
+//		formule.setActive(false);
+//		FormuleDAO formuleDAO = FormuleDAO.getInstance();
+//		formuleDAO.update(formule);
+//		// Mettre à jour le tableau
+//		int index = formuleData.indexOf(formule);
+//		if (index != -1) {
+//			formuleData.set(index, formule);
+//		}
 	}
 
 }

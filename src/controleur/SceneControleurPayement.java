@@ -1,6 +1,8 @@
 package controleur;
 
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.util.Date;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -16,7 +18,7 @@ import modele.metier.Billet;
 import modele.metier.Formule;
 import modele.metier.Piscine;
 
-public class SceneControllerPayement extends SceneController {
+public class SceneControleurPayement extends SceneControleur {
 
 	int numeroCarte;
 	int crypto;
@@ -39,10 +41,15 @@ public class SceneControllerPayement extends SceneController {
 		labelRecapTypeFormule.setText(detailFormule);
 	}
 	
+	public static int codeDate() {
+	    SimpleDateFormat dateFormat = new SimpleDateFormat("MMddHHmmss");
+	    Date date = new Date();
+	    String dateString = dateFormat.format(date);
+	    int code = Integer.parseInt(dateString);
+	    return code;
+	}
 	
 	public void genererBillet() {
-		Billet billet = new Billet(crypto, crypto, null, null);
-		
 		// récupèration de l'id Piscine en fonction du nom de la piscine
 		String NomPiscine = labelNomPiscine.getText();
 		PiscineDAO piscineDAO = new PiscineDAO();
@@ -58,14 +65,11 @@ public class SceneControllerPayement extends SceneController {
 		// récupération du nombre d'entrée initiale
 		int nbEntree = formule.getNbreEntreeFormule();
 		
-		// TODO creation code unique
-		int code = 12345678;
+		// creation code unique
+		int code = codeDate();
 		
 		// Créer un objet billet avec les valeurs récupérées
-		billet.setCode(code);
-		billet.setNbreEntreeRestante(nbEntree);
-		billet.setPiscine(piscine);
-		billet.setFormule(formule);
+		Billet billet = new Billet(code, nbEntree, formule, piscine);
 	    
 	    BilletDAO billetDAO = BilletDAO.getInstance();
 	    billetDAO.create(billet);
@@ -73,7 +77,6 @@ public class SceneControllerPayement extends SceneController {
 	    // va permettre d'afficher le code au client (il faut convertir en String)
 	    String codeClient = String.valueOf(code);
 	    labelCodeClient.setText(codeClient);
-		
 	}
 	
 	public void payer(ActionEvent event) {

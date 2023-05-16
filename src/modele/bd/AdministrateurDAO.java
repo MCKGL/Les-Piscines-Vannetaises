@@ -16,6 +16,7 @@ public class AdministrateurDAO extends DAO<InfoAdministrateur> {
 	private static final String CLE_PRIMAIRE = "id_admin";
 	private static final String TABLE = "info_admin";
 	private static final String MDP = "mdp";
+	private static final String ID = "identifiant";
 	private final String EMPLOYE = "id_employe";
 	
 
@@ -45,11 +46,12 @@ public class AdministrateurDAO extends DAO<InfoAdministrateur> {
 		boolean succes = true;
 		try {
 
-			String requete = "INSERT INTO " + TABLE + " ( " +CLE_PRIMAIRE+", "+ MDP + ", " + EMPLOYE + ") VALUES (?, ?, ?)";
+			String requete = "INSERT INTO " + TABLE + " ( " +CLE_PRIMAIRE+", "+ MDP + ", "+ ID + ", " + EMPLOYE + ") VALUES (?, ?, ?, ?)";
 			PreparedStatement pst = Connexion.getInstance().prepareStatement(requete);
 			pst.setInt(1, admin.getIdAdmin());
 			pst.setString(2, admin.getMdp());
-			pst.setInt(3, admin.getIdEmployee().getIdEmployee());
+			pst.setString(3, admin.getIdConnect());
+			pst.setInt(4, admin.getIdEmployee().getIdEmployee());
 
 			// Mise à jour de la base de donnée
 			pst.executeUpdate();
@@ -65,11 +67,12 @@ public class AdministrateurDAO extends DAO<InfoAdministrateur> {
 	public boolean update(InfoAdministrateur admin) {
 		boolean succes = true;
 		try {
-			String requete = "UPDATE " + TABLE + " SET " + MDP + " = ?, " + EMPLOYE + " = ? WHERE " + CLE_PRIMAIRE + " = ?";
+			String requete = "UPDATE " + TABLE + " SET " + MDP + " = ?, " + ID + " = ?, " + EMPLOYE + " = ? WHERE " + CLE_PRIMAIRE + " = ?";
 			PreparedStatement pst = Connexion.getInstance().prepareStatement(requete);
 			pst.setString(1, admin.getMdp());
-			pst.setInt(2, admin.getIdEmployee().getIdEmployee());
-			pst.setInt(3, admin.getIdAdmin());
+			pst.setString(2, admin.getIdConnect());
+			pst.setInt(3, admin.getIdEmployee().getIdEmployee());
+			pst.setInt(4, admin.getIdAdmin());
 
 			// Mise à jour de la base de donnée
 			pst.executeUpdate();
@@ -110,10 +113,11 @@ public class AdministrateurDAO extends DAO<InfoAdministrateur> {
 			ResultSet rs = pst.executeQuery();
 			rs.next();
 			String mdp = rs.getString(MDP);
+			String idConnect = rs.getString(ID);
 			int idEmployee = rs.getInt(EMPLOYE);
 			Employe employee = EmployeDAO.getInstance().read(idEmployee);
 					
-			admin = new InfoAdministrateur(mdp, employee);
+			admin = new InfoAdministrateur(mdp, idConnect, employee);
 
 		} catch (SQLException e) {
 			e.printStackTrace();

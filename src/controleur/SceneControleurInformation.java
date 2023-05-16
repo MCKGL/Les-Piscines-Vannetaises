@@ -13,7 +13,7 @@ import javafx.scene.control.TableView;
 import modele.bd.SeanceDAO;
 import modele.metier.Seance;
 
-public class SceneControllerInformation extends SceneController implements Initializable {
+public class SceneControleurInformation extends SceneControleur implements Initializable {
 
 	private ObservableList<Seance> seanceData = FXCollections.observableArrayList();
 
@@ -22,6 +22,8 @@ public class SceneControllerInformation extends SceneController implements Initi
     @FXML
 	private TableColumn<Seance, String> jour, fin, typeCours, prof;
 	
+    //TODO : sélecteur cours + bouton qui affiche séances en fonction.
+    
 	public void afficherData() {
 		jour.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().toStringDate()));
 		fin.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().toStringDuree()));

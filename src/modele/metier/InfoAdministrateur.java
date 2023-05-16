@@ -4,11 +4,13 @@ public class InfoAdministrateur {
 	
 	private int idAdmin;
 	private String mdp;
+	private String idConnect;
 	private Employe idEmployee;
 	
-	public InfoAdministrateur(String mdp, Employe idEmployee) {
+	public InfoAdministrateur(String mdp, String idConnect, Employe idEmployee) {
 		super();
 		this.mdp = mdp;
+		this.idConnect = idConnect;
 		this.idEmployee = idEmployee;
 	}
 
@@ -26,6 +28,14 @@ public class InfoAdministrateur {
 
 	public void setMdp(String mdp) {
 		this.mdp = mdp;
+	}
+	
+	public String getIdConnect() {
+		return idConnect;
+	}
+
+	public void setIdConnect(String idConnect) {
+		this.idConnect = idConnect;
 	}
 
 	public Employe getIdEmployee() {
