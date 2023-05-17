@@ -2,7 +2,9 @@ package controleur;
 
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.util.Calendar;
 import java.util.Date;
+import java.sql.Timestamp;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -41,6 +43,7 @@ public class SceneControleurPayement extends SceneControleur {
 		labelRecapTypeFormule.setText(detailFormule);
 	}
 	
+	// ici il reste des risques (très minime vue le context) d'avoir deux code identique. On peut faire yyMMddHHmmssSSS mais il faut transformer code en bigint (long en dao)
 	public static int codeDate() {
 	    SimpleDateFormat dateFormat = new SimpleDateFormat("MMddHHmmss");
 	    Date date = new Date();
@@ -65,11 +68,18 @@ public class SceneControleurPayement extends SceneControleur {
 		// récupération du nombre d'entrée initiale
 		int nbEntree = formule.getNbreEntreeFormule();
 		
+		//creation de la date de peremption et conversion de la date en format SQL
+		Date dateAuj = new Date();
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(dateAuj);
+		calendar.add(Calendar.DAY_OF_MONTH, formule.getDureeValidite());
+		Timestamp datePeremptionSQL = new Timestamp(calendar.getTime().getTime());
+		
 		// creation code unique
 		int code = codeDate();
 		
 		// Créer un objet billet avec les valeurs récupérées
-		Billet billet = new Billet(code, nbEntree, formule, piscine);
+		Billet billet = new Billet(code, nbEntree, datePeremptionSQL, formule, piscine);
 	    
 	    BilletDAO billetDAO = BilletDAO.getInstance();
 	    billetDAO.create(billet);
