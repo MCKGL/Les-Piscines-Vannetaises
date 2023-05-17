@@ -1,5 +1,8 @@
 package modele.metier;
 
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.UUID;
 
 public class Billet {
@@ -10,19 +13,21 @@ public class Billet {
 	 */
 	private int code;
 	private int nbreEntreeRestante;
+	private Timestamp datePeremption;
 	private Formule formule;
 	private Piscine piscine;
 
 // -----------------------------------------------------------------------------------------------------------------------	
-	public Billet(int code, int nbreEntreeRestante, Formule formule, Piscine piscine) {
+	public Billet(int code, int nbreEntreeRestante, Timestamp datePeremption, Formule formule, Piscine piscine) {
 		super();
 		this.code = code;
 		this.nbreEntreeRestante = nbreEntreeRestante;
+		this.datePeremption = datePeremption;
 		this.formule = formule;
 		this.piscine = piscine;
 	}
 
-// -----------------------------------------------------------------------------------------------------------------------
+	// -----------------------------------------------------------------------------------------------------------------------
 	/**
 	 * Getter Setter
 	 *
@@ -38,6 +43,14 @@ public class Billet {
 		return code;
 	}
 
+	
+	public void setDatePeremption(Timestamp datePeremption) {
+		this.datePeremption = datePeremption;
+	}
+
+	public Timestamp getDatePeremption() {
+		return datePeremption;
+	}
 	public Formule getFormule() {
 		return formule;
 	}
@@ -66,10 +79,20 @@ public class Billet {
 		UUID code = UUID.randomUUID();
 		return code;
 	}
+	
+	public String toStringDatePeremption() {
+	    LocalDateTime localDateTime = datePeremption.toLocalDateTime();
+	    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yy");
+	    return localDateTime.format(formatter);
+	}
+	
 // -----------------------------------------------------------------------------------------------------------------------
+
 	@Override
 	public String toString() {
-		return "Billet [code=" + code + ", nbreEntreeRestante=" + nbreEntreeRestante + ", formule=" + formule + ", piscine=" + piscine + "]";
+		return "Billet [code=" + code + ", nbreEntreeRestante=" + nbreEntreeRestante + ", datePeremption="
+				+ datePeremption + ", formule=" + formule + ", piscine=" + piscine + "]";
 	}
+
 }
 

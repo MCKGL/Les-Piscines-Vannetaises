@@ -111,12 +111,11 @@ public class Cours {
 		return this.listeSeances.add(seance);
 	}
 	// -----------------------------------------------------------------------------------------------------------------------
-	/**
-	 * Override 
-	 */
+
 	@Override
 	public String toString() {
-		return "Cours [idCours=" + idCours + ", nom=" + nom + ", description=" + description + ", "
-				+ "coursDispensee=" + listeSeances + ", formule=" + formule + "]";
+		return "Cours [idCours=" + idCours + ", nom=" + nom + ", description=" + description + ", formule=" + formule
+				+ ", listeSeances=" + listeSeances + ", listeCoursProfs=" + listeCoursProfs + "]";
 	}
+
 }

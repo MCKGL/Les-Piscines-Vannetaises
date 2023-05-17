@@ -46,7 +46,7 @@ public class SceneControleurAdministrateur extends ControleurInterfaceAdmin {
 					formuleData.set(index, formule);
 				}
 			}
-		// supprimer un cours
+			// supprimer un cours
 		}else if (cours != null && event.getSource() == boutonSuppCours) {
 			CoursDAO coursDAO = CoursDAO.getInstance();
 
@@ -64,7 +64,7 @@ public class SceneControleurAdministrateur extends ControleurInterfaceAdmin {
 			// On supprime les cours APRES les seances, sans quoi il y aura un soucis avec l'id cours FK
 			coursDAO.delete(cours);
 			coursData.remove(cours);
-		// supprimer seance
+			// supprimer seance
 		}else if (seance != null && event.getSource() == boutonSuppSeance) {
 			SeanceDAO seanceDAO = SeanceDAO.getInstance();
 			seanceDAO.delete(seance);
@@ -74,7 +74,7 @@ public class SceneControleurAdministrateur extends ControleurInterfaceAdmin {
 		paneMajSeance.setVisible(false);
 		paneMajCours.setVisible(false);
 	}
-	
+
 	// Confirmation de la suppression.
 	public void confirmSupp(ActionEvent event) {
 		Formule formule = tableFormule.getSelectionModel().getSelectedItem();
@@ -115,52 +115,84 @@ public class SceneControleurAdministrateur extends ControleurInterfaceAdmin {
 		}
 		paneAlert.setVisible(false);
 	}
-	
-	// Créer une nouvelle formule / cours / seance (en fonction du bouton cliqué)
-	public void creerNouvelleEntree(ActionEvent event) {
-		if(event.getSource() == boutonCreerFormule) {
-			Formule formule = new Formule(null, null, 0, 0, 0, true);
-			String label = textFieldLabelForm.getText();
-			String type = textFieldTypeCoursForm.getText();
-			int prix = Integer.parseInt(textFieldPrixForm.getText());
-			int dureeVal = Integer.parseInt(textFieldDureeValForm.getText());
-			int nbEntree = Integer.parseInt(textFieldNbEntreeForm.getText()); // convertir en Int
 
-			formule.setLabel(label);
-			formule.setType(type);
-			formule.setPrixFormule(prix);
-			formule.setDureeValidite(dureeVal);
-			formule.setNbreEntreeFormule(nbEntree);
-			formule.setActive(true);
+	private void creerFormule() {
+		Formule formule = new Formule(null, null, 0, 0, 0, true);
+		String label = textFieldLabelForm.getText();
+		String type = textFieldTypeCoursForm.getText();
+		String prixText = textFieldPrixForm.getText();
+		String dureeValText = textFieldDureeValForm.getText();
+		String nbEntreeText = textFieldNbEntreeForm.getText();
 
-			FormuleDAO formuleDAO = FormuleDAO.getInstance();
-			formuleDAO.create(formule);
+		if (!label.isEmpty() && !type.isEmpty() && !prixText.isEmpty() && !dureeValText.isEmpty() && !nbEntreeText.isEmpty()) {
+			try {
+				int prix = Integer.parseInt(prixText);
+				int dureeVal = Integer.parseInt(dureeValText);
+				int nbEntree = Integer.parseInt(nbEntreeText);
+
+				formule.setLabel(label);
+				formule.setType(type);
+				formule.setPrixFormule(prix);
+				formule.setDureeValidite(dureeVal);
+				formule.setNbreEntreeFormule(nbEntree);
+				formule.setActive(true);
+
+				FormuleDAO formuleDAO = FormuleDAO.getInstance();
+				formuleDAO.create(formule);
+			} catch (NumberFormatException e) {
+				System.out.println("Les champs de prix, durée de validité et nombre d'entrées doivent contenir uniquement des chiffres");
+			}
+		}else {
+			System.out.println("Veuillez remplir tous les champs");
 		}
-		if(event.getSource() == boutonCreerSeance) {
-			LocalDate date = datePickerSeance.getValue();
-			int heure = Integer.parseInt(textFieldHeureSeance.getText());
-			int minute = Integer.parseInt(textFieldMinSeance.getText());
-			int duree = Integer.parseInt(textFieldDureeSeance.getText());
-			String prenomProf = (String) choiceBoxProf.getValue(); // récupère nom
-			String nomCours = (String) choiceBoxCours.getValue(); // récupère nom
-			LocalDateTime dateHeureMin = LocalDateTime.of(date, LocalTime.of(heure, minute));
+	}
 
-			CoursDAO coursDAO = CoursDAO.getInstance();
-			Cours cours = coursDAO.readByName(nomCours);
-			
-			ProfesseurDAO profDAO = ProfesseurDAO.getInstance();
-			InfoProfesseur prof = profDAO.readByPrenom(prenomProf);
+	private void creerSeance() {
+		// erreur : L'instruction doit être exécutée avant de pouvoir obtenir des résultats. L'erreur n'empêche pas la création d'une séance...
+		// je n'ai pas trouvé à quoi c'était dû
+		Seance seance = new Seance(null, 0, null, null); 
+		LocalDate date = datePickerSeance.getValue();
+		String heureText = textFieldHeureSeance.getText();
+		String minuteText = textFieldMinSeance.getText();
+		String dureeText = textFieldDureeSeance.getText();
+		String prenomProf = (String) choiceBoxProf.getValue();
+		String nomCours = (String) choiceBoxCours.getValue();
 
-			Seance seance = new Seance(dateHeureMin, duree, prof, cours);
-			
-			SeanceDAO seanceDAO = SeanceDAO.getInstance(); // L'instruction doit être exécutée avant de pouvoir obtenir des résultats. Ceci dit ça marche
-			seanceDAO.create(seance);
+		if (date != null && !heureText.isEmpty() && !minuteText.isEmpty() && !dureeText.isEmpty() && prenomProf != null && nomCours != null) {
+			try {
+				int heure = Integer.parseInt(heureText);
+				int minute = Integer.parseInt(minuteText);
+				int duree = Integer.parseInt(dureeText);
+
+				LocalDateTime dateHeureMin = LocalDateTime.of(date, LocalTime.of(heure, minute));
+
+				ProfesseurDAO profDAO = ProfesseurDAO.getInstance();
+				InfoProfesseur prof = profDAO.readByPrenom(prenomProf);
+
+				CoursDAO coursDAO = CoursDAO.getInstance();
+				Cours cours = coursDAO.readByName(nomCours);
+
+				seance.setDate(dateHeureMin);
+				seance.setDuree(duree);
+				seance.setIdProf(prof);
+				seance.setIdCours(cours);
+
+				SeanceDAO seanceDAO = SeanceDAO.getInstance();
+				seanceDAO.create(seance);
+			} catch (NumberFormatException e) {
+				System.out.println("Les champs d'heure, minute et durée doivent contenir uniquement des chiffres");
+			}
+		} else {
+			System.out.println("Veuillez remplir tous les champs");
 		}
-		if(event.getSource() == boutonCreerCours) {
-			Cours cours = new Cours(null, null, null);
-			String nom = textFieldNomCours.getText();
-			String description = textFieldDescCours.getText();
+	}
 
+	private void creerCours() {
+		Cours cours = new Cours(null, null, null);
+		String nom = textFieldNomCours.getText();
+		String description = textFieldDescCours.getText();
+
+		if (!nom.isEmpty() && !description.isEmpty()) {
 			//récupération de la formule correspondant au cours
 			FormuleDAO formuleDAO = FormuleDAO.getInstance();
 			Formule formule = formuleDAO.readByTypes("Cours");
@@ -171,23 +203,145 @@ public class SceneControleurAdministrateur extends ControleurInterfaceAdmin {
 
 			CoursDAO coursDAO = CoursDAO.getInstance();
 			coursDAO.create(cours);
+		} else {
+			System.out.println("Veuillez remplir tous les champs");
 		}
 	}
-	
-	public void mettreAJourSelection() {
-		//TODO si champ pas vide, mettre à jour la valeur concernée sinon garder l'ancienne. Pour l'exemple :
-//		Seance seance = tableSeance.getSelectionModel().getSelectedItem();
-//		Formule formule = tableFormule.getSelectionModel().getSelectedItem();
-//		Cours cours = tableCours.getSelectionModel().getSelectedItem();
-		
-//		formule.setActive(false);
-//		FormuleDAO formuleDAO = FormuleDAO.getInstance();
-//		formuleDAO.update(formule);
-//		// Mettre à jour le tableau
-//		int index = formuleData.indexOf(formule);
-//		if (index != -1) {
-//			formuleData.set(index, formule);
-//		}
+
+	// Créer une nouvelle formule / cours / seance (en fonction du bouton cliqué)
+	public void creerNouvelleEntree(ActionEvent event) {
+		if(event.getSource() == boutonCreerFormule) {
+			creerFormule();
+		}
+		if(event.getSource() == boutonCreerSeance) {
+			creerSeance();
+		}
+		if(event.getSource() == boutonCreerCours) {
+			creerCours();
+		}
+	}
+
+	public void majFormule() {
+		Formule formule = tableFormule.getSelectionModel().getSelectedItem();
+		String label = textFieldLabelForm.getText();
+		String type = textFieldTypeCoursForm.getText();
+		String prixText = textFieldPrixForm.getText();
+		String dureeValText = textFieldDureeValForm.getText();
+		String nbEntreeText = textFieldNbEntreeForm.getText();
+
+		if (!label.isEmpty() && !type.isEmpty() && !prixText.isEmpty() && !dureeValText.isEmpty() && !nbEntreeText.isEmpty()) {
+			try {
+				int prix = Integer.parseInt(prixText);
+				int dureeVal = Integer.parseInt(dureeValText);
+				int nbEntree = Integer.parseInt(nbEntreeText);
+
+				formule.setLabel(label);
+				formule.setType(type);
+				formule.setPrixFormule(prix);
+				formule.setDureeValidite(dureeVal);
+				formule.setNbreEntreeFormule(nbEntree);
+				formule.setActive(true);
+
+				FormuleDAO formuleDAO = FormuleDAO.getInstance();
+				formuleDAO.update(formule);
+				
+				// Mettre à jour le tableau
+				int index = formuleData.indexOf(formule);
+				if (index != -1) {
+					formuleData.set(index, formule);
+				}
+				
+			} catch (NumberFormatException e) {
+				System.out.println("Les champs de prix, durée de validité et nombre d'entrées doivent contenir uniquement des chiffres");
+			}
+		}else {
+			System.out.println("Veuillez remplir tous les champs");
+		}
+	}
+
+	public void majSeance() {
+		Seance seance = tableSeance.getSelectionModel().getSelectedItem();
+		LocalDate date = datePickerSeance.getValue();
+		String heureText = textFieldHeureSeance.getText();
+		String minuteText = textFieldMinSeance.getText();
+		String dureeText = textFieldDureeSeance.getText();
+		String prenomProf = (String) choiceBoxProf.getValue();
+		String nomCours = (String) choiceBoxCours.getValue();
+
+		if (date != null && !heureText.isEmpty() && !minuteText.isEmpty() && !dureeText.isEmpty() && prenomProf != null && nomCours != null) {
+			try {
+				int heure = Integer.parseInt(heureText);
+				int minute = Integer.parseInt(minuteText);
+				int duree = Integer.parseInt(dureeText);
+
+				LocalDateTime dateHeureMin = LocalDateTime.of(date, LocalTime.of(heure, minute));
+
+				ProfesseurDAO profDAO = ProfesseurDAO.getInstance();
+				InfoProfesseur prof = profDAO.readByPrenom(prenomProf);
+
+				CoursDAO coursDAO = CoursDAO.getInstance();
+				Cours cours = coursDAO.readByName(nomCours);
+
+				seance.setDate(dateHeureMin);
+				seance.setDuree(duree);
+				seance.setIdProf(prof);
+				seance.setIdCours(cours);
+
+				SeanceDAO seanceDAO = SeanceDAO.getInstance();
+				seanceDAO.update(seance);
+				
+				// Mettre à jour le tableau
+				int index = seanceData.indexOf(seance);
+				if (index != -1) {
+					seanceData.set(index, seance);
+				}
+				
+			} catch (NumberFormatException e) {
+				System.out.println("Les champs d'heure, minute et durée doivent contenir uniquement des chiffres");
+			}
+		} else {
+			System.out.println("Veuillez remplir tous les champs");
+		}
+	}
+
+	public void majCours() {
+		Cours cours = tableCours.getSelectionModel().getSelectedItem();
+		String nom = textFieldNomCours.getText();
+		String description = textFieldDescCours.getText();
+
+		if (!nom.isEmpty() && !description.isEmpty()) {
+			//récupération de la formule correspondant au cours
+			FormuleDAO formuleDAO = FormuleDAO.getInstance();
+			Formule formule = formuleDAO.readByTypes("Cours");
+
+			cours.setNom(nom);
+			cours.setDescription(description);
+			cours.setFormule(formule);
+
+			CoursDAO coursDAO = CoursDAO.getInstance();
+			coursDAO.update(cours);
+			
+			// Mettre à jour le tableau
+			int index = coursData.indexOf(cours);
+			if (index != -1) {
+				coursData.set(index, cours);
+			}
+			
+		} else {
+			System.out.println("Veuillez remplir tous les champs");
+		}
+	}
+
+	public void mettreAJourSelection(ActionEvent event) {		
+		if(event.getSource() == boutonUpdFormule) {
+			majFormule();
+		}
+		if(event.getSource() == boutonUpdSeance) {
+			majSeance();
+		}
+		if(event.getSource() == boutonUpdCours) {
+			majCours();
+		}
 	}
 
 }

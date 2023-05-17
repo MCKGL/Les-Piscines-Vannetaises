@@ -18,6 +18,8 @@ public class ProfesseurDAO extends DAO<InfoProfesseur> {
 	private static final String TABLE = "info_prof";
 	private static final String SPECIALITES = "specialite";
 	private final String EMPLOYEE = "id_employe";
+	
+	private static final String TABLE_EMP = "employe";
 
 	private static ProfesseurDAO instance=null;
 // -----------------------------------------------------------------------------------------------------------------------
@@ -148,13 +150,8 @@ public class ProfesseurDAO extends DAO<InfoProfesseur> {
 	
 	public InfoProfesseur readByPrenom(String prenom) {
 	    InfoProfesseur prof = null;
-//	    String TABLE2 = "employe";
-//	    String COLONNE1 = "info_prof.id_employe";
-//	    String COLONNE2 = "employe.id_employe";
-//	    String COLONNE = "id.employe";
-	    //TODO sécurisé requête
 	    try {
-	        String requete = "SELECT info_prof.*, employe.* FROM employe JOIN info_prof ON employe.id_employe = info_prof.id_employe WHERE prenom = ?";
+	        String requete = "SELECT " + TABLE + ".*, " + TABLE_EMP + ".* FROM " + TABLE_EMP + " JOIN " + TABLE + " ON " + TABLE_EMP + "." + EMPLOYEE + " = " + TABLE + "." + EMPLOYEE + " WHERE prenom = ?";
 	        PreparedStatement pst = Connexion.getInstance().prepareStatement(requete);
 	        pst.setString(1, prenom);
 	        ResultSet rs = pst.executeQuery();

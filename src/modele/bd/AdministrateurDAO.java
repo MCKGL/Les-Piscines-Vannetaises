@@ -124,5 +124,26 @@ public class AdministrateurDAO extends DAO<InfoAdministrateur> {
 		}
 		return admin;
 	}
+	
+	//lire par identifiant de connexion
+	public InfoAdministrateur readByIdentifiant(String identifant) {
+		InfoAdministrateur admin = null;
+		try {
+			String requete = "SELECT * FROM " + TABLE + " WHERE " + ID + " = ?";
+			PreparedStatement pst = Connexion.getInstance().prepareStatement(requete);
+			pst.setString(1, identifant);
+			ResultSet rs = pst.executeQuery();
+			rs.next();
+			String mdp = rs.getString(MDP);
+			int idEmployee = rs.getInt(EMPLOYE);
+			Employe employee = EmployeDAO.getInstance().read(idEmployee);
+					
+			admin = new InfoAdministrateur(mdp, identifant, employee);
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return admin;
+	}
 
 }
