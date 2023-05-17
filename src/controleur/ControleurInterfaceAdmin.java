@@ -1,12 +1,14 @@
 package controleur;
 
 import java.util.List;
+import java.util.ResourceBundle;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.DatePicker;
@@ -17,6 +19,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
+import modele.bd.AdministrateurDAO;
 import modele.bd.CoursDAO;
 import modele.bd.EmployeDAO;
 import modele.bd.FormuleDAO;
@@ -25,6 +28,7 @@ import modele.bd.SeanceDAO;
 import modele.metier.Cours;
 import modele.metier.Employe;
 import modele.metier.Formule;
+import modele.metier.InfoAdministrateur;
 import modele.metier.InfoProfesseur;
 import modele.metier.Seance;
 
@@ -37,7 +41,7 @@ import modele.metier.Seance;
  * "public" quand les méthodes vont aussi concerner Administrateur.fxml
  */
 
-public class ControleurInterfaceAdmin extends SceneControleur {
+public class ControleurInterfaceAdmin extends SceneControleur implements Initializable {
 	
 	protected ObservableList<InfoProfesseur> empData = FXCollections.observableArrayList();
 	protected ObservableList<Seance> seanceData = FXCollections.observableArrayList();
@@ -53,7 +57,7 @@ public class ControleurInterfaceAdmin extends SceneControleur {
 	@FXML
 	protected TableView<InfoProfesseur> tableProf;
 	@FXML
-	protected Label labelDateSeance, labelHeureSeance, labelDureeSeance, labelProfSeance, labelCoursSeance;
+	protected Label labelDateSeance, labelHeureSeance, labelDureeSeance, labelProfSeance, labelCoursSeance, labelInfoMajFormule;
 	@FXML
 	protected TableColumn<InfoProfesseur, String> nom, prenom, mail, dateNaissance;
 	@FXML
@@ -75,15 +79,35 @@ public class ControleurInterfaceAdmin extends SceneControleur {
 	@FXML
 	protected ChoiceBox<String> choiceBoxProf, choiceBoxCours;
 	
+	@Override
+	public void initialize(java.net.URL arg0, ResourceBundle arg1) {
+		//Récupérer les valeurs pour le choiceBox Cours (ici pour ne le faire qu'une fois)
+		List<Cours> listeCours = CoursDAO.getInstance().readAll();
+		choiceBoxCours.setValue(listeCours.get(0).getNom());
+		for (Cours seanceCours : listeCours) {
+			choiceBoxCours.getItems().add(seanceCours.getNom());
+		}
+		
+		//Récupérer les valeurs pour le choiceBox Prof
+		List<Employe> listeEmploye = EmployeDAO.getInstance().readAll();
+		choiceBoxProf.setValue(listeEmploye.get(0).getPrenom());
+		for (Employe employes : listeEmploye) {
+			choiceBoxProf.getItems().add(employes.getPrenom());
+		}
+	}
+	
 	public void connexion(ActionEvent event) {
 		try { 
 			String mdp = passwordFieldAdmin.getText();
-			String nom = textFieldAdmin.getText();
-			// TODO créer méthode loggin à appeller ici
+			String identifiant = textFieldAdmin.getText();
+			// Comparer entrée utilisateur avec existant dans bd
+			AdministrateurDAO adminDao = AdministrateurDAO.getInstance();
+			InfoAdministrateur identifiantAdmin = adminDao.readByIdentifiant(identifiant);
 
-			if(mdp.equals("toto") && nom.equals("admin")) {
+			if(identifiantAdmin.getMdp().equals(mdp)) {
 				paneConnexion.setVisible(true);
 				afficherTableProf();
+				
 			}else {
 				System.out.println("Mot de passe ou nom utilisateur incorrect");
 			}
@@ -212,10 +236,11 @@ public class ControleurInterfaceAdmin extends SceneControleur {
 			boutonCreerFormule.setVisible(false);
 			boutonSuppFormule.setVisible(true);
 			boutonUpdFormule.setVisible(true);
+			labelInfoMajFormule.setVisible(true);
 			
-			textFieldPrixForm.setText(formule.getPrixToString());
-			textFieldDureeValForm.setText(formule.getDurreeValiditeToString());
-			textFieldNbEntreeForm.setText(formule.getNbEntreeToString());
+			textFieldPrixForm.setText(String.valueOf(formule.getPrixFormule()));
+			textFieldDureeValForm.setText(String.valueOf(formule.getDureeValidite()));
+			textFieldNbEntreeForm.setText(String.valueOf(formule.getNbreEntreeFormule()));
 			textFieldLabelForm.setText(formule.getLabel());
 			textFieldTypeCoursForm.setText(formule.getType());
 			
@@ -239,9 +264,9 @@ public class ControleurInterfaceAdmin extends SceneControleur {
 			boutonUpdSeance.setVisible(true);
 			
 			labelDateSeance.setText(seance.toStringDate());
-			labelDureeSeance.setText(seance.toStringDuree());
+			labelDureeSeance.setText(String.valueOf(seance.getDuree()));
 			labelProfSeance.setText(seance.getIdProf().getIdEmployee().getPrenom());
-			labelCoursSeance.setText(seance.getIdCours().getNom());
+			labelCoursSeance.setText(seance.getIdCours().getNom());		
 		}
 	}
 	
@@ -254,22 +279,6 @@ public class ControleurInterfaceAdmin extends SceneControleur {
 			boutonCreerSeance.setVisible(true);
 			boutonSuppSeance.setVisible(false);
 			boutonUpdSeance.setVisible(false);
-			
-
-			//Récupérer les valeurs pour le choiceBox Cours
-			List<Cours> listeCours = CoursDAO.getInstance().readAll();
-			choiceBoxCours.setValue(listeCours.get(0).getNom());
-			for (Cours cours : listeCours) {
-				choiceBoxCours.getItems().add(cours.getNom());
-			}
-			
-			//Récupérer les valeurs pour le choiceBox Prof
-			List<Employe> listeEmploye = EmployeDAO.getInstance().readAll();
-			choiceBoxProf.setValue(listeEmploye.get(0).getPrenom());
-			for (Employe employes : listeEmploye) {
-				choiceBoxProf.getItems().add(employes.getPrenom());
-			}
-			
 		}
 		if(tableFormule.isVisible()) {
 			paneMajSeance.setVisible(false);
@@ -278,6 +287,7 @@ public class ControleurInterfaceAdmin extends SceneControleur {
 			boutonCreerFormule.setVisible(true);
 			boutonSuppFormule.setVisible(false);
 			boutonUpdFormule.setVisible(false);
+			labelInfoMajFormule.setVisible(false);
 		}
 		if(tableCours.isVisible()) {
 			paneMajSeance.setVisible(false);
@@ -298,6 +308,9 @@ public class ControleurInterfaceAdmin extends SceneControleur {
 		textFieldTypeCoursForm.clear();
 		textFieldNomCours.clear();
 		textFieldDescCours.clear();
+		textFieldHeureSeance.clear();
+		textFieldMinSeance.clear();
+		textFieldDureeSeance.clear();
 		labelDateSeance.setText("");
 		labelDureeSeance.setText("");
 		labelProfSeance.setText("");

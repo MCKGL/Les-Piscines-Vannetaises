@@ -32,7 +32,7 @@
       <TextField fx:id="textFieldAdmin" layoutX="214.0" layoutY="125.0" prefHeight="25.0" prefWidth="172.0" promptText="Nom administateur" />
       <Button alignment="CENTER" contentDisplay="CENTER" layoutX="257.0" layoutY="201.0" mnemonicParsing="false" onAction="#connexion" text="CONNEXION" textAlignment="CENTER" />
       <PasswordField fx:id="passwordFieldAdmin" layoutX="214.0" layoutY="161.0" prefHeight="25.0" prefWidth="172.0" promptText="Mot de passe" />
-      <Pane fx:id="paneConnexion" layoutX="-4.0" prefHeight="400.0" prefWidth="605.0" style="-fx-background-color: #B8F5FF;">
+      <Pane fx:id="paneConnexion" layoutX="-4.0" prefHeight="400.0" prefWidth="605.0" style="-fx-background-color: #B8F5FF;" visible="false">
          <children>
             <ImageView fitHeight="405.0" fitWidth="610.0" layoutX="-2.0" layoutY="-2.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -56,7 +56,6 @@
                   <TableColumn fx:id="fin" prefWidth="96.00006103515625" text="fin" />
                   <TableColumn fx:id="typeCours" prefWidth="150.66664123535156" text="type de cours" />
                   <TableColumn fx:id="prof" prefWidth="68.66668701171875" text="prof" />
-                  <TableColumn fx:id="annulerSeance" prefWidth="137.99996948242188" text="annuler séance" />
                </columns>
             </TableView>
             <TableView fx:id="tableFormule" layoutX="16.0" layoutY="40.0" onMouseClicked="#selectionLigne" prefHeight="312.0" prefWidth="584.0" visible="false">
@@ -94,6 +93,7 @@
                   <Button layoutX="549.0" layoutY="2.0" mnemonicParsing="false" onAction="#fermerPaneMaj" text="X" />
                   <Button fx:id="boutonUpdFormule" layoutX="244.0" layoutY="279.0" mnemonicParsing="false" onAction="#mettreAJourSelection" text="Mettre à jour" />
                   <Button fx:id="boutonSuppFormule" layoutX="79.0" layoutY="279.0" mnemonicParsing="false" onAction="#supprimerSelection" text="Supprimer" />
+                  <Label fx:id="labelInfoMajFormule" layoutX="113.0" layoutY="18.0" text="Une mise à jour réactivera automatiquement une formule inactive" />
                </children>
             </Pane>
             <Pane fx:id="paneMajCours" layoutX="18.0" layoutY="42.0" prefHeight="305.0" prefWidth="575.0" style="-fx-background-color: #B8F5FF;" visible="false">

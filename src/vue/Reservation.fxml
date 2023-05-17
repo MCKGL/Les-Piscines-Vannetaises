@@ -25,6 +25,7 @@
          </children>
       </HBox>
       <Button fx:id="boutonEntreeSimple" layoutX="39.0" layoutY="135.0" mnemonicParsing="false" onAction="#allerPayement" prefHeight="129.0" prefWidth="135.0" text="Entrée Simple" />
+      <Label fx:id="labelPrixEntreeSimple" layoutX="99.0" layoutY="229.0" text="3 E" />
       <Button fx:id="boutonCours" layoutX="229.0" layoutY="135.0" mnemonicParsing="false" onAction="#afficherCours" prefHeight="129.0" prefWidth="135.0" text="Cours" />
       <Button fx:id="boutonAbonnement" layoutX="425.0" layoutY="135.0" mnemonicParsing="false" onAction="#afficherAbonnement" prefHeight="129.0" prefWidth="135.0" text="Abonnement" />
       <Pane fx:id="paneAbonnement" layoutX="-1.0" prefHeight="400.0" prefWidth="601.0" visible="false">
@@ -47,7 +48,6 @@
             <Label fx:id="labelDetailDuo" layoutX="393.0" layoutY="200.0" text="10 entrées pour deux" />
          </children>
       </Pane>
-      <Label fx:id="labelPrixEntreeSimple" layoutX="99.0" layoutY="229.0" text="3 E" />
       <Pane fx:id="paneCours" prefHeight="400.0" prefWidth="601.0" visible="false">
          <children>
             <ImageView fitHeight="400.0" fitWidth="607.0" pickOnBounds="true" preserveRatio="true">

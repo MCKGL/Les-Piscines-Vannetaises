@@ -34,8 +34,7 @@ public class SceneControleurInformation extends SceneControleur implements Initi
 		List<Seance> seances = seanceDAO.readAll();
 		seanceData.clear();
 		seanceData.addAll(seances);
-		tableSeance.setItems(seanceData);
-		
+		tableSeance.setItems(seanceData);		
 	}
 
 	@Override

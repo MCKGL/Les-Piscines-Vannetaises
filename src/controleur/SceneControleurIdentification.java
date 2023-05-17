@@ -28,7 +28,8 @@ public class SceneControleurIdentification extends SceneControleur {
 				textAreaDetailBillet.setText("Code : "+billet.getCode()+"\n"
 									+ "Nature de l'achat : "+billet.getFormule().getType()+"\n"
 									+ "Nombre d'entrées restantes : "+billet.getNbreEntreeRestante()+"\n"
-									+ "Prix : "+billet.getFormule().getPrixFormule()+"\n"
+									+ "Date de péremption : "+billet.toStringDatePeremption()+"\n"
+									+ "Prix : "+billet.getFormule().getPrixFormule()+"€"+"\n"
 									+ "Acheté à : "+billet.getPiscine().getNom());
 			}else {
 				System.out.println("Aucun billet trouvé avec le code : " + id);
