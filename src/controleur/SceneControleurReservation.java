@@ -41,7 +41,22 @@ public class SceneControleurReservation extends SceneControleur implements Initi
 	//méthode appelé à l'initialisation de la page (doit être implementé au niveau de la déclaration de Class)
 	@Override
 	public void initialize(java.net.URL arg0, ResourceBundle arg1) {
-
+		// activé ou désactiver l'état du bouton en fonction de l'état active des formules
+		associerEtatFormuleBouton();
+        //methode pour récupérer le prix de l'entrée libre
+		afficherEntreeLibre();
+        // on récupère les données de la table cours pour les mettre en option dans le choice box mais une fois (donc à l'initialisation)
+        ajoutOptionCoursChoiceBox();
+	}
+	
+	private void afficherEntreeLibre() {
+		String type = "Entree libre";
+        FormuleDAO formuleDao = FormuleDAO.getInstance();
+        Formule entreSimple = formuleDao.readByTypes(type);
+        labelPrixEntreeSimple.setText(Integer.toString(entreSimple.getPrixFormule()) + "€");
+	}
+	
+	private void associerEtatFormuleBouton() {
 		// on va associer au bouton les types de formules
 		FormuleDAO formuleDAO = FormuleDAO.getInstance();
 		Map<String, Button> boutons = new HashMap<>();
@@ -60,24 +75,19 @@ public class SceneControleurReservation extends SceneControleur implements Initi
 		        entry.getValue().setDisable(false);
 		    }
 		}
-		
-        //methode pour l'implementation du prix d'un billet via le bouton entrée libre
-        String type = "Entree libre";
-        FormuleDAO formuleDao = FormuleDAO.getInstance();
-        Formule entreSimple = formuleDao.readByTypes(type);
-        labelPrixEntreeSimple.setText(Integer.toString(entreSimple.getPrixFormule()) + "€");
 	}
 	
-	// a l'initialisation du Pane "cours", Le ChoiceBox récupère les données de la bd
-	public void afficherCours(ActionEvent event) {
-		paneCours.setVisible(true);
-		paneAbonnement.setVisible(false);
-		
+	private void ajoutOptionCoursChoiceBox() {
 	    List<Cours> listeCours = CoursDAO.getInstance().readAll();
 	    choiceBoxCours.setValue(listeCours.get(0).getNom());
 	    for (Cours cours : listeCours) {
 	        choiceBoxCours.getItems().add(cours.getNom());
 	    }
+	}
+	
+	public void afficherCours(ActionEvent event) {
+		paneCours.setVisible(true);
+		paneAbonnement.setVisible(false);
 	}
 	
 	//afficher les détails du cours sélectionné.

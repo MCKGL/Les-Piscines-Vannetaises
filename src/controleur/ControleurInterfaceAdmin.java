@@ -299,7 +299,7 @@ public class ControleurInterfaceAdmin extends SceneControleur implements Initial
 		}
 	}
 	
-	public void fermerPaneMaj(ActionEvent event) {
+	public void fermerPane() {
 		// effacer données saisie ou affiché à la fermeture des panes
 		textFieldPrixForm.clear();
 		textFieldDureeValForm.clear();
@@ -319,6 +319,10 @@ public class ControleurInterfaceAdmin extends SceneControleur implements Initial
 		paneMajSeance.setVisible(false);
 		paneMajFormule.setVisible(false);
 		paneMajCours.setVisible(false);
+	}
+	
+	public void fermerPaneMaj(ActionEvent event) {
+		fermerPane();
 	}
 	
 }
