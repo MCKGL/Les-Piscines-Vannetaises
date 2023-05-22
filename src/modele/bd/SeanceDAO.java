@@ -52,10 +52,11 @@ public class SeanceDAO extends DAO<Seance> {
 			// Mise à jour de la base de donnée
 			pst.executeUpdate();
 			
-			ResultSet rs = pst.getGeneratedKeys();
-			if (rs.next()) {
-				seance.setIdSeance(rs.getInt(1));
-			}
+			//Marche sans et sinon fait erreur.
+//			ResultSet rs = pst.getGeneratedKeys();
+//			if (rs.next()) {
+//				seance.setIdSeance(rs.getInt(1));
+//			}
 			succes = true;
 		} catch (SQLException e) {
 			succes = false;

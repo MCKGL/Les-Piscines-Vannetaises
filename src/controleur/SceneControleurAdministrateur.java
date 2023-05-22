@@ -148,8 +148,6 @@ public class SceneControleurAdministrateur extends ControleurInterfaceAdmin {
 	}
 
 	private void creerSeance() {
-		// erreur : L'instruction doit être exécutée avant de pouvoir obtenir des résultats. L'erreur n'empêche pas la création d'une séance...
-		// je n'ai pas trouvé à quoi c'était dû
 		Seance seance = new Seance(null, 0, null, null); 
 		LocalDate date = datePickerSeance.getValue();
 		String heureText = textFieldHeureSeance.getText();
