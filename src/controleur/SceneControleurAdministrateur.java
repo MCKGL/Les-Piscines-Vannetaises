@@ -70,9 +70,7 @@ public class SceneControleurAdministrateur extends ControleurInterfaceAdmin {
 			seanceDAO.delete(seance);
 			seanceData.remove(seance);
 		}
-		paneMajFormule.setVisible(false);
-		paneMajSeance.setVisible(false);
-		paneMajCours.setVisible(false);
+		fermerPane();
 	}
 
 	// Confirmation de la suppression.
@@ -109,6 +107,8 @@ public class SceneControleurAdministrateur extends ControleurInterfaceAdmin {
 			if (index != -1) {
 				formuleData.set(index, formule);
 			}
+			
+			fermerPane();
 
 		}else {
 			paneMajFormule.setVisible(true);
@@ -139,6 +139,10 @@ public class SceneControleurAdministrateur extends ControleurInterfaceAdmin {
 
 				FormuleDAO formuleDAO = FormuleDAO.getInstance();
 				formuleDAO.create(formule);
+				
+				fermerPane();
+				afficherTableFormule();
+				
 			} catch (NumberFormatException e) {
 				System.out.println("Les champs de prix, durée de validité et nombre d'entrées doivent contenir uniquement des chiffres");
 			}
@@ -148,8 +152,6 @@ public class SceneControleurAdministrateur extends ControleurInterfaceAdmin {
 	}
 
 	private void creerSeance() {
-		// erreur : L'instruction doit être exécutée avant de pouvoir obtenir des résultats. L'erreur n'empêche pas la création d'une séance...
-		// je n'ai pas trouvé à quoi c'était dû
 		Seance seance = new Seance(null, 0, null, null); 
 		LocalDate date = datePickerSeance.getValue();
 		String heureText = textFieldHeureSeance.getText();
@@ -179,6 +181,10 @@ public class SceneControleurAdministrateur extends ControleurInterfaceAdmin {
 
 				SeanceDAO seanceDAO = SeanceDAO.getInstance();
 				seanceDAO.create(seance);
+				
+				fermerPane();
+				afficherTableSeance();
+				
 			} catch (NumberFormatException e) {
 				System.out.println("Les champs d'heure, minute et durée doivent contenir uniquement des chiffres");
 			}
@@ -203,6 +209,10 @@ public class SceneControleurAdministrateur extends ControleurInterfaceAdmin {
 
 			CoursDAO coursDAO = CoursDAO.getInstance();
 			coursDAO.create(cours);
+			
+			fermerPane();
+			afficherTableCours();
+			
 		} else {
 			System.out.println("Veuillez remplir tous les champs");
 		}
@@ -251,6 +261,8 @@ public class SceneControleurAdministrateur extends ControleurInterfaceAdmin {
 					formuleData.set(index, formule);
 				}
 				
+				fermerPane();
+				
 			} catch (NumberFormatException e) {
 				System.out.println("Les champs de prix, durée de validité et nombre d'entrées doivent contenir uniquement des chiffres");
 			}
@@ -296,6 +308,8 @@ public class SceneControleurAdministrateur extends ControleurInterfaceAdmin {
 					seanceData.set(index, seance);
 				}
 				
+				fermerPane();
+				
 			} catch (NumberFormatException e) {
 				System.out.println("Les champs d'heure, minute et durée doivent contenir uniquement des chiffres");
 			}
@@ -326,6 +340,8 @@ public class SceneControleurAdministrateur extends ControleurInterfaceAdmin {
 			if (index != -1) {
 				coursData.set(index, cours);
 			}
+			
+			fermerPane();
 			
 		} else {
 			System.out.println("Veuillez remplir tous les champs");
